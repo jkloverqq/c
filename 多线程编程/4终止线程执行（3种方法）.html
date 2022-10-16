@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://c.biancheng.net/thread/vip_8610.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./4终止线程执行（3种方法）_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./4终止线程执行（3种方法）_files/common.css" rel="stylesheet">
+<title>终止线程执行（3种方法）</title>
+<meta name="description" content="多线程程序中，线程结束执行的方式有 3 种，分别是： 线程将指定函数体中的代码执行完后自行结束； 线程执行过程中，被同一进程中的其它线程（包括主线程）强制终止； 线程执行">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./4终止线程执行（3种方法）_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/thread/">多线程</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/thread/what-is-thread.html">线程是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/thread/first-thread.html">第一个多线程程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/thread/vip_8614.html">线程同步机制</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/thread/vip_8622.html">使用C++11进行多线程编程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/thread/">多线程</a></span>
+	<span class="read-num">阅读：3,505</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>终止线程执行（3种方法）</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">多线程程序中，终止线程执行的方式有 3 种，分别是：
+<ol>
+	<li>
+		线程执行完成后，自行终止；</li>
+	<li>
+		线程执行过程中遇到了 pthread_exit() 或者 return，也会终止执行；</li>
+	<li>
+		线程执行过程中，接收到其它线程发送的“终止执行”的信号，然后终止执行。</li>
+</ol>
+<br>
+三种方式中，第一种很容易理解，本节重点给大家讲解后两种方法。<br>
+<h2>
+	1、pthread_exit()</h2>
+在 C 语言中，return 关键字用于终止函数执行，必要时还能将函数的执行结果反馈给调用者。return 关键字不仅可以用于普通函数，线程函数中也可以使用它。<br>
+<br>
+<code>&lt;pthread.h&gt;</code>头文件中，提供有一个和 return 关键字相同功能的 pthread_exit() 函数。和之前不同，pthread_exit() 函数只适用于线程函数，而不能用于普通函数。<br>
+<br>
+pthread_exit() 函数的语法格式如下：
+<p class="info-box">
+	void pthread_exit(void *retval);</p>
+retval 是<code>void*</code>类型的指针，可以指向任何类型的数据，它指向的数据将作为线程退出时的返回值。如果线程不需要返回任何数据，将 retval 参数置为<code>NULL</code>即可。
+<blockquote>
+	<p>
+		注意，retval 指针不能指向函数内部的局部数据（比如局部变量）。换句话说，pthread_exit() 函数不能返回一个指向局部数据的指针，否则很可能使程序运行结果出错甚至崩溃。</p>
+</blockquote>
+通过一个样例，给大家演示 pthread_exit() 函数的用法（样例一）：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8610.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;pthread.h&gt;</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_comment">//线程要执行的函数，arg 用来接收线程传递过来的数据</span></li><li><span class="sh_type">void</span> <span class="sh_symbol">*</span><span class="sh_function">ThreadFun</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span>arg<span class="sh_symbol">)</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_comment">//终止线程的执行，将“http://c.biancheng.net”返回</span></li><li>    <span class="sh_function">pthread_exit</span><span class="sh_symbol">(</span><span class="sh_string">"http://c.biancheng.net"</span><span class="sh_symbol">);</span> <span class="sh_comment">//返回的字符串存储在常量区，并非当前线程的私有资源</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"*****************"</span><span class="sh_symbol">);</span><span class="sh_comment">//此语句不会被线程执行</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> res<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//创建一个空指针</span></li><li>    <span class="sh_type">void</span> <span class="sh_symbol">*</span> thread_result<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//定义一个表示线程的变量</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>myThread<span class="sh_symbol">;</span></li><li><span style="display:none;">&nbsp;</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>myThread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">,</span> ThreadFun<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"线程创建失败"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//等待 myThread 线程执行完成，并用 thread_result 指针接收该线程的返回值</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>myThread<span class="sh_symbol">,</span> <span class="sh_symbol">&amp;</span>thread_result<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"等待线程失败"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"%s"</span><span class="sh_symbol">,</span> <span class="sh_symbol">(</span><span class="sh_type">char</span><span class="sh_symbol">*)</span>thread_result<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+
+//线程要执行的函数，arg 用来接收线程传递过来的数据
+void *ThreadFun(void *arg)
+{
+    //终止线程的执行，将“http://c.biancheng.net”返回
+    pthread_exit("http://c.biancheng.net"); //返回的字符串存储在常量区，并非当前线程的私有资源
+    printf("*****************");//此语句不会被线程执行
+}
+
+int main()
+{
+    int res;
+    //创建一个空指针
+    void * thread_result;
+    //定义一个表示线程的变量
+    pthread_t myThread;
+
+    res = pthread_create(&amp;myThread, NULL, ThreadFun, NULL);
+    if (res != 0) {
+        printf("线程创建失败");
+        return 0;
+    }
+    //等待 myThread 线程执行完成，并用 thread_result 指针接收该线程的返回值
+    res = pthread_join(myThread, &amp;thread_result);
+    if (res != 0) {
+        printf("等待线程失败");
+    }
+    printf("%s", (char*)thread_result);
+    return 0;
+}</pre></div></div>
+假设程序存储在 thread.c 文件中，执行过程如下：
+<p class="info-box">
+	[root@localhost ~]# gcc thread.c -o thread.exe -lpthread<br>
+	[root@localhost ~]# ./thread.exe<br>
+	http://c.biancheng.net</p>
+不难看出，myThread 线程并没有执行 ThreadFun() 函数中最后一个 printf() 语句，从侧面验证了 pthread_exit() 函数的功能。此外，我们通过在主线程（main() 函数）调用 pthread_join() 函数，获取到了 myThread 线程返回的数据。
+<blockquote>
+	<p>
+		有关 pthread_join() 函数的功能和用法，我们会在《<a href="http://c.biancheng.net/thread/vip_8627.html" target="_blank">获取线程函数的返回值</a>》一节中给大家讲解。</p>
+</blockquote>
+<h4>
+	pthread_exit()和return的区别</h4>
+修改样例一中的程序，将第 8 行（调用 pthread_exit() ）代码替换成如下语句：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8610.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_keyword">return</span> <span class="sh_string">"http://c.biancheng.net"</span><span class="sh_symbol">;</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">return "http://c.biancheng.net";</pre></div></div>
+重新编译、执行此程序，会发现程序的执行结果和之前完全相同。这意味着当线程执行结束时，无论是采用 return 语句还是调用 pthread_exit() 函数，主线程中的 pthread_join() 函数都可以接收到线程的返回值。<br>
+<br>
+这就产生了一个问题，既然 return 关键字也适用于线程函数，&lt;pthread.h&gt; 头文件为什么还提供 pthread_exit() 函数，不是多此一举吗？<br>
+<br>
+首先，return 语句和 pthread_exit() 函数的含义不同，return 的含义是返回，它不仅可以用于线程执行的函数，普通函数也可以使用；pthread_exit() 函数的含义是线程退出，它专门用于结束某个线程的执行。<br>
+<br>
+在主线程（main() 函数）中，return 和 pthread_exit() 函数的区别最明显。举个例子：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8610.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;pthread.h&gt;</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_symbol">*</span><span class="sh_function">ThreadFun</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span>arg<span class="sh_symbol">)</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">5</span><span class="sh_symbol">);</span><span class="sh_comment">//等待一段时间</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"http://c.biancheng.net</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> res<span class="sh_symbol">;</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>myThread<span class="sh_symbol">;</span></li><li>    </li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>myThread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">,</span> ThreadFun<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"线程创建失败"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"C语言中文网</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+
+void *ThreadFun(void *arg)
+{
+    sleep(5);//等待一段时间
+    printf("http://c.biancheng.net\n");
+}
+
+int main()
+{
+    int res;
+    pthread_t myThread;
+    
+    res = pthread_create(&amp;myThread, NULL, ThreadFun, NULL);
+    if (res != 0) {
+        printf("线程创建失败");
+        return 0;
+    }
+    printf("C语言中文网\n");
+    return 0;
+}</pre></div></div>
+编译、执行此程序，输出结果为：
+<p class="info-box">
+	C语言中文网</p>
+通过执行结果可以看到，主线程正常执行结束，myThread 线程并没有输出指定的数据。原因很简单，主线程执行速度很快，主线程最后执行的 return 语句不仅会终止主线程执行，还会终止其它子线程执行。也就是说，myThread 线程还没有执行输出语句就被终止了。<br>
+<br>
+将上面程序中，main() 函数中的<code>return 0;</code>用如下语句替换：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8610.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_function">pthread_exit</span><span class="sh_symbol">(</span>NULL<span class="sh_symbol">);</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">pthread_exit(NULL);</pre></div></div>
+重新编译、执行程序，运行结果为：
+<p class="info-box">
+	C语言中文网<br>
+	http://c.biancheng.net</p>
+对比上面两个执行结果，可以得出的结论是：pthread_exit() 函数只会终止当前线程，不会影响其它线程的执行。
+<blockquote>
+	<p>
+		此外，pthread_exit() 函数还会自动调用线程清理程序（本质是一个由 pthread_cleanup_push() 指定的自定义函数），而 return 不具备这个能力。</p>
+</blockquote>
+总之，如果实际场景中想终止某个子线程，强烈建议大家使用 pthread_exit() 函数。终止主线程时，return 和 pthread_exit() 函数发挥的功能不同，可以根据需要自行选择。
+<h2>
+	2、pthread_cancel()</h2>
+多线程程序中，一个线程还可以向另一个线程发送“终止执行”的信号（后续称“Cancel”信号），这时就需要调用 pthread_cancel() 函数。<br>
+<br>
+pthread_cancel() 函数声明在<code>&lt;pthread.h&gt;</code>头文件中，语法格式如下：
+<p class="info-box">
+	int pthread_cancel(pthread_t thread);</p>
+参数 thread 用于接收 Cancel 信号的目标线程。<br>
+<br>
+如果 pthread_cancel() 函数成功地发送了 Cancel 信号，返回数字 0，否则返回非零数。对于因“未找到目标线程”导致的信号发送失败，函数返回 ESRCH 宏（定义在<code>&lt;errno.h&gt;</code>头文件中，该宏的值为整数 3）。
+<blockquote>
+	<p>
+		注意，pthread_cancel() 函数的功能仅仅是向目标线程发送 Cancel 信号，至于目标线程是否接收该信号，何时响应该信号，全由目标线程决定。我们会在《<a href="http://c.biancheng.net/thread/vip_8613.html" target="_blank">终止线程执行，千万别踩这个坑！</a>》一节给您做详细讲解。</p>
+</blockquote>
+对于接收 Cancel 信号后结束执行的目标线程，等同于该线程自己执行如下语句：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8610.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_function">pthread_exit</span><span class="sh_symbol">(</span>PTHREAD_CANCELED<span class="sh_symbol">);</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">pthread_exit(PTHREAD_CANCELED);</pre></div></div>
+也就是说，当一个线程被强制终止执行时，它会返回<code>PTHREAD_CANCELED</code>这个宏（定义在<code>&lt;pthread.h&gt;</code>头文件中）。<br>
+<br>
+接下来通过一个样例，给大家演示 pthread_cancel() 函数的用法：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8610.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8610.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;pthread.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdlib.h&gt;</span>     <span class="sh_comment">// sleep() 函数</span></li><li><span class="sh_comment">//线程执行的函数</span></li><li><span class="sh_type">void</span> <span class="sh_symbol">*</span> <span class="sh_function">thread_Fun</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span> arg<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"新建线程开始执行</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">10</span><span class="sh_symbol">);</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>myThread<span class="sh_symbol">;</span></li><li>    <span class="sh_type">void</span> <span class="sh_symbol">*</span> mess<span class="sh_symbol">;</span></li><li>    <span class="sh_type">int</span> value<span class="sh_symbol">;</span></li><li>    <span class="sh_type">int</span> res<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//创建 myThread 线程</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>myThread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">,</span> thread_Fun<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"线程创建失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//向 myThread 线程发送 Cancel 信号</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_cancel</span><span class="sh_symbol">(</span>myThread<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"终止 myThread 线程失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//获取已终止线程的返回值</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>myThread<span class="sh_symbol">,</span> <span class="sh_symbol">&amp;</span>mess<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"等待线程失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//如果线程被强制终止，其返回值为 PTHREAD_CANCELED</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>mess <span class="sh_symbol">==</span> PTHREAD_CANCELED<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"myThread 线程被强制终止</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">else</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"error</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+#include &lt;stdlib.h&gt;     // sleep() 函数
+//线程执行的函数
+void * thread_Fun(void * arg) {
+    printf("新建线程开始执行\n");
+    sleep(10);
+}
+
+int main()
+{
+    pthread_t myThread;
+    void * mess;
+    int value;
+    int res;
+    //创建 myThread 线程
+    res = pthread_create(&amp;myThread, NULL, thread_Fun, NULL);
+    if (res != 0) {
+        printf("线程创建失败\n");
+        return 0;
+    }
+    sleep(1);
+    //向 myThread 线程发送 Cancel 信号
+    res = pthread_cancel(myThread);
+    if (res != 0) {
+        printf("终止 myThread 线程失败\n");
+        return 0;
+    }
+    //获取已终止线程的返回值
+    res = pthread_join(myThread, &amp;mess);
+    if (res != 0) {
+        printf("等待线程失败\n");
+        return 0;
+    }
+    //如果线程被强制终止，其返回值为 PTHREAD_CANCELED
+    if (mess == PTHREAD_CANCELED) {
+        printf("myThread 线程被强制终止\n");
+    }
+    else {
+        printf("error\n");
+    }
+    return 0;
+}</pre></div></div>
+假设程序编写在 thread.c 文件中，执行过程为：
+<p class="info-box">
+	[root@localhost ~]# gcc thread.c -o thread.exe -lpthread<br>
+	[root@localhost ~]# ./thread.exe<br>
+	新建线程开始执行<br>
+	myThread 线程被强制终止</p>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./4终止线程执行（3种方法）_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/1371.html" title="享元模式（详解版）">享元模式（详解版）</a></li>
+<li><a href="http://c.biancheng.net/view/1557.html" title="EL表达式中的常量与变量">EL表达式中的常量与变量</a></li>
+<li><a href="http://c.biancheng.net/view/1781.html" title="韩顺平JavaEE JSP实战视频教程">韩顺平JavaEE JSP实战视频教程</a></li>
+<li><a href="http://c.biancheng.net/view/1970.html" title="堆叠自编码器及（TensorFlow）实现（详解版）">堆叠自编码器及（TensorFlow）实现（详解版）</a></li>
+<li><a href="http://c.biancheng.net/view/vip_3237.html" title="Linux bc命令：一款数学计算器">Linux bc命令：一款数学计算器</a></li>
+<li><a href="http://c.biancheng.net/view/3276.html" title="Android Drawable开发简介">Android Drawable开发简介</a></li>
+<li><a href="http://c.biancheng.net/view/vip_6203.html" title="如何在开发期间安装测试Python程序包？">如何在开发期间安装测试Python程序包？</a></li>
+<li><a href="http://c.biancheng.net/view/6733.html" title="MATLAB 2018a下载、安装与破解完全指南">MATLAB 2018a下载、安装与破解完全指南</a></li>
+<li><a href="http://c.biancheng.net/view/7182.html" title="C++ STL map emplace()和emplace_hint()方法详解">C++ STL map emplace()和emplace_hint()方法详解</a></li>
+<li><a href="http://c.biancheng.net/view/7937.html" title="jQuery this事件">jQuery this事件</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8610;
+window.arcId = "64b6ewcHbe/Yo9YpDXWVYvL+bBn7JKjq98DeGIowRba+IAJUa/vrfI7bwOI";
+window.typeidChain = "396";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./4终止线程执行（3种方法）_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./4终止线程执行（3种方法）_files/jquery1.12.4.min.js.下载"></script>
+<script src="./4终止线程执行（3种方法）_files/common.js.下载"></script>
+<span style="display:none;"><script src="./4终止线程执行（3种方法）_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

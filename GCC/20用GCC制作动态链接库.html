@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://c.biancheng.net/view/vip_8526.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./20用GCC制作动态链接库_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./20用GCC制作动态链接库_files/common.css" rel="stylesheet">
+<title>用GCC制作动态链接库</title>
+<meta name="description" content="前面章节中，给读者详细阐述了什么是库文件、什么是静态链接库和动态链接库，同时还介绍了手动创建静态链接库的过程。在此基础上，本节继续讲解动态链接库的创建和使用。 有关">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./20用GCC制作动态链接库_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/gcc/">GCC</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/view/7930.html">GCC是什么？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/view/7933.html">GCC编译器下载和安装教程（针对Linux发行版）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/view/vip_8521.html">如何在Windows上使用GCC编译器？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/view/vip_8522.html">如何用Sublime Text运行C和C++程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/view/vip_8523.html">如何用VS Code运行C和C++程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/view/679.html">GCC的组成部分以及使用到的软件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/view/7936.html">gcc和g++是什么，有什么区别？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/view/7984.html">GCC自动识别的文件扩展名（一览表）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/view/8053.html">GCC -std编译标准一览表</a>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/view/7959.html">GCC编译C/C++程序（一步完成）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/view/7971.html">GCC -E选项：对源程序做预处理操作</a>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/view/7974.html">GCC -S选项：编译非汇编文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/view/7981.html">GCC -c选项：生成目标文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/view/700.html">GCC -o选项：指定输出文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/view/2382.html">GCC -l选项：手动添加链接库</a>
+        </dd>
+<dd>
+        	<span class="channel-num">16</span>
+        	<a href="http://c.biancheng.net/view/vip_8524.html">GCC分步编译C++程序（汇总版）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">17</span>
+        	<a href="http://c.biancheng.net/view/7992.html">如何使用gcc指令一次处理多个文件？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">18</span>
+        	<a href="http://c.biancheng.net/view/8010.html">GCC使用静态链接库和动态链接库</a>
+        </dd>
+<dd>
+        	<span class="channel-num">19</span>
+        	<a href="http://c.biancheng.net/view/vip_8525.html">用GCC制作静态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">20</span>
+        	<a href="http://c.biancheng.net/view/vip_8526.html">用GCC制作动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">21</span>
+        	<a href="http://c.biancheng.net/view/vip_8527.html">显示调用C/C++动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">22</span>
+        	<a href="http://c.biancheng.net/view/vip_8528.html">GCC找不到库文件怎么办？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/gcc/">GCC</a></span>
+	<span class="read-num">阅读：1,671</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>用GCC制作动态链接库</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/vip_8525.html">用GCC制作静态链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/vip_8527.html">显示调用C/C++动态链接库</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">前面章节中，给读者详细阐述了什么是库文件、什么是静态链接库和动态链接库，同时还介绍了手动创建静态链接库的过程。在此基础上，本节继续讲解动态链接库的创建和使用。
+<blockquote>
+	<p>
+		有关动态链接库，以及它的特性、和静态链接库的区别，读者可阅读《<a href="http://c.biancheng.net/view/8010.html" target="_blank">GCC使用静态链接库和动态链接库</a>》一节做详细了解，这里不再做赘述。</p>
+</blockquote>
+为了方便读者更好地理解创建和使用动态链接库的过程，本节仍以在《静态链接库的创建和使用》一节中创建好的 demo 项目（一个 C 语言多文件项目）为例，如下是该目录的具体构成和相关源码：<br>
+<p class="info-box">
+	[root@bogon demo]# ls&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: rgb(178, 34, 34);">&lt;- demo 目录结构</span><br>
+	add.c&nbsp; div.c&nbsp; main.c&nbsp; sub.c&nbsp; test.h<br>
+	[root@bogon demo]# cat test.h&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: rgb(178, 34, 34);">&lt;- test.h 文件内容</span><br>
+	#ifndef __TEST_H_<br>
+	#define __TEST_H_<br>
+	<br>
+	int add(int a,int b);<br>
+	int sub(int a,int b);<br>
+	int div(int a,int b);<br>
+	<br>
+	#endif<br>
+	[root@bogon demo]# cat add.c&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: rgb(178, 34, 34);">&lt;- add.c 文件内容</span><br>
+	#include “test.h”<br>
+	int add(int a,int b)<br>
+	{<br>
+	&nbsp;&nbsp;&nbsp; return a + b;<br>
+	}<br>
+	[root@bogon demo]# cat sub.c&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: rgb(178, 34, 34);">&lt;- sub.c 文件内容</span><br>
+	#include “test.h”<br>
+	int sub(int a,int b)<br>
+	{<br>
+	&nbsp;&nbsp;&nbsp; return a - b;<br>
+	}<br>
+	[root@bogon demo]# cat div.c&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: rgb(178, 34, 34);">&lt;- div.c 文件内容</span>&nbsp; &nbsp; &nbsp; &nbsp;<br>
+	#include “test.h”<br>
+	int div(int a,int b)<br>
+	{<br>
+	&nbsp;&nbsp;&nbsp; return a / b;<br>
+	}<br>
+	[root@bogon demo]# cat main.c&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style="color: rgb(178, 34, 34);">&lt;- main.c 文件内容</span><br>
+	#include &lt;stdio.h&gt;<br>
+	#include "test.h"&nbsp; //必须引入头文件<br>
+	int main(void)<br>
+	{<br>
+	&nbsp;&nbsp;&nbsp; int m, n;<br>
+	&nbsp;&nbsp;&nbsp; printf("Input two numbers: ");<br>
+	&nbsp;&nbsp;&nbsp; scanf("%d %d", &amp;m, &amp;n);<br>
+	&nbsp;&nbsp;&nbsp; printf("%d+%d=%d\n", m, n, add(m, n));<br>
+	&nbsp;&nbsp;&nbsp; printf("%d-%d=%d\n", m, n, sub(m, n));<br>
+	&nbsp;&nbsp;&nbsp; printf("%d÷%d=%d\n", m, n, div(m, n));<br>
+	&nbsp;&nbsp;&nbsp; return 0;<br>
+	}<br>
+	[root@bogon demo]#</p>
+<h2>
+	动态链接库的创建</h2>
+总的来说，动态链接库的创建方式有 2 种。<br>
+<br>
+1) 直接使用源文件创建动态链接库，采用 gcc 命令实现的基本格式如下：
+<p class="info-box">
+	gcc -fpic -shared 源文件名... -o 动态链接库名</p>
+其中，-shared 选项用于生成动态链接库；-fpic（还可写成 -fPIC）选项的功能是，令 GCC 编译器生成动态链接库（多个目标文件的压缩包）时，表示各目标文件中函数、类等功能模块的地址使用相对地址，而非绝对地址。这样，无论将来链接库被加载到内存的什么位置，都可以正常使用。<br>
+<br>
+例如，由 demo 项目中的 add.c、sub.c 和 div.c 这 3 个源文件生成一个动态链接库，执行命令为：<br>
+<p class="info-box">
+	[root@bogon demo]# ls<br>
+	add.c&nbsp; div.c&nbsp; main.c&nbsp; sub.c&nbsp; test.h<br>
+	[root@bogon demo]# gcc -fpic -shared add.c sub.c div.c -o libmymath.so<br>
+	[root@bogon demo]# ls<br>
+	add.c&nbsp; div.c&nbsp;&nbsp;<span style="color: rgb(0, 128, 0);">libmymath.so</span>&nbsp; main.c&nbsp; sub.c&nbsp; test.h</p>
+<blockquote>
+	<p>
+		注意，动态链接库的命令规则和静态链接库完全相同，只不过在 Linux 发行版系统中，其后缀名用 .so 表示；Windows 系统中，后缀名为 .dll。</p>
+</blockquote>
+2) 先使用 gcc -c 指令将指定源文件编译为目标文件。仍以 demo 项目中的 add.c、sub.c 和 div.c 为例，先执行如下命令：
+<p class="info-box">
+	[root@bogon demo]# ls<br>
+	add.c&nbsp; div.c&nbsp; main.c&nbsp; sub.c&nbsp; test.h<br>
+	[root@bogon demo]# gcc -c -fpic add.c sub.c div.c<br>
+	[root@bogon demo]# ls<br>
+	add.c&nbsp;&nbsp;<span style="color: rgb(0, 128, 0);">add.o</span>&nbsp; div.c&nbsp;&nbsp;<span style="color: rgb(0, 128, 0);">div.o</span>&nbsp; main.c&nbsp; sub.c&nbsp;&nbsp;<span style="color: rgb(0, 128, 0);">sub.o</span>&nbsp; test.h</p>
+注意，为了后续生成动态链接库并能正常使用，将源文件编译为目标文件时，也需要使用 -fpic 选项。<br>
+<br>
+在此基础上，接下来利用上一步生成的目标文件，生成动态链接库：<br>
+<p class="info-box">
+	[root@bogon demo]# gcc -shared add.o sub.o div.o -o libmymath.so<br>
+	[root@bogon demo]# ls<br>
+	add.c&nbsp; add.o&nbsp; div.c&nbsp; div.o&nbsp;&nbsp;<span style="color: rgb(0, 128, 0);">libmymath.so</span>&nbsp; main.c&nbsp; sub.c&nbsp; sub.o&nbsp; test.h</p>
+<br>
+以上 2 种操作，生成的动态链接库是完全一样的，读者任选一种即可。
+<h2>
+	动态链接库的使用</h2>
+通过前面章节的学习我们知道，动态链接库的使用场景就是和项目中其它源文件或目标文件一起参与链接。以 demo 项目为例，前面我们将 add.c、sub.c 和 div.c 打包到了 libmymath.so 动态链接库中，此时该项目中仅剩 main.c 源程序文件，因此执行 demo 项目也就演变成了将 main.c 和 libmymath.so 进行链接，进而生成可执行文件。
+<blockquote>
+	<p>
+		注意，test.h 头文件并不直接参与编译，因为在程序的预处理阶段，已经对项目中需要用到的头文件做了处理。</p>
+</blockquote>
+执行如下指令，即可借助动态链接库成功生成可执行文件：
+<p class="info-box">
+	[root@bogon demo]# gcc main.c&nbsp; libmymath.so -o main.exe<br>
+	[root@bogon demo]# ls<br>
+	add.c&nbsp; div.c&nbsp; libmymath.so&nbsp; main.c&nbsp;&nbsp;<span style="color: rgb(0, 128, 0);">main.exe</span>&nbsp; sub.c&nbsp; test.h</p>
+<br>
+注意，生成的 main.exe 通常无法直接执行，例如：
+<p class="info-box">
+	[root@bogon demo]# ./main.exe<br>
+	./a.out: error while loading shared libraries: libd.so: cannot open shared object file: No such file or directory</p>
+可以看到，执行过程中无法找到 libmymath.so 动态链接库。通过执行<code>ldd main.exe</code>指令，可以查看当前文件在执行时需要用到的所有动态链接库，以及各个库文件的存储位置：
+<p class="info-box">
+	[root@bogon demo]# ldd main.exe<br>
+	linux-vdso.so.1 =&gt;&nbsp; (0x00007fff423ff000)<br>
+	<span style="color:#b22222;">libmymath.so =&gt; not found</span><br>
+	libc.so.6 =&gt; /lib64/libc.so.6 (0x00000037e2c00000)<br>
+	/lib64/ld-linux-x86-64.so.2 (0x00000037e2800000)</p>
+可以看到，main.exe 文件的执行需要 4 个动态链接库的支持，其中就包括 libmymath.so，但该文件无法找到，因此 main.exe 执行会失败。<br>
+<br>
+运行由动态链接库生成的可执行文件时，必须确保程序在运行时可以找到这个动态链接库。常用的解决方案有如下几种：
+<ul>
+	<li>
+		将链接库文件移动到标准库目录下（例如 /usr/lib、/usr/lib64、/lib、/lib64）；</li>
+	<li>
+		在终端输入<code>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:xxx</code>，其中 xxx 为动态链接库文件的绝对存储路径（此方式仅在当前终端有效，关闭终端后无效）；</li>
+	<li>
+		修改~/.bashrc 或~/.bash_profile 文件，即在文件最后一行添加<code>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:xxx</code>（xxx 为动态库文件的绝对存储路径）。保存之后，执行<code>source .bashrc</code>指令（此方式仅对当前登陆用户有效）。</li>
+</ul>
+<br>
+本操作系统（CentOS 6.5 64 位）中，只需要将 libmymath.so 库文件移动 /usr/lib64 或者 /lib64 目录下，即可使 main.exe 成功执行：
+<p class="info-box">
+	[root@bogon demo]# ldd main.exe<br>
+	linux-vdso.so.1 =&gt;&nbsp; (0x00007fff06fb3000)<br>
+	<span style="color: rgb(0, 128, 0);">libmymath.so =&gt; /lib64/libmymath.so (0x00007f65b2a62000)</span><br>
+	libc.so.6 =&gt; /lib64/libc.so.6 (0x00000037e2c00000)<br>
+	/lib64/ld-linux-x86-64.so.2 (0x00000037e2800000)<br>
+	[root@bogon demo]# ./main.exe<br>
+	Input two numbers: 10 2<br>
+	10+2=12<br>
+	10-2=8<br>
+	10÷2=5</p>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./20用GCC制作动态链接库_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/vip_8525.html">用GCC制作静态链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/vip_8527.html">显示调用C/C++动态链接库</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/933.html" title="Java商品信息查询">Java商品信息查询</a></li>
+<li><a href="http://c.biancheng.net/view/1344.html" title="C++ left和right操作符用法详解">C++ left和right操作符用法详解</a></li>
+<li><a href="http://c.biancheng.net/view/1492.html" title="C++复制构造函数（详解版）">C++复制构造函数（详解版）</a></li>
+<li><a href="http://c.biancheng.net/view/1802.html" title="Qt的下载和安装（超详细）">Qt的下载和安装（超详细）</a></li>
+<li><a href="http://c.biancheng.net/view/2312.html" title="C++重载[]（下标运算符）详解">C++重载[]（下标运算符）详解</a></li>
+<li><a href="http://c.biancheng.net/view/3165.html" title="Bluetooth（蓝牙）是什么？">Bluetooth（蓝牙）是什么？</a></li>
+<li><a href="http://c.biancheng.net/view/vip_3419.html" title="弗洛伊德算法求最短路径（C语言详解）">弗洛伊德算法求最短路径（C语言详解）</a></li>
+<li><a href="http://c.biancheng.net/view/3841.html" title="OCP（开源计算项目）简介">OCP（开源计算项目）简介</a></li>
+<li><a href="http://c.biancheng.net/view/5401.html" title="JS严格模式（use strict）">JS严格模式（use strict）</a></li>
+<li><a href="http://c.biancheng.net/view/5682.html" title="JS filter()方法：根据指定条件过滤数组元素">JS filter()方法：根据指定条件过滤数组元素</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8526;
+window.arcId = "158eOngklCNlsEjXOxIq0ph2oI70gpCcHnv5xzaBqqTXx9Q291FksaT3b8o";
+window.typeidChain = "73";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./20用GCC制作动态链接库_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./20用GCC制作动态链接库_files/jquery1.12.4.min.js.下载"></script>
+<script src="./20用GCC制作动态链接库_files/common.js.下载"></script>
+<span style="display:none;"><script src="./20用GCC制作动态链接库_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

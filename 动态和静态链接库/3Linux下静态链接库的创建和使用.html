@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://c.biancheng.net/dll/vip_8705.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./3Linux下静态链接库的创建和使用_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./3Linux下静态链接库的创建和使用_files/common.css" rel="stylesheet">
+<title>Linux下静态链接库的创建和使用</title>
+<meta name="description" content="继《 Windows下静态链接库的创建和使用 》一节后，本节仍以 myMath.c 库文件为例，教大家在 Linux 平台上创建一个静态链接库，以及如何将他人分享的静态链接库引入到自己的项目中。 L">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./3Linux下静态链接库的创建和使用_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/dll/">链接库</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/dll/what_is_library.html">链接库是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/dll/vip_8704.html">Windows下静态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/dll/vip_8705.html">Linux下静态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/dll/vip_8706.html">Windows下动态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/dll/vip_8707.html">Linux下动态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/dll/vip_8708.html">Windows下显式调用动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/dll/vip_8709.html">Linux下显式调用动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/dll/">链接库</a></span>
+	<span class="read-num">阅读：2,380</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>Linux下静态链接库的创建和使用</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/dll/vip_8704.html">Windows下静态链接库的创建和使用</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/dll/vip_8706.html">Windows下动态链接库的创建和使用</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">继《<a href="http://c.biancheng.net/dll/vip_8704.html" target="_blank">Windows下静态链接库的创建和使用</a>》一节后，本节仍以 myMath.c 库文件为例，教大家在 Linux 平台上创建一个静态链接库，以及如何将他人分享的静态链接库引入到自己的项目中。<br>
+<br>
+Linux 平台上将 C 语言库文件转换为静态链接库，常用的转换工具是 GCC 编译器，几乎所有的 Linux 发行版（Red Hat、Ubuntu、CentOS 等）都默认装有 GCC，本节使用的系统为 Ubuntu。<br>
+<br>
+如果您不确定当前 Linux 发行版是否装有 GCC，打开 Terminal 命令行工具并输入<code>gcc --version</code>指令：
+<pre class="info-box">test@ubuntu:~$ gcc --version
+gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</pre>
+这是笔者在 Ubuntu 系统上的执行结果，当前系统安装的 GCC 编译器的版本为 9.3.0。反之，如果输出信息为：
+<pre class="info-box">bash: /usr/bin/gcc: No such file or directory</pre>
+表明当前系统没有安装 GCC，您可以阅读《<a href="http://c.biancheng.net/view/7933.html" target="_blank">GCC编译器下载和安装教程</a>》一文下载并安装 GCC 编译器。<br>
+<h2>
+	静态链接库的创建</h2>
+Linux 平台上，GCC 编译器将 myMath.c 转换为静态链接库需要经历以下两步：<br>
+1) 编译所有的 .c 库文件，生成对应的目标文件。本节我们以 myMath.c 库文件为例，因此只编译这 1 个文件即可。<br>
+<br>
+首先，准备好要编译的 myMath.c 库文件和 myMath.h 头文件（具体内容可从《<a href="http://c.biancheng.net/dll/vip_8704.html" target="_blank">Windows下静态链接库的创建和使用</a>》一节中获得）：
+<pre class="info-box">test@ubuntu:~/myMath$ ls
+myMath.c  myMath.h</pre>
+执行如下指令：
+<pre class="info-box">test@ubuntu:~/myMath$ gcc -c myMath.c -o myMath.o    &lt;-- 编译 myMath.c 文件
+test@ubuntu:~/myMath$ ls                             &lt;-- 查看生成的 myMath.o 文件
+myMath.c  myMath.h  <span style="color:#b22222;">myMath.o</span></pre>
+<code>-c myMath.c</code>表示对 myMath.c 进行编译，<code>-o myMath.o</code>表示将编译后生成的目标文件的文件名置为 myMath.o。再次执行 ls 命令，可以看到新生成的 myMath.o 目标文件。<br>
+<br>
+2) 将所有的目标文件打包成一个静态链接库。例如，下面的指令将 myMath.o 打包成了一个静态链接库：
+<pre class="info-box">test@ubuntu:~/myMath$ ar rcs libmyMath.a myMath.o    &lt;-- 将 myMath.o 打包为 libmyMath.a 
+test@ubuntu:~/myMath$ ls
+<span style="color:#b22222;">libmyMath.a</span>  myMath.c  myMath.h  myMath.o</pre>
+ar 命令常用于创建静态链接库，其中 r、c、s 是 ar 命令创建静态链接库所需要设定的参数，libmyMath.a 是新静态链接库的名称。<br>
+<blockquote>
+	<p>
+		需要注意的是，Linux 平台上静态链接库的名称不是随意的，通常遵循 libxxx.a 格式，xxx 部分可以自定义。</p>
+</blockquote>
+经过以上两步，我们就成功地创建了一个静态链接库文件。<br>
+<h2>
+	静态链接库的使用</h2>
+《<a href="http://c.biancheng.net/dll/what_is_library.html" target="_blank">链接库是什么</a>》一节讲过，静态链接库的用法很简单，就是和其它目标文件一起参与链接，最终生成一个可执行文件。<br>
+<br>
+以 libmyMath.o 为例，同目录下再创建一个 main.c 文件，其内容如下：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/dll/vip_8705.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/dll/vip_8705.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/dll/vip_8705.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">"myMath.h"</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> a <span class="sh_symbol">=</span> <span class="sh_number">3</span><span class="sh_symbol">,</span> b <span class="sh_symbol">=</span> <span class="sh_number">5</span><span class="sh_symbol">;</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a+b=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">add</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a-b=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">sub</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a*b=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">mul</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a/b=%d"</span><span class="sh_symbol">,</span> <span class="sh_function">div</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+#include "myMath.h"
+int main()
+{
+    int a = 3, b = 5;
+    printf("a+b=%d\n", add(3, 5));
+    printf("a-b=%d\n", sub(3, 5));
+    printf("a*b=%d\n", mul(3, 5));
+    printf("a/b=%d", div(3, 5));
+    return 0;
+}</pre></div></div>
+首先，我们对 main.c 执行编译操作得到对应的目标文件，执行如下指令：
+<pre class="info-box">test@ubuntu:~/myMath$ ls
+libmyMath.a  <span style="color:#b22222;">main.c</span>  myMath.c  myMath.h  myMath.o 
+test@ubuntu:~/myMath$ gcc -c main.c -o main.o
+test@ubuntu:~/myMath$ ls
+libmyMath.a  main.c  <span style="color:#b22222;">main.o</span>  myMath.c  myMath.h  myMath.o </pre>
+由此，我们得到了 main.o 和 libmyMath.a 这两个文件，接下来就可以开始将它们链接成一个可执行文件，实现链接的指令有两种：
+<pre class="info-box">test@ubuntu:~/myMath$ gcc -static main.o libmyMath.a -o main                       &lt;-- 第 1 种
+test@ubuntu:~/myMath$ gcc main.o -o main -static -lmyMath -L /home/test/myMath     &lt;-- 第 2 种</pre>
+第一种实现方式中，-static 的作用是强制 GCC 编译器使用静态链接库，最终生成的可执行文件的名称为 main。第二种实现方式中，-l 后紧跟静态链接库的名称 myMath（它是 libxxx.a 中的 xxx 部分），-L /home/test/myMath 用于指定 libmyMath.a 的存储位置。<br>
+<br>
+以上两种方式都可以将 main.o 和 libmyMath.a 链接成一个可执行文件，该文件的名称为 main。执行该文件，可以看到程序的执行结果：
+<p class="info-box">
+	test@ubuntu:~/myMath$ ./main<br>
+	a+b=8<br>
+	a-b=-2<br>
+	a*b=15<br>
+	a/b=0</p>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./3Linux下静态链接库的创建和使用_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/dll/vip_8704.html">Windows下静态链接库的创建和使用</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/dll/vip_8706.html">Windows下动态链接库的创建和使用</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/9.html" title="Go语言变量的声明（使用var关键字）">Go语言变量的声明（使用var关键字）</a></li>
+<li><a href="http://c.biancheng.net/view/240.html" title="C++实现可变长度的动态数组">C++实现可变长度的动态数组</a></li>
+<li><a href="http://c.biancheng.net/view/1830.html" title="C语言判断数组中是否包含某个元素">C语言判断数组中是否包含某个元素</a></li>
+<li><a href="http://c.biancheng.net/view/3118.html" title="Docker简介以及Docker历史">Docker简介以及Docker历史</a></li>
+<li><a href="http://c.biancheng.net/view/vip_5081.html" title="给Linux系统挂载U盘">给Linux系统挂载U盘</a></li>
+<li><a href="http://c.biancheng.net/view/5193.html" title="Hibernate close方法：关闭Session对象">Hibernate close方法：关闭Session对象</a></li>
+<li><a href="http://c.biancheng.net/view/6957.html" title="SEO关键词有什么研究的价值？">SEO关键词有什么研究的价值？</a></li>
+<li><a href="http://c.biancheng.net/view/vip_7682.html" title="C++打开的文件一定要用close()方法关闭！">C++打开的文件一定要用close()方法关闭！</a></li>
+<li><a href="http://c.biancheng.net/view/7919.html" title="PHP mkdir()：创建目录">PHP mkdir()：创建目录</a></li>
+<li><a href="http://c.biancheng.net/redis/pipeline.html" title="Redis Pipeline管道技术">Redis Pipeline管道技术</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8705;
+window.arcId = "279ddOAS/oEtZ3t/NbeO4fmyy4v6uFWapj0e+3ftcYYNsnMYOxI8MQQncxA";
+window.typeidChain = "399";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./3Linux下静态链接库的创建和使用_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./3Linux下静态链接库的创建和使用_files/jquery1.12.4.min.js.下载"></script>
+<script src="./3Linux下静态链接库的创建和使用_files/common.js.下载"></script>
+<span style="display:none;"><script src="./3Linux下静态链接库的创建和使用_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

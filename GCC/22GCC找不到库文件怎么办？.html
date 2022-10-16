@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://c.biancheng.net/view/vip_8528.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./22GCC找不到库文件怎么办？_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./22GCC找不到库文件怎么办？_files/common.css" rel="stylesheet">
+<title>GCC找不到库文件怎么办？</title>
+<meta name="description" content="通过阅读《 静态链接库的创建和使用 》和《 动态链接库的创建和使用 》这 2 节，我们已经了解了如何创建静态链接库和动态链接库，并学会了如何使用它们。但即便是相同的操作，由">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./22GCC找不到库文件怎么办？_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/gcc/">GCC</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/view/7930.html">GCC是什么？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/view/7933.html">GCC编译器下载和安装教程（针对Linux发行版）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/view/vip_8521.html">如何在Windows上使用GCC编译器？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/view/vip_8522.html">如何用Sublime Text运行C和C++程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/view/vip_8523.html">如何用VS Code运行C和C++程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/view/679.html">GCC的组成部分以及使用到的软件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/view/7936.html">gcc和g++是什么，有什么区别？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/view/7984.html">GCC自动识别的文件扩展名（一览表）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/view/8053.html">GCC -std编译标准一览表</a>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/view/7959.html">GCC编译C/C++程序（一步完成）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/view/7971.html">GCC -E选项：对源程序做预处理操作</a>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/view/7974.html">GCC -S选项：编译非汇编文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/view/7981.html">GCC -c选项：生成目标文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/view/700.html">GCC -o选项：指定输出文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/view/2382.html">GCC -l选项：手动添加链接库</a>
+        </dd>
+<dd>
+        	<span class="channel-num">16</span>
+        	<a href="http://c.biancheng.net/view/vip_8524.html">GCC分步编译C++程序（汇总版）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">17</span>
+        	<a href="http://c.biancheng.net/view/7992.html">如何使用gcc指令一次处理多个文件？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">18</span>
+        	<a href="http://c.biancheng.net/view/8010.html">GCC使用静态链接库和动态链接库</a>
+        </dd>
+<dd>
+        	<span class="channel-num">19</span>
+        	<a href="http://c.biancheng.net/view/vip_8525.html">用GCC制作静态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">20</span>
+        	<a href="http://c.biancheng.net/view/vip_8526.html">用GCC制作动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">21</span>
+        	<a href="http://c.biancheng.net/view/vip_8527.html">显示调用C/C++动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">22</span>
+        	<a href="http://c.biancheng.net/view/vip_8528.html">GCC找不到库文件怎么办？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/gcc/">GCC</a></span>
+	<span class="read-num">阅读：1,602</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>GCC找不到库文件怎么办？</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/vip_8527.html">显示调用C/C++动态链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/vip_8528.html">GCC找不到库文件怎么办？</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">通过阅读《<a href="http://c.biancheng.net/view/8020.html" target="_blank">静态链接库的创建和使用</a>》和《<a href="http://c.biancheng.net/view/8023.html" target="_blank">动态链接库的创建和使用</a>》这 2 节，我们已经了解了如何创建静态链接库和动态链接库，并学会了如何使用它们。但即便是相同的操作，由于所用操作系统的环境不同，很多读者在实操中会碰到各种各样的问题，其中 GCC 编译器提示“找不到库文件（No such file or directory）”，就是最常见的问题之一。<br>
+<br>
+关于 GCC 提示找不到指定库文件的这个问题，通常出现在以下 2 个场景中：
+<ol>
+	<li>
+		利用静态库或者动态库文件实现链接操作（生成可执行文件）时，GCC 可能会提示“xxx:No such file or directory”（其中 xxx 表示查找失败的静态库或者动态库）；</li>
+	<li>
+		执行借助动态库生成的可执行文件时，GCC 可能会提示“./main.exe: error while loading shared libraries: xxx.so: cannot open shared object file: No such file or directory”（其中 xxx 表示动态库的文件名）。</li>
+</ol>
+<br>
+本节将就以上这 2 种情况，给读者分析 GCC 编译器查找库文件失败的原因，同时会给出相应的解决方案。
+<h2>
+	GCC生成可执行文件时找不到库文件</h2>
+要想彻底解决这个问题，读者就必须先了解在生成可执行文件时，GCC 编译器默认的查找库文件的路径。<br>
+<br>
+通过前面的学习我们知道，程序链接阶段指明所用库文件的方式有 2 种。假设当前 mian.c 文件需要借助 libmymath.a 才能完成链接，则完成链接操作的 gcc 指令有以下 2 种写法：
+<p class="info-box">
+	[root@bogon demo]# gcc -static main.c libmymath.a -o main.exe<br>
+	[root@bogon demo]# gcc -static main.c -lmymath -o main.exe</p>
+<br>
+当以第一种写法完成链接操作时，GCC 编译器只会在当前目录中（这里为 demo 目录）查找 libmymath.a 静态链接库；反之，如果使用 -l（小写的 L）选项指明了要查找的静态库的文件名，则 GCC 编译器会按照如下顺序，依次到指定目录中查找所需库文件：<br>
+<ol>
+	<li>
+		如果 gcc 指令使用 -L 选项指定了查找路径，则 GCC 编译器会优先选择去该路径下查找所需要的库文件；</li>
+	<li>
+		再到 Linux 系统中&nbsp;LIBRARY_PATH 环境变量指定的路径中搜索需要的库文件；</li>
+	<li>
+		最后到 GCC 编译器默认的搜索路径（比如 /lib、/lib64、/usr/lib、/usr/lib64、/usr/local/lib、/usr/local/lib64 等，不同系统环境略有差异）中查找。</li>
+</ol>
+<br>
+如果读者使用第一种方法完成链接操作，但 GCC 编译器提示找不到所需库文件，表明所用库文件并未存储在当前路径下，解决方案就是手动找到库文件并将其移至当前路径，然后重新执行链接操作。<br>
+<br>
+反之，如果读者使用的是第二种方法，也遇到了 GCC 编译器提示未找到所需库文件，表明库文件的存储路径不对，解决方案有以下 3 种：
+<ul>
+	<li>
+		手动找到该库文件，并在 gcc 指令中用 -L 选项明确指明其存储路径。比如 libmymath.a 静态库文件存储在 /usr 目录下，则完成链接操作的 gcc 指令应为<code>gcc -static main.c -L/usr -lmymath -o main.exe</code>；</li>
+	<li>
+		将库文件的存储路径添加到 LIBRARY_PATH 环境变量中。仍以库文件存储在 /usr 目录下，则通过执行<code>export LIBRARY_PATH=$LIBRARY_PATH:/usr</code>指令，即可将 /usr 目录添加到该环境变量中（此方式仅在当前命令行窗口中有效）；</li>
+	<li>
+		将库文件移动到 GCC 编译器默认的搜索路径中。</li>
+</ul>
+<h2>
+	GCC运行可执行文件时找不到动态库文件</h2>
+执行已生成的可执行文件时，如果 GCC 编译器提示找不到所需的库文件，这意味着 GCC 编译器无法找到支持可执行文件运行的某些动态库文件。<br>
+<br>
+事实上，当 GCC 编译器运行可执行文件时，会按照如下的路径顺序搜索所需的动态库文件：
+<ol>
+	<li>
+		如果在生成可执行文件时，用户使用了<code>-Wl,-rpath=dir</code>（其中 dir 表示要查找的具体路径，如果查找路径有多个，中间用 : 冒号分隔）选项指定动态库的搜索路径，则运行该文件时&nbsp;GCC 会首先到指定的路径中查找所需的库文件；</li>
+	<li>
+		GCC 编译器会前往 LD_LIBRARY_PATH 环境变量指明的路径中查找所需的动态库文件；</li>
+	<li>
+		GCC 编译器会前往 /ect/ld.so.conf 文件中指定的搜索路径查找动态库文件；</li>
+	<li>
+		GCC 编译器会前往默认的搜索路径中（例如 /lib、/lib64、/usr/lib、/usr/lib64 等）中查找所需的动态库文件。</li>
+</ol>
+<blockquote>
+	<p>
+		注意，可执行文件的当前存储路径，并不在默认的搜索路径范围内，因此即便将动态库文件和可执行文件放在同一目录下，GCC 编译器也可能提示“找不到动态库”。</p>
+</blockquote>
+<br>
+因此，对于 GCC 运行可执行文件时提示找不到动态库文件的问题，常用的解决方法是：
+<ul>
+	<li>
+		将动态库文件的存储路径，添加到 LD_LIBRARY_PATH 环境变量中。假设动态库文件存储在 /usr 目录中，通知执行<code>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr</code>指令，即可实现此目的（此方式仅在当前命令行窗口中有效）；</li>
+	<li>
+		修改动态库文件的存储路径，即将其移动至 GCC 编译器默认的搜索路径中。</li>
+	<li>
+		修改~/.bashrc 或 ~/.bash_profile 文件，即在文件最后一行添加<code>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:xxx</code>（xxx 为动态库文件的绝对存储路径）。保存之后，执行 source .bashrc 指令（此方式仅对当前登陆用户有效）。</li>
+</ul>
+<br>
+值得一提的是，GCC 编译器提供有 ldd 指令，借助该指令，我们可以明确知道某个可执行文件需要哪些动态库文件做支撑、这些动态库文件是否已经找到、各个动态库文件的具体存储路径等信息。<br>
+<br>
+以《<a href="http://c.biancheng.net/view/8023.html" target="_blank">动态链接库的创建和使用</a>》一节中生成的 main.exe 可执行文件为例，执行如下 ldd 指令：
+<p class="info-box">
+	[root@bogon demo]# ldd main.exe<br>
+	linux-vdso.so.1 =&gt;&nbsp; (0x00007fff06fb3000)<br>
+	libmymath.so =&gt; /lib64/libmymath.so (0x00007f65b2a62000)<br>
+	libc.so.6 =&gt; /lib64/libc.so.6 (0x00000037e2c00000)<br>
+	/lib64/ld-linux-x86-64.so.2 (0x00000037e2800000)</p>
+<blockquote>
+	<p>
+		注意，如果某个动态库文件未找到，则 =&gt; 后面会显示 not found，表明 GCC 编译器无法找到该动态库，此时该可执行文件将无法执行。</p>
+</blockquote>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./22GCC找不到库文件怎么办？_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/vip_8527.html">显示调用C/C++动态链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/vip_8528.html">GCC找不到库文件怎么办？</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/1414.html" title="C++数组及其使用方法完全攻略">C++数组及其使用方法完全攻略</a></li>
+<li><a href="http://c.biancheng.net/view/1676.html" title="IBM AIX p750上为Oracle扩展逻辑卷实战视频（黄伟老师出品2集）">IBM AIX p750上为Oracle扩展逻辑卷实战视频（黄伟老师出品2集）</a></li>
+<li><a href="http://c.biancheng.net/view/1766.html" title="在C语言中使用英文字符">在C语言中使用英文字符</a></li>
+<li><a href="http://c.biancheng.net/view/vip_2205.html" title="到底在声明中还是定义中指定默认参数">到底在声明中还是定义中指定默认参数</a></li>
+<li><a href="http://c.biancheng.net/view/3562.html" title="大数据处理技术有哪些？">大数据处理技术有哪些？</a></li>
+<li><a href="http://c.biancheng.net/view/3606.html" title="汇编语言DIV指令：无符号除法">汇编语言DIV指令：无符号除法</a></li>
+<li><a href="http://c.biancheng.net/view/4197.html" title="Hibernate一级缓存常用操作：刷出、清除和刷新">Hibernate一级缓存常用操作：刷出、清除和刷新</a></li>
+<li><a href="http://c.biancheng.net/view/6797.html" title="Java使用Lambda表达式遍历Iterator迭代器">Java使用Lambda表达式遍历Iterator迭代器</a></li>
+<li><a href="http://c.biancheng.net/redis2/srandmember.html" title="Redis SRANDMEMBER命令">Redis SRANDMEMBER命令</a></li>
+<li><a href="http://c.biancheng.net/redis2/zcard.html" title="Redis ZCARD命令">Redis ZCARD命令</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8528;
+window.arcId = "4fdbEOuV8fwjWFWzexq4XhTkC6GETit4fcGihxsZ9X8yb/LBJgtyaMiwV2o";
+window.typeidChain = "73";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./22GCC找不到库文件怎么办？_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./22GCC找不到库文件怎么办？_files/jquery1.12.4.min.js.下载"></script>
+<script src="./22GCC找不到库文件怎么办？_files/common.js.下载"></script>
+<span style="display:none;"><script src="./22GCC找不到库文件怎么办？_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

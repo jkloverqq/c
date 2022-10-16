@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://c.biancheng.net/thread/vip_8618.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./11使用读写锁实现线程同步_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./11使用读写锁实现线程同步_files/common.css" rel="stylesheet">
+<title>使用读写锁实现线程同步</title>
+<meta name="description" content="前面章节中，我们依次介绍了使用 互斥锁 、 信号量 和 条件变量 实现线程同步，本节讲解如何通过「 读写锁 」实现线程同步。 多线程程序中，如果仅有少数线程会对共享数据进行修">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./11使用读写锁实现线程同步_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/thread/">多线程</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/thread/what-is-thread.html">线程是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/thread/first-thread.html">第一个多线程程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/thread/vip_8614.html">线程同步机制</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/thread/vip_8622.html">使用C++11进行多线程编程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/thread/">多线程</a></span>
+	<span class="read-num">阅读：1,530</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>使用读写锁实现线程同步</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">前面章节中，我们依次介绍了使用<a href="http://c.biancheng.net/thread/vip_8615.html" target="_blank">互斥锁</a>、<a href="http://c.biancheng.net/thread/vip_8616.html" target="_blank">信号量</a>和<a href="http://c.biancheng.net/thread/vip_8617.html" target="_blank">条件变量</a>实现线程同步，本节讲解如何通过「<span style="color:#008000;">读写锁</span>」实现线程同步。<br>
+<br>
+多线程程序中，如果仅有少数线程会对共享数据进行修改，多数线程只是读取共享数据的值，就适合用读写锁解决“线程间抢夺资源”的问题。<br>
+<br>
+读写锁的核心思想是：将线程访问共享数据时发出的请求分为两种，分别是：
+<ul>
+	<li>
+		读请求：只读取共享数据，不做任何修改；</li>
+	<li>
+		写请求：存在修改共享数据的行为。</li>
+</ul>
+<br>
+当有多个线程发出读请求时，这些线程可以同时执行，也就是说，共享数据的值可以同时被多个发出读请求的线程获取；当有多个线程发出写请求时，这些线程只能一个一个地执行（同步执行）。此外，当发出读请求的线程正在执行时，发出写请求的线程必须等待前者执行完后才能开始执行；当发出写请求的线程正在执行时，发出读请求的线程也必须等待前者执行完后才能开始执行。<br>
+<br>
+本质上，读写锁就是一个全局变量，发出读请求和写请求的线程都可以访问它。为了区别线程发出的请求类别，当读写锁被发出读请求的线程占用时，我们称它为“<span style="color:#008000;">读锁</span>”；当读写锁被发出写请求的线程占用时，称它为“<span style="color:#008000;">写锁</span>”。<br>
+<br>
+为了让您更清楚地了解读写锁在多线程程序中发挥的作用，我们制作了下面这张表格：<br>
+<br>
+<table>
+	<caption>
+		表 1 读写锁的作用</caption>
+	<tbody>
+		<tr>
+			<th>
+				当前读写锁的状态</th>
+			<th>
+				线程发出“读”请求</th>
+			<th>
+				线程发出“写”请求</th>
+		</tr>
+		<tr>
+			<th>
+				无锁</th>
+			<td>
+				允许占用</td>
+			<td>
+				允许占用</td>
+		</tr>
+		<tr>
+			<th>
+				读锁</th>
+			<td>
+				允许占用</td>
+			<td>
+				阻塞线程执行</td>
+		</tr>
+		<tr>
+			<th>
+				写锁</th>
+			<td>
+				阻塞线程执行</td>
+			<td>
+				阻塞线程执行</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+从上表可以看出，不同状态下的读写锁会以不同的方式处理发出读请求或写请求的线程：<br>
+1) 当读写锁未被任何线程占用时，发出读请求和写请求的线程都可以占用它。注意，由于读请求和写请求的线程不能同时执行，读写锁默认会优先分配给发出读请求的线程。<br>
+<br>
+2) 当读写锁的状态为“读锁”时，表明当前执行的是发出读请求的线程（可能有多个）。此时如果又有线程发出读请求，该线程不会被阻塞，但如果有线程发出写请求，它就会被阻塞，直到读写锁状态改为“无锁”。<br>
+<br>
+3) 当读写锁状态为“写锁”时，表明当前执行的是发出写请求的线程（只能有 1 个）。此时无论其它线程发出的是读请求还是写请求，都必须等待读写锁状态改为“无锁”后才能执行。<br>
+<br>
+总的来说，对于进程空间中的共享资源，读写锁允许发出“读”请求的线程共享资源，发出“写”请求的线程必须独占资源，进而实现线程同步。
+<h2>
+	读写锁的具体用法</h2>
+POSIX 标准中，读写锁用 pthread_rwlock_t 类型的变量表示，此类型定义在<code>&lt;pthread.h&gt;</code>头文件中。举个例子：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8618.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8618.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8618.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode" shwonum="false"><ol class="snippet-num"><li><span class="sh_usertype">pthread_rwlock_t</span><span class="sh_normal"> </span>myRWLock<span class="sh_symbol">;</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">pthread_rwlock_t myRWLock;</pre></div></div>
+由此，我们就成功创建了一个读写锁。但要想使用 myRWLock 读写锁，还需要进行初始化操作。
+<h4>
+	1) 初始化读写锁</h4>
+初始化读写锁的方法有两种，一种是直接将&nbsp;PTHREAD_RWLOCK_INITIALIZER 宏赋值给读写锁变量，例如：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8618.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8618.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8618.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode" shwonum="false"><ol class="snippet-num"><li><span class="sh_usertype">pthread_rwlock_t</span><span class="sh_normal"> </span>myRWLock <span class="sh_symbol">=</span> PTHREAD_RWLOCK_INITIALIZER<span class="sh_symbol">;</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">pthread_rwlock_t myRWLock = PTHREAD_RWLOCK_INITIALIZER;</pre></div></div>
+还可以借助 pthread_rwlock_init() 函数初始化读写锁，此函数的语法格式为：
+<pre class="info-box">int pthread_rwlock_init(pthread_rwlock_t *rwlock, const pthread_rwlockattr_t *attr);</pre>
+rwlock 参数用于指定要初始化的读写锁变量；attr 参数用于自定义读写锁变量的属性，置为 NULL 时表示以默认属性初始化读写锁。<br>
+<br>
+当 pthread_rwlock_init() 函数初始化成功时，返回数字 0，反之返回非零数。
+<blockquote>
+	<p>
+		当 attr 参数为 NULL 时，以上两种初始化方式完全等价。</p>
+</blockquote>
+<h4>
+	2) 线程发出“读锁”请求</h4>
+通过以下两个函数，线程可以向读写锁发出“读锁”请求：
+<pre class="info-box">int pthread_rwlock_rdlock(pthread_rwlock_t* rwlock);
+int pthread_rwlock_tryrdlock(pthread_rwlock_t* rwlock);
+</pre>
+其中，rwlock 参数指的是初始化好的读写锁。<br>
+<br>
+当读写锁处于“无锁”或者“读锁”状态时，以上两个函数都能成功获得读锁；当读写锁处于“写锁”状态时：
+<ul>
+	<li>
+		pthread_rwlock_rdlock() 函数会阻塞当前线程，直至读写锁被释放；</li>
+	<li>
+		pthread_rwlock_tryrdlock() 函数不会阻塞当前线程，直接返回 EBUSY。</li>
+</ul>
+<br>
+以上两个函数如果能成功获得读锁，函数返回数字 0，反之返回非零数。<br>
+<h4>
+	3) 线程发出“写锁”请求</h4>
+通过以下两个函数，线程可以向读写锁发出“写锁”请求：
+<pre class="info-box">int pthread_rwlock_wrlock(pthread_rwlock_t* rwlock);
+int pthread_rwlock_trywrlock(pthread_rwlock_t* rwlock); </pre>
+rwlock 参数指的是初始化好的读写锁。<br>
+<br>
+当读写锁处于“无锁”状态时，两个函数都能成功获得写锁；当读写锁处于“读锁”或“写锁”状态时：
+<ul>
+	<li>
+		pthread_rwlock_wrlock() 函数将阻塞线程，直至读写锁被释放；</li>
+	<li>
+		pthread_rwlock_trywrlock() 函数不会阻塞线程，直接返回 EBUSY。</li>
+</ul>
+<br>
+以上两个函数如果能成功获得写锁，函数返回数字 0，反之返回非零数。
+<h4>
+	4) 释放读写锁</h4>
+无论是处于“无锁”、“读锁”还是“写锁”的读写锁，都可以使用如下函数释放读写锁：
+<pre class="info-box">int pthread_rwlock_unlock (pthread_rwlock_t* rwlock);</pre>
+rwlock 参数表示要释放的读写锁。<br>
+<br>
+当函数成功释放读写锁时，返回数字 0，反之则返回非零数。注意，由于多个线程可以同时获得“读锁”状态下的读写锁，这种情况下一个线程释放读写锁后，读写锁仍处于“读锁”状态，直至所有线程都释放读写锁，读写锁的状态才为“无锁”状态。<br>
+<h4>
+	5) 销毁读写锁</h4>
+当读写锁不再使用时，我们可以借助如下函数将它销毁：
+<pre class="info-box">int pthread_rwlock_destroy(pthread_rwlock_t* rwlock);</pre>
+参数 rwlock 表示要销毁的目标读写锁。<br>
+<br>
+如果函数成功销毁指定的读写锁，返回数字 0，反之则返回非零数。<br>
+<h2>
+	读写锁的实际应用</h2>
+接下来通过一个实例，给您演示读写锁的用法：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8618.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8618.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8618.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;pthread.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;unistd.h&gt;</span></li><li><span class="sh_type">int</span> x <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_comment">//创建读写锁变量</span></li><li><span class="sh_usertype">pthread_rwlock_t</span><span class="sh_normal"> </span>myrwlock<span class="sh_symbol">;</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span><span class="sh_symbol">*</span> <span class="sh_function">read_thread</span><span class="sh_symbol">(</span><span class="sh_type">void</span><span class="sh_symbol">*</span> args<span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"------%u read_thread ready</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span><span class="sh_function">pthread_self</span><span class="sh_symbol">());</span></li><li>    <span class="sh_keyword">while</span> <span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">)</span></li><li>    <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>        <span class="sh_comment">//请求读锁</span></li><li>        <span class="sh_function">pthread_rwlock_rdlock</span><span class="sh_symbol">(&amp;</span>myrwlock<span class="sh_symbol">);</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"read_thread: %u,x=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">pthread_self</span><span class="sh_symbol">(),</span> x<span class="sh_symbol">);</span></li><li>        <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>        <span class="sh_comment">//释放读写锁</span></li><li>        <span class="sh_function">pthread_rwlock_unlock</span><span class="sh_symbol">(&amp;</span>myrwlock<span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> NULL<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span><span class="sh_symbol">*</span> <span class="sh_function">write_thread</span><span class="sh_symbol">(</span><span class="sh_type">void</span><span class="sh_symbol">*</span> param<span class="sh_symbol">)</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"------%u write_thread ready!</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span><span class="sh_function">pthread_self</span><span class="sh_symbol">());</span></li><li>    <span class="sh_keyword">while</span> <span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">)</span></li><li>    <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>        <span class="sh_comment">// 请求写锁</span></li><li>        <span class="sh_function">pthread_rwlock_wrlock</span><span class="sh_symbol">(&amp;</span>myrwlock<span class="sh_symbol">);</span></li><li>        <span class="sh_symbol">++</span>x<span class="sh_symbol">;</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"write_thread: %u,x=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">pthread_self</span><span class="sh_symbol">(),</span> x<span class="sh_symbol">);</span></li><li>        <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>        <span class="sh_comment">//释放读写锁</span></li><li>        <span class="sh_function">pthread_rwlock_unlock</span><span class="sh_symbol">(&amp;</span>myrwlock<span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> NULL<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> i<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//初始化读写锁</span></li><li>    <span class="sh_function">pthread_rwlock_init</span><span class="sh_symbol">(&amp;</span>myrwlock<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//创建 3 个读 x 变量的线程</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>readThread<span class="sh_symbol">[</span><span class="sh_number">3</span><span class="sh_symbol">];</span></li><li>    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span>i <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span> i <span class="sh_symbol">&lt;</span> <span class="sh_number">3</span><span class="sh_symbol">;</span> <span class="sh_symbol">++</span>i<span class="sh_symbol">)</span></li><li>    <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>readThread<span class="sh_symbol">[</span>i<span class="sh_symbol">],</span> NULL<span class="sh_symbol">,</span> read_thread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//创建 1 个修改 x 变量的线程</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>writeThread<span class="sh_symbol">;</span></li><li>    <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>writeThread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">,</span> write_thread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//等待各个线程执行完成</span></li><li>    <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>writeThread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li><span style="display:none;">&nbsp;</span></li><li>    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span><span class="sh_type">int</span> i <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span> i <span class="sh_symbol">&lt;</span> <span class="sh_number">3</span><span class="sh_symbol">;</span> <span class="sh_symbol">++</span>i<span class="sh_symbol">)</span></li><li>    <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>readThread<span class="sh_symbol">[</span>i<span class="sh_symbol">],</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//销毁读写锁</span></li><li>    <span class="sh_function">pthread_rwlock_destroy</span><span class="sh_symbol">(&amp;</span>myrwlock<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;pthread.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int x = 0;
+//创建读写锁变量
+pthread_rwlock_t myrwlock;
+
+void* read_thread(void* args){
+    printf("------%u read_thread ready\n",pthread_self());
+    while (1)
+    {
+        sleep(1);
+        //请求读锁
+        pthread_rwlock_rdlock(&amp;myrwlock);
+        printf("read_thread: %u,x=%d\n", pthread_self(), x);
+        sleep(1);
+        //释放读写锁
+        pthread_rwlock_unlock(&amp;myrwlock);
+    }
+    return NULL;
+}
+
+void* write_thread(void* param)
+{
+    printf("------%u write_thread ready!\n",pthread_self());
+    while (1)
+    {
+        sleep(1);
+        // 请求写锁
+        pthread_rwlock_wrlock(&amp;myrwlock);
+        ++x;
+        printf("write_thread: %u,x=%d\n", pthread_self(), x);
+        sleep(1);
+        //释放读写锁
+        pthread_rwlock_unlock(&amp;myrwlock);
+    }
+    return NULL;
+}
+
+int main()
+{
+    int i;
+    //初始化读写锁
+    pthread_rwlock_init(&amp;myrwlock, NULL);
+    //创建 3 个读 x 变量的线程
+    pthread_t readThread[3];
+    for (i = 0; i &lt; 3; ++i)
+    {
+        pthread_create(&amp;readThread[i], NULL, read_thread, NULL);
+    }
+    //创建 1 个修改 x 变量的线程
+    pthread_t writeThread;
+    pthread_create(&amp;writeThread, NULL, write_thread, NULL);
+    //等待各个线程执行完成
+    pthread_join(writeThread, NULL);
+
+    for (int i = 0; i &lt; 3; ++i)
+    {
+        pthread_join(readThread[i], NULL);
+    }
+    //销毁读写锁
+    pthread_rwlock_destroy(&amp;myrwlock);
+    return 0;
+}</pre></div></div>
+假设程序编写在 thread.c 文件中，执行过程如下：
+<pre class="info-box">[root@localhost ~]# gcc thread.c -o thread.exe -lpthread
+[root@localhost ~]# ./mythread.exe
+------1134741248 read_thread ready
+------1113761536 read_thread ready
+------1103271680 write_thread ready!
+------1124251392 read_thread ready
+read_thread: 1124251392,x=0
+read_thread: 1113761536,x=0
+read_thread: 1134741248,x=0
+write_thread: 1103271680,x=1
+read_thread: 1134741248,x=1
+read_thread: 1124251392,x=1
+read_thread: 1113761536,x=1
+write_thread: 1103271680,x=2
+read_thread: 1124251392,x=2
+read_thread: 1113761536,x=2
+read_thread: 1134741248,x=2</pre>
+<blockquote>
+	<p>
+		注意，此程序会一直执行，按 "Ctrl+Z" 组合键可以使程序停止。</p>
+</blockquote>
+程序中共创建了 4 个子线程，其中 3 个线程用于读取 x 变量的值，读取变量前会先获得“读锁”。剩余的 1 个线程用于修改 x 变量的值，修改前先获得“写锁”。<br>
+<br>
+通过执行结果不难看到，3 个读取 x 变量的线程总是能够同时获取到 x 变量的值，因为它们能够同时获得“读锁”并同时执行。<br>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./11使用读写锁实现线程同步_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/1180.html" title="什么是内存">什么是内存</a></li>
+<li><a href="http://c.biancheng.net/view/1294.html" title="RAID技术详解">RAID技术详解</a></li>
+<li><a href="http://c.biancheng.net/view/1539.html" title="C++文件读写结构体详解">C++文件读写结构体详解</a></li>
+<li><a href="http://c.biancheng.net/view/vip_2122.html" title="一个比较规范的C语言多文件编程的例子">一个比较规范的C语言多文件编程的例子</a></li>
+<li><a href="http://c.biancheng.net/view/2603.html" title="Python创建线程（2种方式）详解">Python创建线程（2种方式）详解</a></li>
+<li><a href="http://c.biancheng.net/view/3064.html" title="C#/.NET JIT和IL（MSIL或CIL）实现跨平台">C#/.NET JIT和IL（MSIL或CIL）实现跨平台</a></li>
+<li><a href="http://c.biancheng.net/view/vip_3416.html" title="拓扑排序算法及C语言实现">拓扑排序算法及C语言实现</a></li>
+<li><a href="http://c.biancheng.net/view/4674.html" title="C语言经典视频教程汇总，看了无师自通（共18套）">C语言经典视频教程汇总，看了无师自通（共18套）</a></li>
+<li><a href="http://c.biancheng.net/view/6581.html" title="Java操作Neo4j数据库（附带源码）">Java操作Neo4j数据库（附带源码）</a></li>
+<li><a href="http://c.biancheng.net/view/8234.html" title="JS navigator对象的使用">JS navigator对象的使用</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8618;
+window.arcId = "262dt3BA6AyOUpS/UU8fIMuzRGXWvn7W8cNybcNLfTETSzAtK4L4ute5S00";
+window.typeidChain = "396";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./11使用读写锁实现线程同步_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./11使用读写锁实现线程同步_files/jquery1.12.4.min.js.下载"></script>
+<script src="./11使用读写锁实现线程同步_files/common.js.下载"></script>
+<span style="display:none;"><script src="./11使用读写锁实现线程同步_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://c.biancheng.net/thread/vip_8622.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./14使用C++11进行多线程编程_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./14使用C++11进行多线程编程_files/common.css" rel="stylesheet">
+<title>使用C++11进行多线程编程</title>
+<meta name="description" content="前面章节中，我们借助操作系统提供的接口实现了 C 语言多线程程序的编写。C++ 11 标准中新引入了与多线程编程相关的多个头文件，包括 thread、mutex、future、condition_variable 和 atomic。 当">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./14使用C++11进行多线程编程_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/thread/">多线程</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/thread/what-is-thread.html">线程是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/thread/first-thread.html">第一个多线程程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/thread/vip_8614.html">线程同步机制</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/thread/vip_8622.html">使用C++11进行多线程编程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/thread/">多线程</a></span>
+	<span class="read-num">阅读：1,960</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>使用C++11进行多线程编程</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">前面章节中，我们借助操作系统提供的接口实现了 C 语言多线程程序的编写。C++ 11 标准中新引入了与多线程编程相关的多个头文件，包括 &lt;thread&gt;、&lt;mutex&gt;、&lt;future&gt;、&lt;condition_variable&gt; 和 &lt;atomic&gt;。<br>
+<br>
+当我们在 Linux 环境中编写 C++ 的多线程程序时，既可以借助 POSIX 标准提供的 &lt;pthread.h&gt; 实现，也可以借助 C++11 标准提供的头文件实现。本节，我们就给大家详细地讲解如何利用 C++11 标准编写多线程程序。
+<h2>
+	线程的创建和使用</h2>
+C++11 标准中，<code>&lt;thread&gt;</code>头文件提供了 thread 类（位于 std 命令空间中），专门用来完成线程的创建和使用。
+<h4>
+	1) 创建线程</h4>
+一个线程可以用 thread 类的对象来表示，thread类中重载了多种构造函数，最常用的有以下两个：<br>
+<pre class="info-box">//1、Fn 表示线程要执行的函数，args 表示向 Fn 传递的多个参数，此构造函数支持泛型
+template &lt;class Fn, class... Args&gt;
+explicit thread (Fn&amp;&amp; fn, Args&amp;&amp;... args);
+//2、移动构造函数
+thread (thread&amp;&amp; x) noexcept;</pre>
+<blockquote>
+	<p>
+		注意，thread 类只提供了移动构造函数，未提供拷贝构造函数。这意味着，我们不能直接将一个事先定义好的 thread 对象赋值给另一个 thread 对象，但可以将临时的（匿名的）thread 对象赋值给另一个 thread 对象。有关移动构造函数，读者可阅读《<a href="http://c.biancheng.net/view/7847.html" target="_blank">C++11移动构造函数详解</a>》一文做详细了解。</p>
+</blockquote>
+POSIX 标准中，线程所执行函数的参数和返回值都必须为 void* 类型。而 thread 类创建的线程可以执行任意的函数，即不对函数的参数和返回值做具体限定。<br>
+<br>
+举个例子：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8622.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;iostream&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;thread&gt;</span></li><li><span class="sh_keyword">using</span> <span class="sh_keyword">namespace</span> std<span class="sh_symbol">;</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_function">threadFun1</span><span class="sh_symbol">(</span><span class="sh_type">int</span> n<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"---thread1 running</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">;</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"n="</span> <span class="sh_symbol">&lt;&lt;</span> n <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_function">threadFun2</span><span class="sh_symbol">(</span><span class="sh_keyword">const</span> <span class="sh_type">char</span> <span class="sh_symbol">*</span> url<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"---thread2 running</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">;</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"url="</span> <span class="sh_symbol">&lt;&lt;</span> url <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_comment">//调用第 1 种构造函数</span></li><li>    <span class="sh_usertype">thread</span><span class="sh_normal"> </span><span class="sh_function">thread1</span><span class="sh_symbol">(</span>threadFun1<span class="sh_symbol">,</span><span class="sh_number">10</span><span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//调用移动构造函数</span></li><li>    <span class="sh_usertype">thread</span><span class="sh_normal"> </span>thread2 <span class="sh_symbol">=</span> std<span class="sh_symbol">::</span><span class="sh_function">thread</span><span class="sh_symbol">(</span>threadFun2<span class="sh_symbol">,</span><span class="sh_string">"http://c.biancheng.net"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//阻塞主线程，等待 thread1 线程执行完毕</span></li><li>    thread1<span class="sh_symbol">.</span><span class="sh_function">join</span><span class="sh_symbol">();</span></li><li>    <span class="sh_comment">//阻塞主线程，等待 thread2 线程执行完毕</span></li><li>    thread2<span class="sh_symbol">.</span><span class="sh_function">join</span><span class="sh_symbol">();</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+using namespace std;
+
+void threadFun1(int n) {
+    cout &lt;&lt; "---thread1 running\n";
+    cout &lt;&lt; "n=" &lt;&lt; n &lt;&lt; endl;
+}
+
+void threadFun2(const char * url) {
+    cout &lt;&lt; "---thread2 running\n";
+    cout &lt;&lt; "url=" &lt;&lt; url &lt;&lt; endl;
+}
+
+int main() {
+    //调用第 1 种构造函数
+    thread thread1(threadFun1,10);
+    //调用移动构造函数
+    thread thread2 = std::thread(threadFun2,"http://c.biancheng.net");
+    //阻塞主线程，等待 thread1 线程执行完毕
+    thread1.join();
+    //阻塞主线程，等待 thread2 线程执行完毕
+    thread2.join();
+    return 0;
+}</pre></div></div>
+程序执行结果为（不唯一）：
+<p class="info-box">
+	---thread1 running<br>
+	n=10<br>
+	---thread2 running<br>
+	url=http://c.biancheng.net</p>
+程序中，我们分别调用两种构造函数创建了两个线程，它们分别执行 threadFun1() 和 threadFun2() 函数。我们在主线程（main() 函数）中调用了 thread 类提供的 join() 成员函数，以 thread1.join() 为例，它的功能是阻塞主线程，直至 thread1 线程执行完毕后，主线程才能继续执行。
+<h4>
+	2) 线程的使用</h4>
+除了 join() 成员函数外，thread 类还提供有很多实用的成员函数，表 1 给大家列出了几个最常用的函数：<br>
+<br>
+<table>
+	<caption>
+		表 1 thread 类的常用成员函数</caption>
+	<tbody>
+		<tr>
+			<th>
+				成员函数</th>
+			<th>
+				功 能</th>
+		</tr>
+		<tr>
+			<td>
+				get_id()</td>
+			<td>
+				获取当前 thread 对象的线程 ID。</td>
+		</tr>
+		<tr>
+			<td>
+				joinable()</td>
+			<td>
+				判断当前线程是否支持调用 join() 成员函数。</td>
+		</tr>
+		<tr>
+			<td>
+				join()</td>
+			<td>
+				阻塞当前 thread 对象所在的线程，直至 thread 对象表示的线程执行完毕后，所在线程才能继续执行。</td>
+		</tr>
+		<tr>
+			<td>
+				detach()</td>
+			<td>
+				将当前线程从调用该函数的线程中分离出去，它们彼此独立执行。</td>
+		</tr>
+		<tr>
+			<td>
+				swap()</td>
+			<td>
+				交换两个线程的状态。</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+注意，每个thread 对象在调用析构函数销毁前，要么调用 join() 函数令主线程等待子线程执行完成，要么调用 detach() 函数将子线程和主线程分离，两者比选其一，否则程序可能存在以下两个问题：
+<ul>
+	<li>
+		线程占用的资源将无法全部释放，造成内存泄漏；</li>
+	<li>
+		当主线程执行完成而子线程未执行完时，程序执行将引发异常。</li>
+</ul>
+<br>
+举个例子：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8622.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;iostream&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;thread&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;unistd.h&gt;</span></li><li><span class="sh_keyword">using</span> <span class="sh_keyword">namespace</span> std<span class="sh_symbol">;</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_function">threadFun1</span><span class="sh_symbol">(</span><span class="sh_type">int</span> n<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">5</span><span class="sh_symbol">);</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"---thread1 running</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">;</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"n="</span> <span class="sh_symbol">&lt;&lt;</span> n <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_function">threadFun2</span><span class="sh_symbol">(</span><span class="sh_keyword">const</span> <span class="sh_type">char</span> <span class="sh_symbol">*</span> url<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"---thread2 running</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">;</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"url="</span> <span class="sh_symbol">&lt;&lt;</span> url <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_comment">//调用第 1 种构造函数</span></li><li>    <span class="sh_usertype">thread</span><span class="sh_normal"> </span><span class="sh_function">thread1</span><span class="sh_symbol">(</span>threadFun1<span class="sh_symbol">,</span> <span class="sh_number">10</span><span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//输出 thread1 线程的 ID</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"thread1 ID:"</span> <span class="sh_symbol">&lt;&lt;</span> thread1<span class="sh_symbol">.</span><span class="sh_function">get_id</span><span class="sh_symbol">()</span> <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//调用移动构造函数</span></li><li>    <span class="sh_usertype">thread</span><span class="sh_normal"> </span>thread2 <span class="sh_symbol">=</span> std<span class="sh_symbol">::</span><span class="sh_function">thread</span><span class="sh_symbol">(</span>threadFun2<span class="sh_symbol">,</span> <span class="sh_string">"http://c.biancheng.net"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//输出 thread2 线程的 ID</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"thread2 ID:"</span> <span class="sh_symbol">&lt;&lt;</span> thread2<span class="sh_symbol">.</span><span class="sh_function">get_id</span><span class="sh_symbol">()</span> <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//将 thread1 与主线程分离开，thread1 线程独立执行。</span></li><li>    thread1<span class="sh_symbol">.</span><span class="sh_function">detach</span><span class="sh_symbol">();</span></li><li>    <span class="sh_comment">//判断 thread2 线程是否可以调用 join() 函数</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>thread2<span class="sh_symbol">.</span><span class="sh_function">joinable</span><span class="sh_symbol">())</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_comment">//阻塞主线程，直至 thread2 线程执行完毕。</span></li><li>        thread2<span class="sh_symbol">.</span><span class="sh_function">join</span><span class="sh_symbol">();</span></li><li>    <span class="sh_cbracket">}</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"main finished"</span> <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;unistd.h&gt;
+using namespace std;
+
+void threadFun1(int n) {
+    sleep(5);
+    cout &lt;&lt; "---thread1 running\n";
+    cout &lt;&lt; "n=" &lt;&lt; n &lt;&lt; endl;
+}
+
+void threadFun2(const char * url) {
+    cout &lt;&lt; "---thread2 running\n";
+    cout &lt;&lt; "url=" &lt;&lt; url &lt;&lt; endl;
+}
+
+int main() {
+    //调用第 1 种构造函数
+    thread thread1(threadFun1, 10);
+    //输出 thread1 线程的 ID
+    cout &lt;&lt; "thread1 ID:" &lt;&lt; thread1.get_id() &lt;&lt; endl;
+    //调用移动构造函数
+    thread thread2 = std::thread(threadFun2, "http://c.biancheng.net");
+    //输出 thread2 线程的 ID
+    cout &lt;&lt; "thread2 ID:" &lt;&lt; thread2.get_id() &lt;&lt; endl;
+    //将 thread1 与主线程分离开，thread1 线程独立执行。
+    thread1.detach();
+    //判断 thread2 线程是否可以调用 join() 函数
+    if (thread2.joinable()) {
+        //阻塞主线程，直至 thread2 线程执行完毕。
+        thread2.join();
+    }
+    cout &lt;&lt; "main finished" &lt;&lt; endl;
+    return 0;
+}</pre></div></div>
+假设程序编写在 thread.cpp 文件中，执行过程如下：
+<p class="info-box">
+	[root@localhost ~]# g++ thread.cpp -o thread.exe -std=c++11 -lpthread<br>
+	[root@localhost ~]# ./thread.exe<br>
+	thread1 ID:140278776624896<br>
+	thread2 ID:140278768232192<br>
+	---thread2 running<br>
+	url=http://c.biancheng.net<br>
+	main finished</p>
+<blockquote>
+	<p>
+		如果在 Windows 环境中运行，将程序中引入的 &lt;unistd.h&gt; 头文件改为 &lt;Windows.h&gt;，将第 6 行的 sleep(5); 语句改为 Sleep(5); 语句即可。</p>
+</blockquote>
+程序中创建了 2 个线程，通过调用 get_id() 成员函数分别获得了它们的线程 ID，其中 thread1 线程独立执行，thread2 线程先于主线程执行完成。通过执行结果可以看到，thread1 线程的执行结果并没有显示到屏幕上，这是因为 thread1 线程还未执行输出语句，主线程就已经执行结束（整个进程也执行结束），thread1 线程无法将执行结果输出到屏幕上。<br>
+<br>
+<code>&lt;thread&gt;</code>头文件中不仅定义了 thread 类，还提供了一个名为 this_thread 的命名空间，此空间中包含一些功能实用的函数，如表 2 所示<br>
+<br>
+<table>
+	<caption>
+		表 2 this_thread命名空间常用函数</caption>
+	<tbody>
+		<tr>
+			<th>
+				函数</th>
+			<th>
+				功 能</th>
+		</tr>
+		<tr>
+			<td>
+				get_id()</td>
+			<td>
+				获得当前线程的 ID。</td>
+		</tr>
+		<tr>
+			<td>
+				yield()</td>
+			<td>
+				阻塞当前线程，直至条件成熟。</td>
+		</tr>
+		<tr>
+			<td>
+				sleep_until()</td>
+			<td>
+				阻塞当前线程，直至某个时间点为止。</td>
+		</tr>
+		<tr>
+			<td>
+				sleep_for()</td>
+			<td>
+				阻塞当前线程指定的时间（例如阻塞 5 秒）。</td>
+		</tr>
+	</tbody>
+</table>
+<blockquote>
+	<p>
+		有关表 2 中这些函数的用法，我们不再一一举例，感兴趣的读者可查阅 C++ 函数手册。</p>
+</blockquote>
+<h2>
+	实现线程同步</h2>
+C++ 11 标准为解决“线程间抢夺公共资源”提供了多种方案，其中就包括我们前面讲到的互斥锁和条件变量。<br>
+<h4>
+	1) 互斥锁</h4>
+<blockquote>
+	<p>
+		有关互斥锁实现线程同步的原理，这里不再赘述，您可以阅读《<a href="http://c.biancheng.net/thread/vip_8615.html" target="_blank">Linux互斥锁实现线程同步</a>》一文做详细了解。</p>
+</blockquote>
+考虑到不同场景的需要，C++ 11 标准提供有多种互斥锁，比如递归互斥锁、定时互斥锁，自动“加锁”和“解锁”的互斥锁等。本节我们以普通的互斥锁为例，给大家讲解互斥锁的基本用法。<br>
+<br>
+C++11标准规定，互斥锁用 mutex 类（位于 std 命名空间中）的对象表示，该类定义在<code>&lt;mutex&gt;</code>头文件中。mutex 类提供有 lock() 和 unlock() 成员函数，分别完成“加锁”和“解锁”功能。<br>
+<br>
+举个例子：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8622.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;mutex&gt;</span>          <span class="sh_comment">// std::mutex</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;chrono&gt;</span>         <span class="sh_comment">// std::chrono::seconds()</span></li><li><span class="sh_keyword">using</span> <span class="sh_keyword">namespace</span> std<span class="sh_symbol">;</span></li><li><span class="sh_type">int</span>  n <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>std<span class="sh_symbol">::</span><span class="sh_usertype">mutex</span><span class="sh_normal"> </span>mtx<span class="sh_symbol">;</span>           <span class="sh_comment">// 定义一个 mutex 类对象，创建一个互斥锁</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_function">threadFun</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">while</span><span class="sh_symbol">(</span>n<span class="sh_symbol">&lt;</span><span class="sh_number">10</span><span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>        <span class="sh_comment">//对互斥锁进行“加锁”</span></li><li>        mtx<span class="sh_symbol">.</span><span class="sh_function">lock</span><span class="sh_symbol">();</span></li><li>        n<span class="sh_symbol">++;</span></li><li>        cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"ID"</span> <span class="sh_symbol">&lt;&lt;</span> std<span class="sh_symbol">::</span>this_thread<span class="sh_symbol">::</span><span class="sh_function">get_id</span><span class="sh_symbol">()</span> <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">" n = "</span><span class="sh_symbol">&lt;&lt;</span> n <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li>        <span class="sh_comment">//对互斥锁进行“解锁”</span></li><li>        mtx<span class="sh_symbol">.</span><span class="sh_function">unlock</span><span class="sh_symbol">();</span></li><li>        <span class="sh_comment">//暂停 1 秒</span></li><li>        std<span class="sh_symbol">::</span>this_thread<span class="sh_symbol">::</span><span class="sh_function">sleep_for</span><span class="sh_symbol">(</span>std<span class="sh_symbol">::</span>chrono<span class="sh_symbol">::</span><span class="sh_function">seconds</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">));</span></li><li>    <span class="sh_cbracket">}</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_usertype">thread</span><span class="sh_normal"> </span><span class="sh_function">th1</span><span class="sh_symbol">(</span>threadFun<span class="sh_symbol">);</span></li><li>    <span class="sh_usertype">thread</span><span class="sh_normal"> </span><span class="sh_function">th2</span><span class="sh_symbol">(</span>threadFun<span class="sh_symbol">);</span></li><li><span style="display:none;">&nbsp;</span></li><li>    th1<span class="sh_symbol">.</span><span class="sh_function">join</span><span class="sh_symbol">();</span></li><li>    th2<span class="sh_symbol">.</span><span class="sh_function">join</span><span class="sh_symbol">();</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;mutex&gt;          // std::mutex
+#include &lt;chrono&gt;         // std::chrono::seconds()
+using namespace std;
+int  n = 0;
+std::mutex mtx;           // 定义一个 mutex 类对象，创建一个互斥锁
+
+void threadFun() {
+    while(n&lt;10){
+        //对互斥锁进行“加锁”
+        mtx.lock();
+        n++;
+        cout &lt;&lt; "ID" &lt;&lt; std::this_thread::get_id() &lt;&lt; " n = "&lt;&lt; n &lt;&lt; endl;
+        //对互斥锁进行“解锁”
+        mtx.unlock();
+        //暂停 1 秒
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+}
+
+int main()
+{
+    thread th1(threadFun);
+    thread th2(threadFun);
+
+    th1.join();
+    th2.join();
+    return 0;
+}</pre></div></div>
+程序执行结果为（不唯一）：
+<p class="info-box">
+	ID16064 n = 1<br>
+	ID1956 n = 2<br>
+	ID16064 n = 3<br>
+	ID1956 n = 4<br>
+	ID16064 n = 5<br>
+	ID1956 n = 6<br>
+	ID16064 n = 7<br>
+	ID1956 n = 8<br>
+	ID16064 n = 9<br>
+	ID1956 n = 10</p>
+程序中，访问公共变量 n 的线程有 2 个，为了避免它们之间竞争资源，我们对 threadFun() 函数中访问 n 变量的过程引入了互斥锁机制。<br>
+<h4>
+	2) 条件变量</h4>
+有关条件变量实现线程同步的原理，这里不再赘述，您可以阅读《<a href="http://c.biancheng.net/thread/vip_8617.html" target="_blank">Linux条件变量实现线程同步</a>》一文做详细了解。<br>
+<br>
+C++ 11标准提供了两种表示条件变量的类，分别是 condition_variable 和 condition_variable_any，它们都定义在<code>&lt;condition_variable&gt;</code>头文件中。我们知道，为了避免线程间抢夺资源，条件变量通常和互斥锁搭配使用，condition_variable 类表示的条件变量只能和 unique_lock 类表示的互斥锁（可自行加锁和解锁）搭配使用，而 condition_variable_any 类表示的条件变量可以和任意类型的互斥锁搭配使用（例如递归互斥锁、定时互斥锁等）。<br>
+<br>
+这里我们以 condition_variable_any 为例，给大家讲解 C++11 标准中条件变量的基本用法。每个 condition_variable_any 类的对象都表示一个条件变量，该类提供的成员函数如表 3 所示。<br>
+<br>
+<table>
+	<caption>
+		表 3 条件变量常用函数</caption>
+	<tbody>
+		<tr>
+			<th>
+				成员函数</th>
+			<th>
+				功 能</th>
+		</tr>
+		<tr>
+			<td>
+				wait()</td>
+			<td>
+				阻塞当前线程，等待条件成立。</td>
+		</tr>
+		<tr>
+			<td>
+				wait_for()</td>
+			<td>
+				阻塞当前线程的过程中，该函数会自动调用 unlock() 函数解锁互斥锁，从而令其他线程使用公共资源。当条件成立或者超过了指定的等待时间（比如 3 秒），该函数会自动调用 lock() 函数对互斥锁加锁，同时令线程继续执行。</td>
+		</tr>
+		<tr>
+			<td>
+				wait_until()</td>
+			<td>
+				和 wait_for() 功能类似，不同之处在于，wait_until() 函数可以设定一个具体时间点（例如 2021年4月8日 的某个具体时间），当条件成立或者等待时间超过了指定的时间点，函数会自动对互斥锁加锁，同时线程继续执行。</td>
+		</tr>
+		<tr>
+			<td>
+				notify_one()</td>
+			<td>
+				向其中一个正在等待的线程发送“条件成立”的信号。</td>
+		</tr>
+		<tr>
+			<td>
+				notify_all()</td>
+			<td>
+				向所有等待的线程发送“条件成立”的信号。</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+举个例子：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8622.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8622.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;iostream&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;thread&gt;</span>             <span class="sh_comment">// std::thread</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;mutex&gt;</span>              <span class="sh_comment">// std::mutex, std::unique_lock</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;condition_variable&gt;</span> <span class="sh_comment">// std::condition_variable_any</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;chrono&gt;</span>         <span class="sh_comment">// std::chrono::seconds()</span></li><li><span class="sh_comment">//创建一个互斥锁</span></li><li>std<span class="sh_symbol">::</span><span class="sh_usertype">mutex</span><span class="sh_normal"> </span>mtx<span class="sh_symbol">;</span></li><li><span class="sh_comment">//创建一个条件变量</span></li><li>std<span class="sh_symbol">::</span><span class="sh_usertype">condition_variable_any</span><span class="sh_normal"> </span>cond<span class="sh_symbol">;</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_function">print_id</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span></li><li>    mtx<span class="sh_symbol">.</span><span class="sh_function">lock</span><span class="sh_symbol">();</span></li><li>    <span class="sh_comment">//阻塞线程，直至条件成立</span></li><li>    cond<span class="sh_symbol">.</span><span class="sh_function">wait</span><span class="sh_symbol">(</span>mtx<span class="sh_symbol">);</span></li><li>    std<span class="sh_symbol">::</span>cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"----threadID "</span> <span class="sh_symbol">&lt;&lt;</span> std<span class="sh_symbol">::</span>this_thread<span class="sh_symbol">::</span><span class="sh_function">get_id</span><span class="sh_symbol">()</span> <span class="sh_symbol">&lt;&lt;</span><span class="sh_string">" run"</span> <span class="sh_symbol">&lt;&lt;</span> std<span class="sh_symbol">::</span>endl<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//等待 2 秒</span></li><li>    std<span class="sh_symbol">::</span>this_thread<span class="sh_symbol">::</span><span class="sh_function">sleep_for</span><span class="sh_symbol">(</span>std<span class="sh_symbol">::</span>chrono<span class="sh_symbol">::</span><span class="sh_function">seconds</span><span class="sh_symbol">(</span><span class="sh_number">2</span><span class="sh_symbol">));</span></li><li>    mtx<span class="sh_symbol">.</span><span class="sh_function">unlock</span><span class="sh_symbol">();</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">void</span> <span class="sh_function">go</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span></li><li>    std<span class="sh_symbol">::</span>cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"go running</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//阻塞线程 2 秒钟</span></li><li>    std<span class="sh_symbol">::</span>this_thread<span class="sh_symbol">::</span><span class="sh_function">sleep_for</span><span class="sh_symbol">(</span>std<span class="sh_symbol">::</span>chrono<span class="sh_symbol">::</span><span class="sh_function">seconds</span><span class="sh_symbol">(</span><span class="sh_number">2</span><span class="sh_symbol">));</span></li><li>    <span class="sh_comment">//通知所有等待的线程条件成立</span></li><li>    cond<span class="sh_symbol">.</span><span class="sh_function">notify_all</span><span class="sh_symbol">();</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_comment">//创建 4 个线程执行 print_id() 函数</span></li><li>    std<span class="sh_symbol">::</span><span class="sh_usertype">thread</span><span class="sh_normal"> </span>threads<span class="sh_symbol">[</span><span class="sh_number">4</span><span class="sh_symbol">];</span></li><li>    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span><span class="sh_type">int</span> i <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span> i <span class="sh_symbol">&lt;</span> <span class="sh_number">4</span><span class="sh_symbol">;</span> <span class="sh_symbol">++</span>i<span class="sh_symbol">)</span></li><li>        threads<span class="sh_symbol">[</span>i<span class="sh_symbol">]</span> <span class="sh_symbol">=</span> std<span class="sh_symbol">::</span><span class="sh_function">thread</span><span class="sh_symbol">(</span>print_id<span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//创建 1 个线程执行 go() 函数</span></li><li>    std<span class="sh_symbol">::</span><span class="sh_usertype">thread</span><span class="sh_normal"> </span><span class="sh_function">goThread</span><span class="sh_symbol">(</span>go<span class="sh_symbol">);</span></li><li>    <span class="sh_comment">//等待所有线程执行结果后，主线程才能继续执行</span></li><li>    goThread<span class="sh_symbol">.</span><span class="sh_function">join</span><span class="sh_symbol">();</span></li><li>    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span><span class="sh_keyword">auto</span><span class="sh_symbol">&amp;</span> th <span class="sh_symbol">:</span> threads<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        th<span class="sh_symbol">.</span><span class="sh_function">join</span><span class="sh_symbol">();</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;iostream&gt;
+#include &lt;thread&gt;             // std::thread
+#include &lt;mutex&gt;              // std::mutex, std::unique_lock
+#include &lt;condition_variable&gt; // std::condition_variable_any
+#include &lt;chrono&gt;         // std::chrono::seconds()
+//创建一个互斥锁
+std::mutex mtx;
+//创建一个条件变量
+std::condition_variable_any cond;
+
+void print_id() {
+    mtx.lock();
+    //阻塞线程，直至条件成立
+    cond.wait(mtx);
+    std::cout &lt;&lt; "----threadID " &lt;&lt; std::this_thread::get_id() &lt;&lt;" run" &lt;&lt; std::endl;
+    //等待 2 秒
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    mtx.unlock();
+}
+
+void go() {
+    std::cout &lt;&lt; "go running\n";
+    //阻塞线程 2 秒钟
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    //通知所有等待的线程条件成立
+    cond.notify_all();
+}
+
+int main()
+{
+    //创建 4 个线程执行 print_id() 函数
+    std::thread threads[4];
+    for (int i = 0; i &lt; 4; ++i)
+        threads[i] = std::thread(print_id);
+    //创建 1 个线程执行 go() 函数
+    std::thread goThread(go);
+    //等待所有线程执行结果后，主线程才能继续执行
+    goThread.join();
+    for (auto&amp; th : threads) {
+        th.join();
+    }
+    return 0;
+}</pre></div></div>
+执行结果为：
+<p class="info-box">
+	go running<br>
+	----threadID 11416 run<br>
+	----threadID 18696 run<br>
+	----threadID 11268 run<br>
+	----threadID 16824 run</p>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./14使用C++11进行多线程编程_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/73.html" title="Go语言结构体内嵌模拟类的继承">Go语言结构体内嵌模拟类的继承</a></li>
+<li><a href="http://c.biancheng.net/view/691.html" title="C++ valarray对象适用运算符详解">C++ valarray对象适用运算符详解</a></li>
+<li><a href="http://c.biancheng.net/view/1228.html" title="临界区问题及其解决办法（抢占式内核和非抢占式内核）">临界区问题及其解决办法（抢占式内核和非抢占式内核）</a></li>
+<li><a href="http://c.biancheng.net/view/1904.html" title="TensorFlow优化器种类及其用法详解">TensorFlow优化器种类及其用法详解</a></li>
+<li><a href="http://c.biancheng.net/view/2292.html" title="Python type()函数：动态创建类">Python type()函数：动态创建类</a></li>
+<li><a href="http://c.biancheng.net/view/2404.html" title="Python查看模块（变量、函数、类）方法">Python查看模块（变量、函数、类）方法</a></li>
+<li><a href="http://c.biancheng.net/view/3151.html" title="Android HttpURLConnection访问互联网资源">Android HttpURLConnection访问互联网资源</a></li>
+<li><a href="http://c.biancheng.net/view/3839.html" title="云服务审计员、云服务代理商和云服务承运商">云服务审计员、云服务代理商和云服务承运商</a></li>
+<li><a href="http://c.biancheng.net/view/7507.html" title="MySQL REVOKE：删除用户权限">MySQL REVOKE：删除用户权限</a></li>
+<li><a href="http://c.biancheng.net/redis2/persist.html" title="Redis PERSIST命令">Redis PERSIST命令</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8622;
+window.arcId = "324c2ffcU0YjsEVLC0wSrjciobywjIkzHRizmqISrGD1TIXAijDAqczXZc8";
+window.typeidChain = "396";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./14使用C++11进行多线程编程_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./14使用C++11进行多线程编程_files/jquery1.12.4.min.js.下载"></script>
+<script src="./14使用C++11进行多线程编程_files/common.js.下载"></script>
+<span style="display:none;"><script src="./14使用C++11进行多线程编程_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

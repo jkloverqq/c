@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://c.biancheng.net/dll/vip_8704.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./2Windows下静态链接库的创建和使用_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./2Windows下静态链接库的创建和使用_files/common.css" rel="stylesheet">
+<title>Windows下静态链接库的创建和使用</title>
+<meta name="description" content="了解了什么是静态链接库之后，接下来就以 myMath.c 为例，教大家在 Windows 平台上创建一个静态链接库，并学会将他人分享的静态链接库引入到自己的项目中。 在 Windows 平台上创建静态链">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./2Windows下静态链接库的创建和使用_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/dll/">链接库</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/dll/what_is_library.html">链接库是什么</a>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/dll/vip_8704.html">Windows下静态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/dll/vip_8705.html">Linux下静态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/dll/vip_8706.html">Windows下动态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/dll/vip_8707.html">Linux下动态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/dll/vip_8708.html">Windows下显式调用动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/dll/vip_8709.html">Linux下显式调用动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/dll/">链接库</a></span>
+	<span class="read-num">阅读：3,720</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>Windows下静态链接库的创建和使用</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/dll/what_is_library.html">链接库是什么</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/dll/vip_8705.html">Linux下静态链接库的创建和使用</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">了解了什么是静态链接库之后，接下来就以 myMath.c 为例，教大家在 Windows 平台上创建一个静态链接库，并学会将他人分享的静态链接库引入到自己的项目中。<br>
+<br>
+在 Windows 平台上创建静态链接库，我们选用的工具是 Visual Studio（简称 VS），它是微软发布的一款功能强大的 IDE（集成开发环境）。目前为止，VS 已经发布了多个版本，最新版本是 VS 2019，本节我们就以这个版本为例进行讲解，其它版本的操作方法也是类似的。<br>
+<h2>
+	静态链接库的创建</h2>
+首先，打开 VS2019，选择“创建新项目”：<br>
+<br>
+<div style="text-align: center;">
+	<img alt="" src="./2Windows下静态链接库的创建和使用_files/2-210F5140334548.gif"><br>
+	图 1 创建新项目</div>
+<br>
+弹出的对话框如图 2 所示，选择“静态库”：<br>
+<br>
+<div style="text-align: center;">
+	<img alt="" src="./2Windows下静态链接库的创建和使用_files/2-210F5140402G8.gif"><br>
+	图 2 创建静态库项目</div>
+<br>
+如图 3 所示，自定义所要创建的项目名和存储位置：<br>
+<br>
+<div style="text-align: center;">
+	<img alt="" src="./2Windows下静态链接库的创建和使用_files/2-210F5140424S5.gif"><br>
+	图 3 自定义项目的名称和存储位置</div>
+<br>
+初始状态下，创建好的静态库项目中会自动包含以下几个文件：<br>
+<br>
+<div style="text-align: center;">
+	<img alt="" src="./2Windows下静态链接库的创建和使用_files/2-210F51404435D.gif"><br>
+	图 4 初始状态下的静态库项目</div>
+<br>
+图 4 所示的这些文件，我们只保留 myMath.c 源文件（将 myMath.cpp 的后缀名改为 .c），其它三个文件直接删除即可。在此基础上，我们需要创建 myMath.c 对应的头文件，以便向他人分享静态链接库时展示具体的功能和用法。<br>
+<br>
+例如，在项目中添加 myMath.h 作为 myMath.c 对应的头文件，鼠标右击图 4 的“头文件”，依次选择“添加 -&gt; 新建项”，弹出的对话框中选择“头文件(.h)”并自定义文件名称即可。最终，项目中仅有 myMath.h 和 myMath.c 两个文件。<br>
+<br>
+注意，由于我们没有使用 VS 默认提供的 pch.h 等文件，需要修改一下 VS 的设置。在图 4 所示的窗口中右击项目名（本节自定义的项目名称为 myMath），选择“属性”，会弹出图 5 所示的对话框：<br>
+<br>
+<div style="text-align: center;">
+	<img alt="" src="./2Windows下静态链接库的创建和使用_files/2-210F5140505G6.gif"><br>
+	图 5 取消预编译头</div>
+<br>
+完成以上操作后，就可以向 myMath.c 和 myMath.h 中添加代码了。以《<a href="http://c.biancheng.net/dll/what_is_library.html" target="_blank">链接库是什么</a>》一节中的 myMath.c 为例，将 add()、sub()、mul()、div() 的函数声明部分添加到 myMath.h 文件中，将定义部分添加到 myMath.c 文件中。
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/dll/vip_8704.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/dll/vip_8704.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/dll/vip_8704.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_comment">//myMath.h</span></li><li><span class="sh_comment">//实现两个整数相加，返回它们的和</span></li><li><span class="sh_type">int</span> <span class="sh_function">add</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">);</span></li><li><span class="sh_comment">//实现两个整数相减，返回它们的差</span></li><li><span class="sh_type">int</span> <span class="sh_function">sub</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">);</span></li><li><span class="sh_comment">//实现两个整数相乘，返回它们的乘积</span></li><li><span class="sh_type">int</span> <span class="sh_function">mul</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">);</span></li><li><span class="sh_comment">//实现两个整数相除，返回它们的商</span></li><li><span class="sh_type">int</span> <span class="sh_function">div</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">);</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_comment">//myMath.c</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">"myMath.h"</span></li><li><span class="sh_type">int</span> <span class="sh_function">add</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">return</span>  a <span class="sh_symbol">+</span> b<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_type">int</span> <span class="sh_function">sub</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">return</span>  a <span class="sh_symbol">-</span> b<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_type">int</span> <span class="sh_function">mul</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">return</span>  a <span class="sh_symbol">*</span> b<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_type">int</span> <span class="sh_function">div</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>b <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_keyword">return</span> a <span class="sh_symbol">/</span> b<span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_symbol">-</span><span class="sh_number">1</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">//myMath.h
+//实现两个整数相加，返回它们的和
+int add(int a, int b);
+//实现两个整数相减，返回它们的差
+int sub(int a, int b);
+//实现两个整数相乘，返回它们的乘积
+int mul(int a, int b);
+//实现两个整数相除，返回它们的商
+int div(int a, int b);
+
+//myMath.c
+#include "myMath.h"
+int add(int a, int b) {
+    return  a + b;
+}
+int sub(int a, int b) {
+    return  a - b;
+}
+int mul(int a, int b) {
+    return  a * b;
+}
+int div(int a, int b) {
+    if (b != 0) {
+        return a / b;
+    }
+    return -1;
+}</pre></div></div>
+菜单栏中依次选择“生成 -&gt; 生成 myMath”（项目名称可能不同），或者直接按 Ctrl+B 组合键，VS 显示图 6 所示的信息就表示成功创建好了静态链接库。<br>
+<br>
+<div style="text-align: center;">
+	<img alt="" src="./2Windows下静态链接库的创建和使用_files/2-210F5140530X6.gif"><br>
+	图 6 成功创建静态链接库的提示信息</div>
+<br>
+图 6 中重点标注的路径，表明了新生成的静态链接库的存储位置。可以看到，Windows 平台静态链接库文件的后缀名为 .lib。
+<h2>
+	静态链接库的使用</h2>
+项目中，无论是引用自己先前建好的静态链接库，还是他人分享的静态链接库，只需完成以下两个步骤（以建好的 myMath.lib 为例）：<br>
+<br>
+1) 假设我们想在 myDemo 项目中使用 myMath.lib 静态链接库，首先要引入 myMath.h 头文件，具体做法是：将 myMath.h 文件拷贝到 myDemo 项目中，鼠标右键点击图 7 中的 "myDemo" 项目名，选择“在文件资源管理器中打开文件夹”，即可找到 myDemo 项目的存储位置。<br>
+<br>
+同时，将 myMath.h 文件引入到 myDemo 项目中：<br>
+<br>
+<div style="text-align: center;">
+	<img alt="" src="./2Windows下静态链接库的创建和使用_files/2-210F5140554350.gif"><br>
+	图 7 项目中引入 .h 文件</div>
+<br>
+选择“现有项”后会打开另一个对话框，找到 myMath.h 文件并将其引入到当前项目中。成功引入后，图 7 中的头文件下会显示 myMath.h 文件。<br>
+<br>
+2) 只引入 myMath.h 文件是远远不够的，.h 文件中各个函数的具体实现位于 myMath.lib 文件内，因此必须保证项目在链接阶段能成功找到 myMath.lib 文件。<br>
+<br>
+一种较简单的方法是，用 #pragma 预处理指令指明要使用的静态链接库。假设 myMath.lib 的存储路径为 "D://myMath.lib"，则我们只需在 main.c 文件的开头加入以下代码：<br>
+<pre class="info-box">#pragma comment (lib,"D://myMath.lib")</pre>
+这行代码指明了 myMath.lib 静态链接库的存储位置，VS 就可以成功找到它。<br>
+<br>
+例如，main.c 文件中的代码如下：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/dll/vip_8704.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/dll/vip_8704.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/dll/vip_8704.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">"myMath.h"</span></li><li><span class="sh_preproc">#pragma</span> <span class="sh_function">comment</span><span class="sh_symbol">(</span>lib<span class="sh_symbol">,</span><span class="sh_string">"D://myMath.lib"</span><span class="sh_symbol">)</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> a <span class="sh_symbol">=</span> <span class="sh_number">3</span><span class="sh_symbol">,</span> b <span class="sh_symbol">=</span> <span class="sh_number">5</span><span class="sh_symbol">;</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a+b=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">add</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a-b=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">sub</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a*b=%d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">mul</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"a/b=%d"</span><span class="sh_symbol">,</span> <span class="sh_function">div</span><span class="sh_symbol">(</span><span class="sh_number">3</span><span class="sh_symbol">,</span> <span class="sh_number">5</span><span class="sh_symbol">));</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+#include "myMath.h"
+#pragma comment(lib,"D://myMath.lib")
+int main()
+{
+    int a = 3, b = 5;
+    printf("a+b=%d\n", add(3, 5));
+    printf("a-b=%d\n", sub(3, 5));
+    printf("a*b=%d\n", mul(3, 5));
+    printf("a/b=%d", div(3, 5));
+    return 0;
+}</pre></div></div>
+程序执行结果为：
+<p class="info-box">
+	a+b=8<br>
+	a-b=-2<br>
+	a*b=15<br>
+	a/b=0</p>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./2Windows下静态链接库的创建和使用_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/dll/what_is_library.html">链接库是什么</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/dll/vip_8705.html">Linux下静态链接库的创建和使用</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/142.html" title="进制转换">进制转换</a></li>
+<li><a href="http://c.biancheng.net/view/263.html" title="C++派生类和赋值运算符">C++派生类和赋值运算符</a></li>
+<li><a href="http://c.biancheng.net/view/1272.html" title="写时复制技术（详解版）">写时复制技术（详解版）</a></li>
+<li><a href="http://c.biancheng.net/view/1368.html" title="C++ while（do-while）循环详解">C++ while（do-while）循环详解</a></li>
+<li><a href="http://c.biancheng.net/view/3055.html" title="Android多窗口模式（分屏模式）">Android多窗口模式（分屏模式）</a></li>
+<li><a href="http://c.biancheng.net/view/3851.html" title="Qt下载（多种下载通道+所有版本）">Qt下载（多种下载通道+所有版本）</a></li>
+<li><a href="http://c.biancheng.net/view/3961.html" title="大型云计算平台的搭建以及解决方案（超详细）">大型云计算平台的搭建以及解决方案（超详细）</a></li>
+<li><a href="http://c.biancheng.net/view/4356.html" title="Go语言并发简述（并发的优势）">Go语言并发简述（并发的优势）</a></li>
+<li><a href="http://c.biancheng.net/thread/vip_8625.html" title="将Linux多线程程序移植到Windows">将Linux多线程程序移植到Windows</a></li>
+<li><a href="http://c.biancheng.net/spring/bean-life-cycle.html" title="Spring Bean生命周期">Spring Bean生命周期</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8704;
+window.arcId = "0fffCu+FrnKkVHkoORmaoQKKXDReIZI49M8Bj2lgPHdRjPr5rLiwM7OjSYo";
+window.typeidChain = "399";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./2Windows下静态链接库的创建和使用_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./2Windows下静态链接库的创建和使用_files/jquery1.12.4.min.js.下载"></script>
+<script src="./2Windows下静态链接库的创建和使用_files/common.js.下载"></script>
+<span style="display:none;"><script src="./2Windows下静态链接库的创建和使用_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

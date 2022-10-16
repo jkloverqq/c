@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://c.biancheng.net/view/vip_8524.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./16GCC分步编译C++程序（汇总版）_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./16GCC分步编译C++程序（汇总版）_files/common.css" rel="stylesheet">
+<title>GCC分步编译C++程序（汇总版）</title>
+<meta name="description" content="通过前面几节的讲解，已经就 gcc（g++）指令可用的 -E、-S、-c 以及 -o 选项的功能和用法做了详细的讲解。在此基础上，本节将对如何分步编译C/C++程序这个问题做一个完整的解答。 接下">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./16GCC分步编译C++程序（汇总版）_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/gcc/">GCC</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/view/7930.html">GCC是什么？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/view/7933.html">GCC编译器下载和安装教程（针对Linux发行版）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/view/vip_8521.html">如何在Windows上使用GCC编译器？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/view/vip_8522.html">如何用Sublime Text运行C和C++程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/view/vip_8523.html">如何用VS Code运行C和C++程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/view/679.html">GCC的组成部分以及使用到的软件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/view/7936.html">gcc和g++是什么，有什么区别？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/view/7984.html">GCC自动识别的文件扩展名（一览表）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/view/8053.html">GCC -std编译标准一览表</a>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/view/7959.html">GCC编译C/C++程序（一步完成）</a>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/view/7971.html">GCC -E选项：对源程序做预处理操作</a>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/view/7974.html">GCC -S选项：编译非汇编文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/view/7981.html">GCC -c选项：生成目标文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/view/700.html">GCC -o选项：指定输出文件</a>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/view/2382.html">GCC -l选项：手动添加链接库</a>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">16</span>
+        	<a href="http://c.biancheng.net/view/vip_8524.html">GCC分步编译C++程序（汇总版）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">17</span>
+        	<a href="http://c.biancheng.net/view/7992.html">如何使用gcc指令一次处理多个文件？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">18</span>
+        	<a href="http://c.biancheng.net/view/8010.html">GCC使用静态链接库和动态链接库</a>
+        </dd>
+<dd>
+        	<span class="channel-num">19</span>
+        	<a href="http://c.biancheng.net/view/vip_8525.html">用GCC制作静态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">20</span>
+        	<a href="http://c.biancheng.net/view/vip_8526.html">用GCC制作动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">21</span>
+        	<a href="http://c.biancheng.net/view/vip_8527.html">显示调用C/C++动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">22</span>
+        	<a href="http://c.biancheng.net/view/vip_8528.html">GCC找不到库文件怎么办？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/gcc/">GCC</a></span>
+	<span class="read-num">阅读：2,225</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>GCC分步编译C++程序（汇总版）</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/2382.html">GCC -l选项：手动添加链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/7992.html">如何使用gcc指令一次处理多个文件？</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">通过前面几节的讲解，已经就 gcc（g++）指令可用的 -E、-S、-c 以及 -o 选项的功能和用法做了详细的讲解。在此基础上，本节将对“如何分步编译C/C++程序”这个问题做一个完整的解答。<br>
+<br>
+接下来，我将以 g++ 指令分别对 C++ 源程序做预处理、编译、汇编和链接操作为例，完整地给读者演示如何分步编译源代码程序。样例程序如下：<br>
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/view/vip_8524.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/view/vip_8524.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/view/vip_8524.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_comment">//位于 demo.cpp 文件中</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;iostream&gt;</span></li><li><span class="sh_keyword">using</span> <span class="sh_keyword">namespace</span> std<span class="sh_symbol">;</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span><span class="sh_cbracket">{</span></li><li>    cout <span class="sh_symbol">&lt;&lt;</span> <span class="sh_string">"GCC教程：http://c.biancheng.net/gcc/"</span> <span class="sh_symbol">&lt;&lt;</span> endl<span class="sh_symbol">;</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">//位于 demo.cpp 文件中
+#include &lt;iostream&gt;
+using namespace std;
+
+int main(){
+    cout &lt;&lt; "GCC教程：http://c.biancheng.net/gcc/" &lt;&lt; endl;
+    return 0;
+}</pre></div></div>
+<h2>
+	GCC分步编译C++源程序</h2>
+<h4>
+	1) 预处理</h4>
+通过给 g++ 指令添加 -E 选项，即可轻松实现令 GCC 编译器只对目标源程序进行预处理操作。比如：
+<p class="info-box">
+	[root@bogon demo]# g++ -E demo.cpp -o demo.i<br>
+	[root@bogon demo]# ls<br>
+	demo.cpp&nbsp; <span style="color:#008000;">demo.i</span></p>
+注意，由于编译阶段需要用到预处理的结果，因此这里必须使用 -o 选项将该结果输出到指定的 demo.i 文件中（Linux 系统中，通常用 ".i" 或者 ".ii" 作为 C++ 程序预处理后所得文件的后缀名）。
+<blockquote>
+	<p>
+		感兴趣的读者可自行运行 cat demo.i 指令查看 demo.i 文件中的内容。</p>
+</blockquote>
+<h4>
+	2) 编译&nbsp;</h4>
+值得一提的是，编译阶段针对的将不再是 demo.cpp 源文件，而是 demo.i 预处理文件。对预处理文件进行编译操作，实际上就是对 demo.i 文件做进一步的语法分析，并生成对应的汇编代码文件（Linux 发行版通常以 ".s" 作为其后缀名）。<br>
+<br>
+通过给 g++ 指令添加 -S 选项，即可令 GCC 编译器仅对指定预处理文件做编译操作。例如：
+<p class="info-box">
+	[root@bogon demo]# g++ -S demo.i<br>
+	[root@bogon demo]# ls<br>
+	demo.cpp&nbsp; demo.i&nbsp; <span style="color:#008000;">demo.s</span></p>
+和预处理阶段不同，即便这里不使用 -o 选项，编译结果也会输出到和预处理文件同名（后缀名改为 .s）的新建文件中。<br>
+<h4>
+	3) 汇编</h4>
+汇编阶段就是将之前生成的汇编代码文件（demo.s）做进一步转换，生成对应的机器指令。通过给 g++ 指令添加 -c 选项，即可令 GCC 编译器仅对指定的汇编代码文件做汇编操作。<br>
+<br>
+例如：
+<p class="info-box">
+	[root@bogon demo]# g++ -c demo.s<br>
+	[root@bogon demo]# ls<br>
+	demo.cpp&nbsp; demo.i&nbsp; <span style="color:#008000;">demo.o</span>&nbsp; demo.s</p>
+显然，默认情况下汇编操作会自动生成一个和汇编代码文件名称相同、后缀名为 .o 的二进制文件（又称为目标文件）。
+<h4>
+	4) 链接</h4>
+目标文件已经是二进制文件，与可执行文件的组织形式类似，只是有些函数和全局变量的地址还未找到，因此还无法执行。链接的作用就是找到这些目标地址，将所有的目标文件组织成一个可以执行的二进制文件。<br>
+<br>
+完成链接操作，并不需要给 g++ 添加任何选项，只要将汇编阶段得到的 demo.o 作为参数传递给它，g++就会在其基础上完成链接操作。例如：
+<p class="info-box">
+	[root@bogon demo]# g++ demo.o<br>
+	[root@bogon demo]# ls<br>
+	<span style="color:#008000;">a.out</span>&nbsp; demo.cpp&nbsp; demo.i&nbsp; demo.o&nbsp; demo.s</p>
+在链接阶段，如果不使用 -o 选项将执行结果输出到指定文件，则 g++ 会默认创建一个名为 a.out 的可执行文件，并将执行结果输出到该文件中。<br>
+<br>
+经过以上 4 步，最终生成了 a.out 可执行文件，我们可以尝试运行该文件，查看其结果是否正确：
+<p class="info-box">
+	[root@bogon demo]# ./a.out<br>
+	GCC教程：http://c.biancheng.net/gcc/</p>
+显然，该结果和我们的预期相符。<br>
+<br>
+除此之外，如果读者不想执行这么多条指令，但想获得预处理、编译、汇编以及链接这 4 个过程产生的中间文件，可以执行如下指令：
+<p class="info-box">
+	[root@bogon demo]# g++ demo.cpp -save-temps<br>
+	[root@bogon demo]# ls<br>
+	a.out&nbsp; demo.c&nbsp; demo.cpp&nbsp; demo.ii&nbsp; demo.o&nbsp; demo.s</p>
+可以看到，通过给 g++ 添加 -save-temps 选项，可以使 GCC 编译器保留编译源文件过程中产生的所有中间文件。<br>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./16GCC分步编译C++程序（汇总版）_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/2382.html">GCC -l选项：手动添加链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/7992.html">如何使用gcc指令一次处理多个文件？</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/569.html" title="C语言小写转大写，小写字母转换成大写字母">C语言小写转大写，小写字母转换成大写字母</a></li>
+<li><a href="http://c.biancheng.net/view/1052.html" title="Java验证用户名和密码">Java验证用户名和密码</a></li>
+<li><a href="http://c.biancheng.net/view/1078.html" title="Linux fg命令：把后台命令恢复在前台执行">Linux fg命令：把后台命令恢复在前台执行</a></li>
+<li><a href="http://c.biancheng.net/view/1937.html" title="DeepDream网络（TensorFlow创建）详解">DeepDream网络（TensorFlow创建）详解</a></li>
+<li><a href="http://c.biancheng.net/view/3227.html" title="Google Map API开发简介">Google Map API开发简介</a></li>
+<li><a href="http://c.biancheng.net/view/3778.html" title="汇编语言WriteFile函数：向文件写入数据">汇编语言WriteFile函数：向文件写入数据</a></li>
+<li><a href="http://c.biancheng.net/view/vip_5093.html" title="Linux RAID（磁盘阵列）完全攻略">Linux RAID（磁盘阵列）完全攻略</a></li>
+<li><a href="http://c.biancheng.net/view/5533.html" title="Swagger常用注解使用详解">Swagger常用注解使用详解</a></li>
+<li><a href="http://c.biancheng.net/view/7920.html" title="PHP rmdir()：删除目录">PHP rmdir()：删除目录</a></li>
+<li><a href="http://c.biancheng.net/view/9487.html" title="IP地址和Mac地址的区别">IP地址和Mac地址的区别</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8524;
+window.arcId = "25d9hn6XSh5RaT9Lft2Hr71F0jfrjQgECwrpxyOznu6STe+fDQsd9d4HVQs";
+window.typeidChain = "73";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./16GCC分步编译C++程序（汇总版）_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./16GCC分步编译C++程序（汇总版）_files/jquery1.12.4.min.js.下载"></script>
+<script src="./16GCC分步编译C++程序（汇总版）_files/common.js.下载"></script>
+<span style="display:none;"><script src="./16GCC分步编译C++程序（汇总版）_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

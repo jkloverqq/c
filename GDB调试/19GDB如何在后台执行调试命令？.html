@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://c.biancheng.net/view/vip_8516.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./19GDB如何在后台执行调试命令？_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./19GDB如何在后台执行调试命令？_files/common.css" rel="stylesheet">
+<title>GDB如何在后台执行调试命令？</title>
+<meta name="description" content="前面章节中，我们已经接触了很多调试命令，如 run（r）、continue（c）、next（n）等，借助它们即可操控 GDB 调试目标程序。有些读者可能已经注意到，这些调试命令在执行过程中，是无">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./19GDB如何在后台执行调试命令？_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/gdb/">GDB</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/view/8123.html">GDB是什么？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/view/8130.html">GDB下载和安装教程</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/view/vip_8511.html">如何在Windows平台上安装GDB调试器？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/view/vip_8512.html">Sublime Text配置GDB调试环境</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/view/8153.html">GDB调试C/C++程序的整个过程</a>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/view/vip_8520.html">调用GDB调试器的4种方式</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/view/8174.html">gdb run（r）命令：启动程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/view/8189.html">GDB break（b）：设置断点</a>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/view/8191.html">如何实时监控变量值的变化情况？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/view/8199.html">GDB catch命令：建立捕捉断点</a>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/view/8255.html">GDB条件断点（condition命令）详解</a>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/view/8232.html">GDB单步调试程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/view/vip_8519.html">如何使用GDB进行断点调试？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/view/8238.html">GDB print和display命令：查看变量的值</a>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/view/vip_8513.html">GDB print命令更高级的用法！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">16</span>
+        	<a href="http://c.biancheng.net/view/8219.html">GDB禁用和删除断点</a>
+        </dd>
+<dd>
+        	<span class="channel-num">17</span>
+        	<a href="http://c.biancheng.net/view/vip_8514.html">如何用GDB调试多线程程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">18</span>
+        	<a href="http://c.biancheng.net/view/vip_8515.html">GDB non-stop模式详解</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">19</span>
+        	<a href="http://c.biancheng.net/view/vip_8516.html">GDB如何在后台执行调试命令？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">20</span>
+        	<a href="http://c.biancheng.net/view/vip_8517.html">GDB调试多进程程序</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">21</span>
+        	<a href="http://c.biancheng.net/view/vip_8518.html">GDB如何进行反向调试？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">22</span>
+        	<a href="http://c.biancheng.net/view/8291.html">GDB handle命令：信号处理</a>
+        </dd>
+<dd>
+        	<span class="channel-num">23</span>
+        	<a href="http://c.biancheng.net/view/8282.html">GDB frame和backtrace命令：查看栈信息</a>
+        </dd>
+<dd>
+        	<span class="channel-num">24</span>
+        	<a href="http://c.biancheng.net/view/7466.html">GDB编辑和搜索源码</a>
+        </dd>
+<dd>
+        	<span class="channel-num">25</span>
+        	<a href="http://c.biancheng.net/view/8293.html">GDB help命令：查看目标命令的具体用法</a>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/gdb/">GDB</a></span>
+	<span class="read-num">阅读：1,113</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>GDB如何在后台执行调试命令？</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/vip_8515.html">GDB non-stop模式详解</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/vip_8517.html">GDB调试多进程程序</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">前面章节中，我们已经接触了很多调试命令，如 run（r）、continue（c）、next（n）等，借助它们即可操控 GDB 调试目标程序。有些读者可能已经注意到，这些调试命令在执行过程中，是无法使用其它 GDB 调试命令的，换句话说，只有当一个调试命令执行结束后，(gdb) 命令提示符才会出现，我们才能执行下一个调试命令。<br>
+<br>
+事实上，对于某些调试命令，GDB 调试器提供有 2 种执行方式：
+<ul>
+	<li>
+		同步执行：“一个一个”的执行，即必须等待前一个命令执行完毕，才能执行下一个调试命令。</li>
+	<li>
+		后台执行：又称“异步执行”，即当某个调试命令开始执行时，(gdb) 命令提示符会立即出现，我们无需等待前一个命令执行完毕就可以继续执行下一个调试命令。&nbsp;</li>
+</ul>
+<br>
+以后台（异步）的方式执行一个调试命令，其语法格式如下：
+<p class="info-box">
+	(gdb) command&amp;</p>
+其中，command 表示就是要执行的调试命令。command 和 &amp; 之间不需要添加空格。<br>
+<br>
+显然，通过在目标命令的后面添加一个 '&amp;' 字符，即可使该命令以后台的方式执行。例如，continue 命令的异步执行版本为<code>continue&amp;</code> 或者<code>c&amp;</code>。<br>
+<br>
+表 1 罗列了支持后台执行的一些常用的调试命令。<br>
+<br>
+<table>
+	<caption>
+		表 1 GDB支持后台执行的调试命令</caption>
+	<tbody>
+		<tr>
+			<th>
+				调试命令</th>
+			<th>
+				含 义</th>
+		</tr>
+		<tr>
+			<td>
+				run（r）</td>
+			<td>
+				启动被调试的程序。有关此命令的具体用法，读者可阅读《<a href="http://c.biancheng.net/view/8174.html" target="_blank">GDB run 命令</a>》一节。</td>
+		</tr>
+		<tr>
+			<td>
+				attach</td>
+			<td>
+				调试处于运行着的的程序。</td>
+		</tr>
+		<tr>
+			<td>
+				step</td>
+			<td>
+				单步调试程序。有关此命令的具体用法，可阅读《<a href="http://c.biancheng.net/view/8232.html" target="_blank">GDB单步调试程序</a>》一节。</td>
+		</tr>
+		<tr>
+			<td>
+				stepi</td>
+			<td>
+				执行一条机器指令。</td>
+		</tr>
+		<tr>
+			<td>
+				next(n)</td>
+			<td>
+				单步调试程序。有关此命令的具体用法，可阅读《<a href="http://c.biancheng.net/view/8232.html" target="_blank">GDB单步调试程序</a>》一节。</td>
+		</tr>
+		<tr>
+			<td>
+				nexti</td>
+			<td>
+				执行一条机器指令，其与 stepi 命令的区别，类似于 step 和 next 命令的区别。</td>
+		</tr>
+		<tr>
+			<td>
+				continue</td>
+			<td>
+				继续执行程序。</td>
+		</tr>
+		<tr>
+			<td>
+				finish</td>
+			<td>
+				结束当前正在执行的函数。有关此命令的用法，可阅读《<a href="http://c.biancheng.net/view/8203.html" target="_blank">GDB断点调试</a>》一节。</td>
+		</tr>
+		<tr>
+			<td>
+				until（u）</td>
+			<td>
+				快速执行完当前的循环体。有关此命令的用法，可阅读《<a href="http://c.biancheng.net/view/8232.html" target="_blank">GDB单步调试程序</a>》一节。</td>
+		</tr>
+	</tbody>
+</table>
+<blockquote>
+	<p>
+		注意，并非所有的调试命令都支持异步执行。如果目标调试命令不支持后台执行的形式，当我们尝试使用“命令名+&amp;”的方式执行该命令时，GDB 调试器会提示类似“Function "&amp;" not defined.”的错误信息。</p>
+</blockquote>
+后台执行命令异步调试程序的方法，多用于 non-stop 模式中。虽然 all-stop 模式中也可以使用，但在前一个异步命令未执行完毕前，仍旧不能执行其它命令。
+<h2>
+	GDB interrupt命令：暂停后台线程执行</h2>
+对于在后台处于执行状态的线程，可以使用 interrupt 命令将其中断。以调试《<a href="http://c.biancheng.net/view/8270.html">GDB non-stop模式</a>》一节给出的多线程程序为例：
+<p class="info-box">
+	(gdb) l<br>
+	1 #include &lt;stdio.h&gt;<br>
+	2 #include &lt;pthread.h&gt;<br>
+	3<br>
+	4 static void *thread1_job()<br>
+	5 {<br>
+	6&nbsp;&nbsp;&nbsp;&nbsp; printf("this is 1\n");<br>
+	7 }<br>
+	8 static void *thread2_job()<br>
+	9 {<br>
+	10&nbsp;&nbsp;&nbsp;&nbsp; printf("this is 2\n");<br>
+	(gdb)<br>
+	11 }<br>
+	12<br>
+	13 int main()<br>
+	14 {<br>
+	15&nbsp;&nbsp;&nbsp;&nbsp; pthread_t tid1,tid2;<br>
+	16&nbsp;&nbsp;&nbsp;&nbsp; pthread_create(&amp;tid1, NULL, thread1_job, NULL);<br>
+	17&nbsp;&nbsp;&nbsp;&nbsp; pthread_create(&amp;tid2, NULL, thread2_job, NULL);<br>
+	18&nbsp;&nbsp;&nbsp;&nbsp; pthread_join(tid1,NULL);<br>
+	19&nbsp;&nbsp;&nbsp;&nbsp; pthread_join(tid2,NULL);<br>
+	20&nbsp;&nbsp;&nbsp;&nbsp; printf("this is main\n");<br>
+	(gdb)<br>
+	21&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>
+	22 }<br>
+	(gdb) b 6<br>
+	Breakpoint 1 at 0x11b1: file main.c, line 6.<br>
+	(gdb) set non-stop on&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;-- 以 non-stop 模式调试程序<br>
+	(gdb) r<br>
+	Starting program: ~/demo/main.exe<br>
+	[Thread debugging using libthread_db enabled]<br>
+	Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".<br>
+	[New Thread 0x7ffff7d9f700 (LWP 57816)]<br>
+	[New Thread 0x7ffff759e700 (LWP 57817)]<br>
+	this is 2<br>
+	<br>
+	Thread 2 "main.exe" hit Breakpoint 1, thread1_job () at main.c:6<br>
+	6&nbsp;&nbsp;&nbsp;&nbsp; printf("this is 1\n");<br>
+	(gdb) [Thread 0x7ffff759e700 (LWP 57817) exited]<br>
+	<br>
+	(gdb) info threads<br>
+	&nbsp; Id&nbsp;&nbsp; Target Id&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Frame<br>
+	* 1&nbsp;&nbsp;&nbsp; Thread 0x7ffff7da0740 (LWP 57812) "main.exe"&nbsp; <span style="color:#b22222;">(running)</span><br>
+	&nbsp; &nbsp;2&nbsp;&nbsp;&nbsp; Thread 0x7ffff7d9f700 (LWP 57816) "main.exe"&nbsp; &nbsp;thread1_job ()&nbsp; at main.c:6<br>
+	(gdb)</p>
+可以看到，当以 non-stop 模式调试程序时，由于我们仅在第 6 行代码处打上了断点，因此启动程序中，仅存在 2 个线程（1 个线程执行完毕后结束了），并且 1 号线程是一直在后台执行着的。<br>
+<br>
+借助 interrupt 命令，我们可以将 1 号线程暂停执行：
+<p class="info-box">
+	(gdb) interrupt<br>
+	(gdb)<br>
+	Thread 1 "main.exe" stopped.<br>
+	......<br>
+	(gdb) info threads<br>
+	&nbsp; Id&nbsp;&nbsp; Target Id&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Frame<br>
+	* 1&nbsp;&nbsp;&nbsp; Thread 0x7ffff7da0740 (LWP 57812) "main.exe"&nbsp; ......at pthread_join_common.c:145<br>
+	&nbsp; 2&nbsp;&nbsp;&nbsp; Thread 0x7ffff7d9f700 (LWP 57816) "main.exe"&nbsp; &nbsp;hread1_job () at main.c:6<br>
+	(gdb)</p>
+可以看到，1 号线程停止了运行。
+<blockquote>
+	<p>
+		注意，在 all-stop 模式下，interrupt 命令作用于所有线程，即该命令可以令整个程序暂停执行；而在 non-stop 模式下，interrupt 命令仅作用于当前线程。 如果想另其作用于所有线程，可以执行 interrupt -a 命令。</p>
+</blockquote>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./19GDB如何在后台执行调试命令？_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/vip_8515.html">GDB non-stop模式详解</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/vip_8517.html">GDB调试多进程程序</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/178.html" title="for循环嵌套，C语言for循环嵌套详解">for循环嵌套，C语言for循环嵌套详解</a></li>
+<li><a href="http://c.biancheng.net/view/1506.html" title="李明C语言中级视频教程下载（42集高清原画）">李明C语言中级视频教程下载（42集高清原画）</a></li>
+<li><a href="http://c.biancheng.net/view/3114.html" title="C# Char：字符">C# Char：字符</a></li>
+<li><a href="http://c.biancheng.net/view/3823.html" title="汇编语言FPU寄存器栈（register stack）">汇编语言FPU寄存器栈（register stack）</a></li>
+<li><a href="http://c.biancheng.net/view/3956.html" title="Qt Designer的简单使用">Qt Designer的简单使用</a></li>
+<li><a href="http://c.biancheng.net/view/4791.html" title="Java DriverManager.getLogWriter()方法：获取日志的打印输出流">Java DriverManager.getLogWriter()方法：获取日志的打印输出流</a></li>
+<li><a href="http://c.biancheng.net/view/vip_5097.html" title="使用mdadm命令来配置RAID">使用mdadm命令来配置RAID</a></li>
+<li><a href="http://c.biancheng.net/view/vip_5952.html" title="Python浮点数精度问题（包含解决方案）">Python浮点数精度问题（包含解决方案）</a></li>
+<li><a href="http://c.biancheng.net/view/6979.html" title="如何为网站选择合适的关键词？">如何为网站选择合适的关键词？</a></li>
+<li><a href="http://c.biancheng.net/view/7951.html" title="jQuery fadeTo()方法的用法">jQuery fadeTo()方法的用法</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8516;
+window.arcId = "6521ExII2ly+Skc1CcOH4ahJwDocoXL4RxItkJ8J2r4TM3u/DWytaKok05w";
+window.typeidChain = "154";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./19GDB如何在后台执行调试命令？_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./19GDB如何在后台执行调试命令？_files/jquery1.12.4.min.js.下载"></script>
+<script src="./19GDB如何在后台执行调试命令？_files/common.js.下载"></script>
+<span style="display:none;"><script src="./19GDB如何在后台执行调试命令？_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

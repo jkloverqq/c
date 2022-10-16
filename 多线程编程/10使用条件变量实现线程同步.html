@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://c.biancheng.net/thread/vip_8617.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./10使用条件变量实现线程同步_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./10使用条件变量实现线程同步_files/common.css" rel="stylesheet">
+<title>使用条件变量实现线程同步</title>
+<meta name="description" content="假设一个进程中包含多个线程，这些线程共享变量 x，我们希望某个（或某些）线程等待 x==10 条件成立后再执行后续的代码，该如何实现呢？ 您可能想到用 while 循环实现，例如： void">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./10使用条件变量实现线程同步_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/thread/">多线程</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/thread/what-is-thread.html">线程是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/thread/first-thread.html">第一个多线程程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/thread/vip_8614.html">线程同步机制</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/thread/vip_8622.html">使用C++11进行多线程编程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/thread/">多线程</a></span>
+	<span class="read-num">阅读：1,720</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>使用条件变量实现线程同步</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">假设一个进程中包含多个线程，这些线程共享变量 x，我们希望某个（或某些）线程等待 "x==10' 条件成立后再执行后续的代码，该如何实现呢？<br>
+<br>
+您可能想到用 while 循环实现，例如：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8617.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_type">void</span><span class="sh_symbol">*</span> <span class="sh_function">threadFun</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span> args<span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">while</span><span class="sh_symbol">(</span>x <span class="sh_symbol">!=</span> <span class="sh_number">10</span><span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>        <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">5</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">// 待条件成立后，执行后续的代码</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">void* threadFun(void * args){
+    while(x != 10){
+        sleep(5);
+    }
+    // 待条件成立后，执行后续的代码
+}</pre></div></div>
+当线程执行此函数时，会判断 x 的值是否等于 10，如果不等则间隔 5 秒后再重复判断，直到 x 的值等于 10 ，线程才能执行后续的代码。<br>
+<br>
+直观上看，while 循环确实能够阻塞线程，但这种方法存在严重的效率问题。当线程因条件不成立进入等待状态时，如果此时恰好有另一个线程将 x 的值改为 10，该线程必须等待 5 秒后才能继续执行。如果我们将等待时间缩短（或者直接将 sleep(5) 注释掉），线程将反复判断 x 的值是否等于 10，它可能会一直霸占着 CPU 资源，导致其它线程无法执行，x 变量的值会出现“长时间不改变”的情况。<br>
+<br>
+针对类似的场景，我们推荐您用<span style="color:#008000;">条件变量</span>来实现。和互斥锁、信号量类似，条件变量本质也是一个全局变量，它的功能是阻塞线程，直至接收到“条件成立”的信号后，被阻塞的线程才能继续执行。<br>
+<br>
+一个条件变量可以阻塞多个线程，这些线程会组成一个等待队列。当条件成立时，条件变量可以解除线程的“被阻塞状态”。也就是说，条件变量可以完成以下两项操作：
+<ul>
+	<li>
+		阻塞线程，直至接收到“条件成立”的信号；</li>
+	<li>
+		向等待队列中的一个或所有线程发送“条件成立”的信号，解除它们的“被阻塞”状态。</li>
+</ul>
+<br>
+为了避免多线程之间发生“抢夺资源”的问题，条件变量在使用过程中必须和一个互斥锁搭配使用。如果您不了解互斥锁或者对互斥锁一知半解，请先阅读《<a href="http://c.biancheng.net/thread/vip_8615.html" target="_blank">Linux互斥锁实现线程同步</a>》一文。
+<h2>
+	条件变量的具体用法</h2>
+POSIX 标准中，条件变量用 pthread_cond_t 类型的变量表示，此类型定义在<code>&lt;pthread.h&gt;</code>头文件中。举个例子：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre style="display: none;"><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8617.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode" shownum="false"><ul class="snippet-no-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;pthread.h&gt;</span></li><li><span class="sh_usertype">pthread_cond_t</span><span class="sh_normal"> </span>myCond<span class="sh_symbol">;</span></li></ul></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;pthread.h&gt;
+pthread_cond_t myCond;</pre></div></div>
+由此，我们就成功创建了一个条件变量。要想使用 myCond 条件变量，还需要进行初始化操作。
+<h4>
+	1) 初始化条件变量</h4>
+初始化条件变量的方式有两种，一种是直接将 PTHREAD_COND_INITIALIZER 赋值给条件变量，例如：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre style="display: none;"><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8617.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode" shownum="false"><ul class="snippet-no-num"><li><span class="sh_usertype">pthread_cond_t</span><span class="sh_normal"> </span>myCond <span class="sh_symbol">=</span> PTHREAD_COND_INITIALIZER<span class="sh_symbol">;</span></li></ul></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">pthread_cond_t myCond = PTHREAD_COND_INITIALIZER;</pre></div></div>
+<br>
+还可以借助 pthread_cond_init() 函数初始化条件变量，语法格式如下：
+<pre class="info-box">int pthread_cond_init(pthread_cond_t * cond, const pthread_condattr_t * attr);</pre>
+参数 cond 用于指明要初始化的条件变量；参数 attr 用于自定义条件变量的属性，通常我们将它赋值为 NULL，表示以系统默认的属性完成初始化操作。<br>
+<br>
+pthread_cond_init() 函数初始化成功时返回数字 0，反之函数返回非零数。<br>
+<blockquote>
+	<p>
+		当 attr 参数为 NULL 时，以上两种初始化方式完全等价。</p>
+</blockquote>
+<h4>
+	2) 阻塞当前线程，等待条件成立</h4>
+当条件不成立时，条件变量可以阻塞当前线程，所有被阻塞的线程会构成一个等待队列。<br>
+<br>
+阻塞线程可以借助以下两个函数实现：
+<pre class="info-box">int pthread_cond_wait(pthread_cond_t* cond, pthread_mutex_t* mutex);
+int pthread_cond_timedwait(pthread_cond_t* cond, pthread_mutex_t* mutex, const struct timespec* abstime); </pre>
+cond 参数表示已初始化好的条件变量；mutex 参数表示与条件变量配合使用的互斥锁；abstime 参数表示阻塞线程的时间。
+<blockquote>
+	<p>
+		注意，abstime 参数指的是绝对时间，例如您打算阻塞线程 5 秒钟，那么首先要得到当前系统的时间，然后再加上 5 秒，最终得到的时间才是传递的实参值。</p>
+</blockquote>
+调用两个函数之前，我们必须先创建好一个互斥锁并完成“加锁”操作，然后才能作为实参传递给 mutex 参数。两个函数会完成以下两项工作：
+<ul>
+	<li>
+		阻塞线程，直至接收到“条件成立”的信号；</li>
+	<li>
+		当线程被添加到等待队列上时，将互斥锁“解锁”。</li>
+</ul>
+<br>
+也就是说，函数尚未接收到“条件成立”的信号之前，它将一直阻塞线程执行。注意，当函数接收到“条件成立”的信号后，它并不会立即结束对线程的阻塞，而是先完成对互斥锁的“加锁”操作，然后才解除阻塞。
+<blockquote>
+	<p>
+		<span style="background-color: rgb(249, 249, 249);">两个函数都以“原子操作”的方式完成“阻塞线程+解锁”或者“重新加锁+解除阻塞”这两个过程。所谓“原子操作”，即当有多个线程执行相同的某个过程时，虽然它们都会访问互斥锁和条件变量，但之间不会相互干扰。</span></p>
+</blockquote>
+以上两个函数都能用来阻塞线程，它们的区别在于：pthread_cond_wait() 函数可以永久阻塞线程，直到条件变量成立的那一刻；pthread_cond_timedwait() 函数只能在 abstime 参数指定的时间内阻塞线程，超出时限后，该函数将重新对互斥锁执行“加锁”操作，并解除对线程的阻塞，函数的返回值为 ETIMEDOUT。<br>
+<br>
+如果函数成功接收到了“条件成立”的信号，重新对互斥锁完成了“加锁”并使线程继续执行，函数返回数字 0，反之则返回非零数。<br>
+<blockquote>
+	<p>
+		POSIX 标准规定，pthread_cond_wait() 和 pthread_cond_timedwait() 函数是可以作为“取消点”的函数。当线程接收到“强制终止执行”的信号后，执行到这两个函数时，线程就会终止执行。有关强制终止执行线程和“取消点”的具体含义，您可以阅读《<a href="http://c.biancheng.net/thread/vip_8613.html" target="_blank">线程间相互终止执行，这个坑千万别踩！</a>》一文。</p>
+</blockquote>
+<h4>
+	3) 解除线程的“阻塞”状态</h4>
+对于被 pthread_cond_wait() 或 pthread_cond_timedwait() 函数阻塞的线程，我们可以借助如下两个函数向它们发送“条件成立”的信号，解除它们的“被阻塞”状态：
+<pre class="info-box">int pthread_cond_signal(pthread_cond_t* cond);
+int pthread_cond_broadcast(pthread_cond_t* cond);</pre>
+cond 参数表示初始化好的条件变量。当函数成功解除线程的“被阻塞”状态时，返回数字 0，反之返回非零数。<br>
+<br>
+两个函数都能解除线程的“被阻塞”状态，区别在于：
+<ul>
+	<li>
+		pthread_cond_signal() 函数至少解除一个线程的“被阻塞”状态，如果等待队列中包含多个线程，优先解除哪个线程将由操作系统的线程调度程序决定；</li>
+	<li>
+		pthread_cond_broadcast() 函数可以解除等待队列中所有线程的“被阻塞”状态。</li>
+</ul>
+<br>
+由于互斥锁的存在，解除阻塞后的线程也不一定能立即执行。当互斥锁处于“加锁”状态时，解除阻塞状态的所有线程会组成等待互斥锁资源的队列，等待互斥锁“解锁”。<br>
+<h4>
+	4) 销毁条件变量</h4>
+对于初始化好的条件变量，我们可以调用 pthread_cond_destory() 函数销毁它。<br>
+<br>
+pthread_cond_destory() 函数的语法格式如下：
+<pre class="info-box">int pthread_cond_destroy(pthread_cond_t *cond);</pre>
+cond 参数表示要销毁的条件变量。如果函数成功销毁 cond 参数指定的条件变量，返回数字 0，反之返回非零数。<br>
+<br>
+值得一提的是，销毁后的条件变量还可以调用 pthread_cond_init() 函数重新初始化后使用。<br>
+<h2>
+	条件变量的实际应用</h2>
+接下来，通过一个实例给您演示条件变量的具体用法。
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8617.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8617.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;pthread.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdlib.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;unistd.h&gt;</span></li><li><span class="sh_comment">//初始化互斥锁</span></li><li><span class="sh_usertype">pthread_mutex_t</span><span class="sh_normal"> </span>myMutex <span class="sh_symbol">=</span> PTHREAD_MUTEX_INITIALIZER<span class="sh_symbol">;</span></li><li><span class="sh_comment">//初始化条件变量</span></li><li><span class="sh_usertype">pthread_cond_t</span><span class="sh_normal"> </span>myCond <span class="sh_symbol">=</span> PTHREAD_COND_INITIALIZER<span class="sh_symbol">;</span></li><li><span class="sh_comment">//设置全局变量</span></li><li><span class="sh_type">int</span> x <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_comment">//线程执行的函数</span></li><li><span class="sh_type">void</span> <span class="sh_symbol">*</span> <span class="sh_function">waitForTrue</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span>args<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> res<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//条件变量阻塞线程之前，先对互斥锁执行“加锁”操作</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_mutex_lock</span><span class="sh_symbol">(&amp;</span>myMutex<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"waitForTrue 加锁失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> NULL<span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"------等待 x 的值为 10</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span><span class="sh_function">pthread_cond_wait</span><span class="sh_symbol">(&amp;</span>myCond<span class="sh_symbol">,</span> <span class="sh_symbol">&amp;</span>myMutex<span class="sh_symbol">)</span> <span class="sh_symbol">==</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"x = %d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> x<span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//最终将互斥锁解锁</span></li><li>    <span class="sh_function">pthread_mutex_unlock</span><span class="sh_symbol">(&amp;</span>myMutex<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">return</span> NULL<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_comment">//线程执行的函数</span></li><li><span class="sh_type">void</span> <span class="sh_symbol">*</span> <span class="sh_function">doneForTrue</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span>args<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> res<span class="sh_symbol">;</span></li><li><span style="display:none;">&nbsp;</span></li><li>    <span class="sh_keyword">while</span> <span class="sh_symbol">(</span>x <span class="sh_symbol">!=</span> <span class="sh_number">10</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_comment">//对互斥锁执行“加锁”操作</span></li><li>        res <span class="sh_symbol">=</span> <span class="sh_function">pthread_mutex_lock</span><span class="sh_symbol">(&amp;</span>myMutex<span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">==</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>            x<span class="sh_symbol">++;</span></li><li>            <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"doneForTrue：x = %d</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> x<span class="sh_symbol">);</span></li><li>            <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>            <span class="sh_comment">//对互斥锁“解锁”</span></li><li>            <span class="sh_function">pthread_mutex_unlock</span><span class="sh_symbol">(&amp;</span>myMutex<span class="sh_symbol">);</span></li><li>        <span class="sh_cbracket">}</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//发送“条件成立”的信号，解除 mythread1 线程的“被阻塞”状态</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_cond_signal</span><span class="sh_symbol">(&amp;</span>myCond<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"解除阻塞失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> NULL<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> res<span class="sh_symbol">;</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>mythread1<span class="sh_symbol">,</span> mythread2<span class="sh_symbol">;</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>mythread1<span class="sh_symbol">,</span> NULL<span class="sh_symbol">,</span> waitForTrue<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"mythread1线程创建失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>mythread2<span class="sh_symbol">,</span> NULL<span class="sh_symbol">,</span> doneForTrue<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"mythread2线程创建失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//等待 mythread1 线程执行完成</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>mythread1<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"1：等待线程失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//等待 mythread2 线程执行完成</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>mythread2<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"2：等待线程失败</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//销毁条件变量</span></li><li>    <span class="sh_function">pthread_cond_destroy</span><span class="sh_symbol">(&amp;</span>myCond<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+//初始化互斥锁
+pthread_mutex_t myMutex = PTHREAD_MUTEX_INITIALIZER;
+//初始化条件变量
+pthread_cond_t myCond = PTHREAD_COND_INITIALIZER;
+//设置全局变量
+int x = 0;
+//线程执行的函数
+void * waitForTrue(void *args) {
+    int res;
+    //条件变量阻塞线程之前，先对互斥锁执行“加锁”操作
+    res = pthread_mutex_lock(&amp;myMutex);
+    if (res != 0) {
+        printf("waitForTrue 加锁失败\n");
+        return NULL;
+    }
+    printf("------等待 x 的值为 10\n");
+    if (pthread_cond_wait(&amp;myCond, &amp;myMutex) == 0) {
+        printf("x = %d\n", x);
+    }
+    //最终将互斥锁解锁
+    pthread_mutex_unlock(&amp;myMutex);
+    return NULL;
+}
+//线程执行的函数
+void * doneForTrue(void *args) {
+    int res;
+
+    while (x != 10) {
+        //对互斥锁执行“加锁”操作
+        res = pthread_mutex_lock(&amp;myMutex);
+        if (res == 0) {
+            x++;
+            printf("doneForTrue：x = %d\n", x);
+            sleep(1);
+            //对互斥锁“解锁”
+            pthread_mutex_unlock(&amp;myMutex);
+        }
+    }
+    //发送“条件成立”的信号，解除 mythread1 线程的“被阻塞”状态
+    res = pthread_cond_signal(&amp;myCond);
+    if (res != 0) {
+        printf("解除阻塞失败\n");
+    }
+    return NULL;
+}
+int main() {
+    int res;
+    pthread_t mythread1, mythread2;
+    res = pthread_create(&amp;mythread1, NULL, waitForTrue, NULL);
+    if (res != 0) {
+        printf("mythread1线程创建失败\n");
+        return 0;
+    }
+    res = pthread_create(&amp;mythread2, NULL, doneForTrue, NULL);
+    if (res != 0) {
+        printf("mythread2线程创建失败\n");
+        return 0;
+    }
+    //等待 mythread1 线程执行完成
+    res = pthread_join(mythread1, NULL);
+    if (res != 0) {
+        printf("1：等待线程失败\n");
+    }
+    //等待 mythread2 线程执行完成
+    res = pthread_join(mythread2, NULL);
+    if (res != 0) {
+        printf("2：等待线程失败\n");
+    }
+    //销毁条件变量
+    pthread_cond_destroy(&amp;myCond);
+    return 0;
+}</pre></div></div>
+假设程序编写在 thread.c 文件中，执行过程如下：
+<p class="info-box">
+	[root@localhost ~]# gcc thread.c -o thread.exe -lpthread<br>
+	[root@localhost ~]# ./thread.exe<br>
+	------等待 x 的值为 10<br>
+	doneForTrue：x = 1<br>
+	doneForTrue：x = 2<br>
+	doneForTrue：x = 3<br>
+	doneForTrue：x = 4<br>
+	doneForTrue：x = 5<br>
+	doneForTrue：x = 6<br>
+	doneForTrue：x = 7<br>
+	doneForTrue：x = 8<br>
+	doneForTrue：x = 9<br>
+	doneForTrue：x = 10<br>
+	x = 10</p>
+程序中共创建了 2 个线程 mythread1 和 mythread2，其中 mythread1 线程借助条件变量实现了“直到变量 x 的值为 10 时，才继续执行后续代码”的功能，mythread1 线程用于将 x 的变量修改为 10，同时向 mythread1 线程发送“条件成立”的信号，唤醒 mythread1 线程并继续执行。<br>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./10使用条件变量实现线程同步_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/1103.html" title="Java什么是反射机制？反射机制的概念">Java什么是反射机制？反射机制的概念</a></li>
+<li><a href="http://c.biancheng.net/view/1259.html" title="逻辑地址空间和物理地址空间">逻辑地址空间和物理地址空间</a></li>
+<li><a href="http://c.biancheng.net/view/1416.html" title="C++基于范围的for循环详解">C++基于范围的for循环详解</a></li>
+<li><a href="http://c.biancheng.net/view/vip_2099.html" title="用户模式和内核模式">用户模式和内核模式</a></li>
+<li><a href="http://c.biancheng.net/view/2561.html" title="MySQL常用运算符详解">MySQL常用运算符详解</a></li>
+<li><a href="http://c.biancheng.net/view/vip_3429.html" title="分块查找（索引顺序查找）算法及C语言实现">分块查找（索引顺序查找）算法及C语言实现</a></li>
+<li><a href="http://c.biancheng.net/view/4269.html" title="Spring JDK动态代理（附带实例）">Spring JDK动态代理（附带实例）</a></li>
+<li><a href="http://c.biancheng.net/view/5180.html" title="Hibernate like方法：设置模糊查询的条件">Hibernate like方法：设置模糊查询的条件</a></li>
+<li><a href="http://c.biancheng.net/view/5788.html" title="String API常用方法介绍">String API常用方法介绍</a></li>
+<li><a href="http://c.biancheng.net/view/7925.html" title="jQuery scroll滚动事件">jQuery scroll滚动事件</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8617;
+window.arcId = "c78ddco4Ap85ZliZJSMu2KuIn+odrq/VuQTW0uZ8G17ygEfCIgt7MmyvDyo";
+window.typeidChain = "396";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./10使用条件变量实现线程同步_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./10使用条件变量实现线程同步_files/jquery1.12.4.min.js.下载"></script>
+<script src="./10使用条件变量实现线程同步_files/common.js.下载"></script>
+<span style="display:none;"><script src="./10使用条件变量实现线程同步_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

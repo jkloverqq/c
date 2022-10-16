@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://c.biancheng.net/view/vip_8519.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./13如何使用GDB进行断点调试？_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./13如何使用GDB进行断点调试？_files/common.css" rel="stylesheet">
+<title>如何使用GDB进行断点调试？</title>
+<meta name="description" content="前面利用 3 节的内容，分别介绍了 GDB 调试器支持在被调试程序中打断点的 3 种方法，即 break、watch 以及 catch 命令。在此基础上，本节给大家讲解：如何借助断点对程序进行调试？ 通过">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./13如何使用GDB进行断点调试？_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/gdb/">GDB</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/view/8123.html">GDB是什么？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/view/8130.html">GDB下载和安装教程</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/view/vip_8511.html">如何在Windows平台上安装GDB调试器？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/view/vip_8512.html">Sublime Text配置GDB调试环境</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/view/8153.html">GDB调试C/C++程序的整个过程</a>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/view/vip_8520.html">调用GDB调试器的4种方式</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/view/8174.html">gdb run（r）命令：启动程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/view/8189.html">GDB break（b）：设置断点</a>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/view/8191.html">如何实时监控变量值的变化情况？</a>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/view/8199.html">GDB catch命令：建立捕捉断点</a>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/view/8255.html">GDB条件断点（condition命令）详解</a>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/view/8232.html">GDB单步调试程序</a>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/view/vip_8519.html">如何使用GDB进行断点调试？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/view/8238.html">GDB print和display命令：查看变量的值</a>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/view/vip_8513.html">GDB print命令更高级的用法！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">16</span>
+        	<a href="http://c.biancheng.net/view/8219.html">GDB禁用和删除断点</a>
+        </dd>
+<dd>
+        	<span class="channel-num">17</span>
+        	<a href="http://c.biancheng.net/view/vip_8514.html">如何用GDB调试多线程程序？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">18</span>
+        	<a href="http://c.biancheng.net/view/vip_8515.html">GDB non-stop模式详解</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">19</span>
+        	<a href="http://c.biancheng.net/view/vip_8516.html">GDB如何在后台执行调试命令？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">20</span>
+        	<a href="http://c.biancheng.net/view/vip_8517.html">GDB调试多进程程序</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">21</span>
+        	<a href="http://c.biancheng.net/view/vip_8518.html">GDB如何进行反向调试？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">22</span>
+        	<a href="http://c.biancheng.net/view/8291.html">GDB handle命令：信号处理</a>
+        </dd>
+<dd>
+        	<span class="channel-num">23</span>
+        	<a href="http://c.biancheng.net/view/8282.html">GDB frame和backtrace命令：查看栈信息</a>
+        </dd>
+<dd>
+        	<span class="channel-num">24</span>
+        	<a href="http://c.biancheng.net/view/7466.html">GDB编辑和搜索源码</a>
+        </dd>
+<dd>
+        	<span class="channel-num">25</span>
+        	<a href="http://c.biancheng.net/view/8293.html">GDB help命令：查看目标命令的具体用法</a>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/gdb/">GDB</a></span>
+	<span class="read-num">阅读：2,525</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>如何使用GDB进行断点调试？</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/8232.html">GDB单步调试程序</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/8238.html">GDB print和display命令：查看变量的值</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">前面利用 3 节的内容，分别介绍了 GDB 调试器支持在被调试程序中打断点的 3 种方法，即 break、watch 以及 catch 命令。在此基础上，本节给大家讲解：如何借助断点对程序进行调试？<br>
+<br>
+通过在程序的适当位置打断点，观察程序执行至该位置时某些变量（或表达式）的值，进而不断缩小导致程序出现异常或 Bug 的语句的搜索范围，并最终找到，整个过程就称为<span style="color:#008000;">断点调试</span>。<br>
+<br>
+值得一提的是，整个断点调试的过程，除了要借助 break、watch 或者 catch 命令以外，还要借助其它一些命令，例如在前面章节中，我们已经使用过的 print 命令（查看变量的值）、continue 命令（使程序继续执行）等。<br>
+<br>
+表 1 罗列了断点调试程序过程中，常用的一些命令以及各自的含义。<br>
+<br>
+<table>
+	<caption>
+		表 1 GDB断点调试常用命令</caption>
+	<tbody>
+		<tr>
+			<th>
+				命令（缩写）</th>
+			<th>
+				功 能</th>
+		</tr>
+		<tr>
+			<td>
+				run（r）</td>
+			<td>
+				启动或者重启一个程序。</td>
+		</tr>
+		<tr>
+			<td>
+				list（l）</td>
+			<td>
+				显示带有行号的源码。</td>
+		</tr>
+		<tr>
+			<td>
+				continue（c）</td>
+			<td>
+				让暂停的程序继续运行。</td>
+		</tr>
+		<tr>
+			<td>
+				next（n）</td>
+			<td>
+				单步调试程序，即手动控制代码一行一行地执行。</td>
+		</tr>
+		<tr>
+			<td>
+				step（s）</td>
+			<td>
+				如果有调用函数，进入调用的函数内部；否则，和 next 命令的功能一样。</td>
+		</tr>
+		<tr>
+			<td>
+				until（u）<br>
+				until location（u location）</td>
+			<td>
+				当你厌倦了在一个循环体内单步跟踪时，单纯使用 until 命令，可以运行程序直到退出循环体。<br>
+				until n 命令中，n 为某一行代码的行号，该命令会使程序运行至第 n 行代码处停止。</td>
+		</tr>
+		<tr>
+			<td>
+				finish（fi）</td>
+			<td>
+				结束当前正在执行的函数，并在跳出函数后暂停程序的执行。</td>
+		</tr>
+		<tr>
+			<td>
+				return（return）</td>
+			<td>
+				结束当前调用函数并返回指定值，到上一层函数调用处停止程序执行。</td>
+		</tr>
+		<tr>
+			<td>
+				jump（j）</td>
+			<td>
+				使程序从当前要执行的代码处，直接跳转到指定位置处继续执行后续的代码。</td>
+		</tr>
+		<tr>
+			<td>
+				print（p）</td>
+			<td>
+				打印指定变量的值。</td>
+		</tr>
+		<tr>
+			<td>
+				quit（q）</td>
+			<td>
+				退出 GDB 调试器。</td>
+		</tr>
+	</tbody>
+</table>
+<blockquote>
+	<p>
+		其中，next、step 以及 until 命令，已经在 《<a href="http://c.biancheng.net/view/8232.html" target="_blank">GDB单步调试</a>》一节中做了详细介绍，本节不再赘述。另外，表 1 中罗列的这些命令读者无需死记硬背，因为实际使用 GDB 调试器时，它们都会常常用到，熟能生巧。</p>
+</blockquote>
+为了搞清楚表 1 中这些命令的功能和用法，这里仍以上节创建的 C 语言程序为例：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/view/vip_8519.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/view/vip_8519.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/view/vip_8519.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_type">int</span> <span class="sh_function">print</span><span class="sh_symbol">(</span><span class="sh_type">int</span> num<span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> ret <span class="sh_symbol">=</span> num <span class="sh_symbol">*</span> num<span class="sh_symbol">;</span></li><li>    <span class="sh_keyword">return</span> ret<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_type">int</span> <span class="sh_function">myfunc</span><span class="sh_symbol">(</span><span class="sh_type">int</span> num<span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> i <span class="sh_symbol">=</span> <span class="sh_number">1</span><span class="sh_symbol">;</span></li><li>    <span class="sh_type">int</span> sum <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_keyword">while</span><span class="sh_symbol">(</span>i <span class="sh_symbol">&lt;=</span> num<span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>        sum <span class="sh_symbol">+=</span> <span class="sh_function">print</span><span class="sh_symbol">(</span>i<span class="sh_symbol">);</span></li><li>        i<span class="sh_symbol">++;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> sum<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> num <span class="sh_symbol">=</span><span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_function">scanf</span><span class="sh_symbol">(</span><span class="sh_string">"%d"</span><span class="sh_symbol">,</span> <span class="sh_symbol">&amp;</span>num<span class="sh_symbol">);</span></li><li>    <span class="sh_type">int</span> result <span class="sh_symbol">=</span> <span class="sh_function">myfunc</span><span class="sh_symbol">(</span>num<span class="sh_symbol">);</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"%d"</span><span class="sh_symbol">,</span> result<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+int print(int num){
+    int ret = num * num;
+    return ret;
+}
+int myfunc(int num){
+    int i = 1;
+    int sum = 0;
+    while(i &lt;= num){
+        sum += print(i);
+        i++;
+    }
+    return sum;
+}
+int main(){
+    int num =0;
+    scanf("%d", &amp;num);
+    int result = myfunc(num);
+    printf("%d", result);
+    return 0;
+}</pre></div></div>
+此程序存储在<code>~/demo/main.c</code>源文件中（~ 表示当前用户的主目录）。<br>
+<br>
+1) 首先，表 1 中 run、continue、list、next、print 以及 quit 命令的用法都非常简单，唯一需要注意的一点是，run 命令除了可以启动程序的执行，还可以在任何时候重新启动程序。<br>
+<br>
+例如，以 main.c 为例：
+<p class="info-box">
+	[root@bogon demo]#&nbsp; gdb main.exe -q<br>
+	Reading symbols from main.exe...<br>
+	(gdb) l&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;-- list 命令的缩写，罗列出带有行号的源码<br>
+	1 #include &lt;stdio.h&gt;<br>
+	2 int print(int num){<br>
+	3&nbsp;&nbsp;&nbsp;&nbsp; int ret = num * num;<br>
+	4&nbsp;&nbsp;&nbsp;&nbsp; return ret;<br>
+	......<br>
+	15 int main(){<br>
+	16&nbsp;&nbsp;&nbsp;&nbsp; int num =0;<br>
+	17&nbsp;&nbsp;&nbsp;&nbsp; scanf("%d", &amp;num);<br>
+	18&nbsp;&nbsp;&nbsp;&nbsp; int result = myfunc(num);<br>
+	19&nbsp;&nbsp;&nbsp;&nbsp; printf("%d", result);<br>
+	20&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>
+	(gdb)<br>
+	21 }<br>
+	(gdb) b 16&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;-- break 命令的缩写，在程序第 16 行处打普通断点<br>
+	Breakpoint 1 at 0x11fa: file main.c, line 16.<br>
+	(gdb) r&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;-- run 命令的缩写，启动程序<br>
+	Starting program: /home/test/demo/main.exe<br>
+	Breakpoint 1, main () at main.c:16<br>
+	16&nbsp;&nbsp;&nbsp;&nbsp; int num =0;<br>
+	(gdb) next&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;-- 单步执行程序，即执行一行代码<br>
+	17&nbsp;&nbsp;&nbsp;&nbsp; scanf("%d", &amp;num);<br>
+	(gdb) next&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;-- 继续单步执行，此时需要输入一个整数传递给 num<br>
+	3<br>
+	18&nbsp;&nbsp;&nbsp;&nbsp; int result = myfunc(num);<br>
+	(gdb) p num&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;-- print 命令的缩写，显示 num 的值<br>
+	$1 = 3&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;--&nbsp;$1 表示 num 变量所在存储区的名称，这里指的是 num 的值为 3<br>
+	(gdb) n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;-- 继续单步执行<br>
+	19&nbsp;&nbsp;&nbsp;&nbsp; printf("%d", result);<br>
+	(gdb) n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;-- 单步执行<br>
+	20&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>
+	(gdb) q&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;-- 退出调试<br>
+	A debugging session is active.<br>
+	<br>
+	Inferior 1 [process 4576] will be killed.<br>
+	<br>
+	Quit anyway? (y or n) y&nbsp; &nbsp; &nbsp; &nbsp; &lt;-- 由于程序执行尚未结束，GDB 会进行再次确认<br>
+	[root@bogon demo]#</p>
+<blockquote>
+	<p>
+		事实上，以上很多命令还有其它的语法格式，只是不常用，这里不再过多赘述，感兴趣的读者可自行查阅<a href="https://sourceware.org/gdb/current/onlinedocs/gdb/index.html#SEC_Contents" rel="nofollow" target="_blank"> GDB 官网手册</a>。</p>
+</blockquote>
+接下来，重点给大家介绍表 1 中另外几个命令的用法。
+<h2>
+	GDB finish和return命令</h2>
+实际调试时，在某个函数中调试一段时间后，可能不需要再一步步执行到函数返回处，希望直接执行完当前函数，这时可以使用 finish 命令。与 finish 命令类似的还有 return 命令，它们都可以结束当前执行的函数。<br>
+<br>
+finish 命令和 return 命令的区别是，finish 命令会执行函数到正常退出；而 return 命令是立即结束执行当前函数并返回，也就是说，如果当前函数还有剩余的代码未执行完毕，也不会执行了。除此之外，return 命令还有一个功能，即可以指定该函数的返回值。<br>
+<br>
+仍以 main.exe 为例，如下演示了 finish 命令的用法：
+<p class="info-box">
+	(gdb) b 18<br>
+	Breakpoint 1 at 0x4005ab: file main.c, line 18.<br>
+	(gdb) r<br>
+	Starting program: ~/demo/main.exe<br>
+	3<br>
+	<br>
+	Breakpoint 1, main () at main.c:18<br>
+	18&nbsp;&nbsp;&nbsp;&nbsp; int result = myfunc(num);<br>
+	(gdb) step<br>
+	myfunc (num=3) at main.c:7<br>
+	7&nbsp;&nbsp;&nbsp;&nbsp; int i = 1;<br>
+	(gdb) n<br>
+	8&nbsp;&nbsp;&nbsp;&nbsp; int sum = 0;<br>
+	(gdb) n<br>
+	9&nbsp;&nbsp;&nbsp;&nbsp; while(i &lt;= num){<br>
+	<span style="color:#008000;">(gdb) finish</span><br>
+	Run till exit from #0&nbsp; myfunc (num=3) at main.c:9<br>
+	0x00000000004005b5 in main () at main.c:18<br>
+	18&nbsp;&nbsp;&nbsp;&nbsp; int result = myfunc(num);<br>
+	Value returned is $1 = 14<br>
+	(gdb)&nbsp;</p>
+可以看到，当程序运行至第 9 行处使用 finish 命令，GDB 调试器会执行完 myfunc() 函数中的剩余代码，并在执行完函数后停止。接下来重新执行程序，观察 return 命令的功能：
+<p class="info-box">
+	(gdb) r<br>
+	The program being debugged has been started already.<br>
+	Start it from the beginning? (y or n) y<br>
+	Starting program: ~/demo/main.exe<br>
+	3<br>
+	<br>
+	Breakpoint 1, main () at main.c:18<br>
+	18&nbsp;&nbsp;&nbsp;&nbsp; int result = myfunc(num);<br>
+	(gdb) step<br>
+	myfunc (num=3) at main.c:7<br>
+	7&nbsp;&nbsp;&nbsp;&nbsp; int i = 1;<br>
+	(gdb) n<br>
+	8&nbsp;&nbsp;&nbsp;&nbsp; int sum = 0;<br>
+	(gdb) n<br>
+	9&nbsp;&nbsp;&nbsp;&nbsp; while(i &lt;= num){<br>
+	<span style="color:#008000;">(gdb) return 5</span><br>
+	Make myfunc return now? (y or n) y<br>
+	#0&nbsp; 0x00000000004005b5 in main () at main.c:18<br>
+	18&nbsp;&nbsp;&nbsp;&nbsp; int result = myfunc(num);<br>
+	(gdb) n<br>
+	19&nbsp;&nbsp;&nbsp;&nbsp; printf("%d", result);<br>
+	(gdb) p result<br>
+	$3 = 5</p>
+可以看到，同样程序执行至第 9 行，借助 return 命令会立即终止执行 myfunc() 函数，同时手动指定该函数的返回值为 5。因此，最终 result 变量的值为 5，而不再是 14。
+<h2>
+	GDB jump命令</h2>
+jump 命令的功能是直接跳到指定行继续执行程序，其语法格式为：
+<p class="info-box">
+	(gdb) jump location</p>
+其中，location 通常为某一行代码的行号。<br>
+<br>
+也就是说，jump 命令可以略过某些代码，直接跳到 location 处的代码继续执行程序。这意味着，如果你跳过了某个变量（对象）的初始化代码，直接执行操作该变量（对象）的代码，很可能会导致程序崩溃或出现其它 Bug。另外，如果 jump 跳转到的位置后续没有断点，那么 GDB 会直接执行自跳转处开始的后续代码。<br>
+<br>
+举个例子：
+<p class="info-box">
+	(gdb) b 16<br>
+	Breakpoint 1 at 0x40058b: file main.c, line 16.<br>
+	(gdb) r<br>
+	Starting program: ~/demo/main.exe<br>
+	<br>
+	Breakpoint 1, main () at main.c:16<br>
+	16&nbsp;&nbsp;&nbsp;&nbsp; int num = 0;<br>
+	(gdb) jump 19<br>
+	Continuing at 0x4005b8.<br>
+	0<br>
+	Program exited normally.</p>
+可以看到，由于借助 jump 指令跳过了 result 变量的初始化过程，因此 result 变量的值为 0（或者垃圾值）。
+<blockquote>
+	<p>
+		注意，从第 16 行直接跳到第 19 行执行，并不意味着 result 变量不能使用。因为对于可执行文件而言，并不存在 num、result 这些变量名，它们都已经被转化为了地址（确定地说是偏移地址），并且程序在执行时，位于 main() 函数中的所有变量的存储地址都会被确定。也就是说，当我们跳到第 19 行输出 result 的值时，实际上是取其存储地址中的数据，只不过由于 result 没有初始化，所以最终结果值可能为 0，也可能为垃圾值。</p>
+</blockquote>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./13如何使用GDB进行断点调试？_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/8232.html">GDB单步调试程序</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/view/8238.html">GDB print和display命令：查看变量的值</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/linux/gzip.html" title="gzip">gzip</a></li>
+<li><a href="http://c.biancheng.net/view/1036.html" title="Linux GRUB加密方法详解（2种加密方式）">Linux GRUB加密方法详解（2种加密方式）</a></li>
+<li><a href="http://c.biancheng.net/view/1118.html" title="Linux mhash和mcrypt安装过程详解（LAMP环境搭建）">Linux mhash和mcrypt安装过程详解（LAMP环境搭建）</a></li>
+<li><a href="http://c.biancheng.net/view/2307.html" title="Python异常处理机制到底有什么用？">Python异常处理机制到底有什么用？</a></li>
+<li><a href="http://c.biancheng.net/view/3189.html" title="Docker单机桥接网络详解">Docker单机桥接网络详解</a></li>
+<li><a href="http://c.biancheng.net/view/5354.html" title="Spring Cloud Ribbon自定义负载均衡策略">Spring Cloud Ribbon自定义负载均衡策略</a></li>
+<li><a href="http://c.biancheng.net/view/6933.html" title="C++ STL list添加（插入）元素方法详解">C++ STL list添加（插入）元素方法详解</a></li>
+<li><a href="http://c.biancheng.net/view/7006.html" title="URL伪静态化对SEO的影响">URL伪静态化对SEO的影响</a></li>
+<li><a href="http://c.biancheng.net/view/7278.html" title="PHP数组">PHP数组</a></li>
+<li><a href="http://c.biancheng.net/view/8205.html" title="数据库需求分析阶段详解">数据库需求分析阶段详解</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8519;
+window.arcId = "104fOc0inYPbAFUAd1rf7jskPlE0NWjZ9K27E3l0harudj+Nq+A0mr2oYJ4";
+window.typeidChain = "154";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./13如何使用GDB进行断点调试？_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./13如何使用GDB进行断点调试？_files/jquery1.12.4.min.js.下载"></script>
+<script src="./13如何使用GDB进行断点调试？_files/common.js.下载"></script>
+<span style="display:none;"><script src="./13如何使用GDB进行断点调试？_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

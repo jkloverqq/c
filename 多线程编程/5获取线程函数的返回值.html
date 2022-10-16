@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://c.biancheng.net/thread/vip_8627.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./5获取线程函数的返回值_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./5获取线程函数的返回值_files/common.css" rel="stylesheet">
+<title>获取线程函数的返回值</title>
+<meta name="description" content="前面提到，如果我们想获取某个线程执行结束时返回的数据，可以调用 pthread_join() 函数来实现。本节，我们就为您详细讲解 pthread_join() 函数的功能和用法。 pthread_join() 函数声明在 pth">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./5获取线程函数的返回值_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/thread/">多线程</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/thread/what-is-thread.html">线程是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/thread/first-thread.html">第一个多线程程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/thread/vip_8614.html">线程同步机制</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/thread/vip_8622.html">使用C++11进行多线程编程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/thread/">多线程</a></span>
+	<span class="read-num">阅读：2,569</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>获取线程函数的返回值</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">前面提到，如果我们想获取某个线程执行结束时返回的数据，可以调用 pthread_join() 函数来实现。本节，我们就为您详细讲解 pthread_join() 函数的功能和用法。<br>
+<br>
+pthread_join() 函数声明在<code>&lt;pthread.h&gt;</code>头文件中，语法格式如下：
+<pre class="info-box">int pthread_join(pthread_t thread, void ** retval);</pre>
+thread 参数用于指定接收哪个线程的返回值；retval 参数表示接收到的返回值，如果 thread 线程没有返回值，又或者我们不需要接收 thread 线程的返回值，可以将 retval 参数置为 NULL。<br>
+<br>
+pthread_join() 函数会一直阻塞调用它的线程，直至目标线程执行结束（接收到目标线程的返回值），阻塞状态才会解除。如果 pthread_join() 函数成功等到了目标线程执行结束（成功获取到目标线程的返回值），返回值为数字 0；反之如果执行失败，函数会根据失败原因返回相应的非零值，每个非零值都对应着不同的宏，例如：<br>
+<ul>
+	<li>
+		EDEADLK：检测到线程发生了死锁。关于线程发生死锁，我们会在《<a href="http://c.biancheng.net/thread/vip_8619.html" target="_blank">Linux如何避免线程发生死锁？</a>》一节中做详细讲解。</li>
+	<li>
+		EINVAL：分为两种情况，要么目标线程本身不允许其它线程获取它的返回值，要么事先就已经有线程调用 pthread_join() 函数获取到了目标线程的返回值。</li>
+	<li>
+		ESRCH：找不到指定的 thread 线程。</li>
+</ul>
+<blockquote>
+	<p>
+		以上这些宏都声明在 &lt;errno.h&gt; 头文件中，如果程序中想使用这些宏，需提前引入此头文件。</p>
+</blockquote>
+再次强调，一个线程执行结束的返回值只能由一个 pthread_join() 函数获取，当有多个线程调用 pthread_join() 函数获取同一个线程的执行结果时，哪个线程最先执行 pthread_join() 函数，执行结果就由那个线程获得，其它线程的 pthread_join() 函数都将执行失败。<br>
+<br>
+对于一个默认属性的线程 A 来说，线程占用的资源并不会因为执行结束而得到释放。而通过在其它线程中执行<code>pthread_join(A,NULL);</code>语句，可以轻松实现“及时释放线程 A 所占资源”的目的。&nbsp;<br>
+<br>
+接下来通过一个样例，给大家演示 pthread_join() 函数的用法：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display:none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8627.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8627.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8627.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;errno.h&gt;</span>   <span class="sh_comment">//使用宏 ESRCH</span></li><li><span class="sh_preproc">#include</span> <span class="sh_string">&lt;pthread.h&gt;</span></li><li><span class="sh_comment">//线程执行的函数</span></li><li><span class="sh_type">void</span> <span class="sh_symbol">*</span><span class="sh_function">ThreadFun</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span>arg<span class="sh_symbol">)</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_function">pthread_exit</span><span class="sh_symbol">(</span><span class="sh_string">"http://c.biancheng.net"</span><span class="sh_symbol">);</span></li><li><span class="sh_cbracket">}</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span></li><li><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> res<span class="sh_symbol">;</span></li><li>    <span class="sh_type">void</span> <span class="sh_symbol">*</span> thread_result<span class="sh_symbol">;</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>myThread<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//创建 myThread 线程</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>myThread<span class="sh_symbol">,</span> NULL<span class="sh_symbol">,</span> ThreadFun<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"线程创建失败"</span><span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//阻塞主线程，等待 myThread 线程执行结束</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>myThread<span class="sh_symbol">,</span> <span class="sh_symbol">&amp;</span>thread_result<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"1：等待线程失败"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">//输出获取到的 myThread 线程的返回值</span></li><li>    <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"%s</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_symbol">(</span><span class="sh_type">char</span><span class="sh_symbol">*)</span>thread_result<span class="sh_symbol">);</span></li><li><span style="display:none;">&nbsp;</span></li><li>    <span class="sh_comment">//尝试再次获取 myThread 线程的返回值</span></li><li>    res <span class="sh_symbol">=</span> <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>myThread<span class="sh_symbol">,</span> <span class="sh_symbol">&amp;</span>thread_result<span class="sh_symbol">);</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>res <span class="sh_symbol">==</span> ESRCH<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"2：等待线程失败，线程不存在"</span><span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include &lt;stdio.h&gt;
+#include &lt;errno.h&gt;   //使用宏 ESRCH
+#include &lt;pthread.h&gt;
+//线程执行的函数
+void *ThreadFun(void *arg)
+{
+    pthread_exit("http://c.biancheng.net");
+}
+int main()
+{
+    int res;
+    void * thread_result;
+    pthread_t myThread;
+    //创建 myThread 线程
+    res = pthread_create(&amp;myThread, NULL, ThreadFun, NULL);
+    if (res != 0) {
+        printf("线程创建失败");
+        return 0;
+    }
+    //阻塞主线程，等待 myThread 线程执行结束
+    res = pthread_join(myThread, &amp;thread_result);
+    if (res != 0) {
+        printf("1：等待线程失败");
+    }
+    //输出获取到的 myThread 线程的返回值
+    printf("%s\n", (char*)thread_result);
+
+    //尝试再次获取 myThread 线程的返回值
+    res = pthread_join(myThread, &amp;thread_result);
+    if (res == ESRCH) {
+        printf("2：等待线程失败，线程不存在");
+    }
+    return 0;
+}</pre></div></div>
+假设程序位于 thread.c 文件中，执行过程如下：
+<p class="info-box">
+	[root@localhost ~]# gcc thread.c -o thread.exe -lpthread<br>
+	[root@localhost ~]# ./thread.exe<br>
+	http://c.biancheng.net<br>
+	2：等待线程失败，线程不存在</p>
+在程序的在主线程（main() 函数）中，我们尝试两次调用 pthread_join() 函数获取 myThread 线程执行结束的返回值。通过执行结果可以看到，第一个 pthread_join() 函数成功执行，而第二个 Pthread_join() 函数执行失败。原因很简单，第一个成功执行的 pthread_join() 函数会使 myThread 线程释放自己占用的资源，myThread 线程也就不复存在，所以第二个 pthread_join() 函数会返回 ESRCH。<br>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./5获取线程函数的返回值_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/1011.html" title="Shell break和continue跳出循环详解">Shell break和continue跳出循环详解</a></li>
+<li><a href="http://c.biancheng.net/view/1626.html" title="VC++实用API编程视频教程">VC++实用API编程视频教程</a></li>
+<li><a href="http://c.biancheng.net/mysql/rand.html" title="MySQL RAND函数：生成随机数">MySQL RAND函数：生成随机数</a></li>
+<li><a href="http://c.biancheng.net/view/2812.html" title="C#构造函数（构造方法）">C#构造函数（构造方法）</a></li>
+<li><a href="http://c.biancheng.net/view/5324.html" title="使用Eureka编写服务消费者">使用Eureka编写服务消费者</a></li>
+<li><a href="http://c.biancheng.net/view/6228.html" title="PHP array_values()：获取数组中所有元素的值">PHP array_values()：获取数组中所有元素的值</a></li>
+<li><a href="http://c.biancheng.net/view/6943.html" title="网站收录是怎么回事？">网站收录是怎么回事？</a></li>
+<li><a href="http://c.biancheng.net/view/7494.html" title="C语言和C++的混合编译">C语言和C++的混合编译</a></li>
+<li><a href="http://c.biancheng.net/view/8049.html" title="JavaScript简介">JavaScript简介</a></li>
+<li><a href="http://c.biancheng.net/css3/selector.html" title="CSS选择器">CSS选择器</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8627;
+window.arcId = "155eEFHZCIzY31sfuXmGh51ygkksMQsHHY0zyWG632CVImXLc0Mfn07IkPA";
+window.typeidChain = "396";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./5获取线程函数的返回值_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./5获取线程函数的返回值_files/jquery1.12.4.min.js.下载"></script>
+<script src="./5获取线程函数的返回值_files/common.js.下载"></script>
+<span style="display:none;"><script src="./5获取线程函数的返回值_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

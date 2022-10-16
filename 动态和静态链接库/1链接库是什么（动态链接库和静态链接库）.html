@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://c.biancheng.net/dll/what_is_library.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./1链接库是什么（动态链接库和静态链接库）_files/common.css" rel="stylesheet">
+<title>链接库是什么（动态链接库和静态链接库）</title>
+<meta name="description" content="静态链接库和动态链接库是最常用的两种共享代码的方法，从本节开始，您将系统地了解它们，并彻底搞清楚以下问题： 什么是库，什么是链接库，以及静态链接库和动态链接库的区别">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./1链接库是什么（动态链接库和静态链接库）_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/dll/">链接库</a></dt>
+		<dd class="active">
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/dll/what_is_library.html">链接库是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/dll/vip_8704.html">Windows下静态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/dll/vip_8705.html">Linux下静态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/dll/vip_8706.html">Windows下动态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/dll/vip_8707.html">Linux下动态链接库的创建和使用</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/dll/vip_8708.html">Windows下显式调用动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/dll/vip_8709.html">Linux下显式调用动态链接库</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/dll/">链接库</a></span>
+	<span class="read-num">阅读：5,822</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>链接库是什么（动态链接库和静态链接库）</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/dll/">链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/dll/vip_8704.html">Windows下静态链接库的创建和使用</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">静态链接库和动态链接库是最常用的两种共享代码的方法，从本节开始，您将系统地了解它们，并彻底搞清楚以下问题：
+<ul>
+	<li>
+		什么是库，什么是链接库，以及静态链接库和动态链接库的区别；</li>
+	<li>
+		如何手动创建一个静态或者动态链接库；</li>
+	<li>
+		如何在自己的项目中使用第三方提供的静态或者动态链接库。</li>
+</ul>
+<br>
+首先我们来了解一下库和链接库的含义。<br>
+<h2>
+	什么是链接库</h2>
+计算机中，有些文件专门用于存储可以重复使用的代码块，例如功能实用的函数或者类，我们通常将它们称为<span style="color:#008000;">库文件</span>，简称“库”（Library）。<br>
+<br>
+以 C 语言为例，如下为大家展示的就是一个函数库：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/dll/what_is_library.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/dll/what_is_library.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/dll/what_is_library.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_comment">//myMath.c</span></li><li><span class="sh_type">int</span> <span class="sh_function">add</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">return</span>  a <span class="sh_symbol">+</span> b<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">sub</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">return</span>  a <span class="sh_symbol">-</span> b<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">mul</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">return</span>  a <span class="sh_symbol">*</span> b<span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">div</span><span class="sh_symbol">(</span><span class="sh_type">int</span> a<span class="sh_symbol">,</span> <span class="sh_type">int</span> b<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>b <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_keyword">return</span> a <span class="sh_symbol">/</span> b<span class="sh_symbol">;</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_symbol">-</span><span class="sh_number">1</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">//myMath.c
+int add(int a, int b) {
+    return  a + b;
+}
+
+int sub(int a, int b) {
+    return  a - b;
+}
+
+int mul(int a, int b) {
+    return  a * b;
+}
+
+int div(int a, int b) {
+    if (b != 0) {
+        return a / b;
+    }
+    return -1;
+}</pre></div></div>
+myMath.c 文件中包含 4 个函数，它们分别可以完成两个整数的加法、减法、乘法和除法运算。myMath.c 库文件的用法也很简单，直接将它添加到某一个 C 语言项目中，就可以直接调用文件中的 4 个函数，每个函数可以调用多次。<br>
+<br>
+显然，实际开发中引入他人编写好的库文件可以省略某些功能的开发环节，提高项目的开发效率。但遗憾的是，类似 myMath.c 这种“开源”的库文件很难找到，多数程序员并不会直接分享源代码，他们更愿意分享库文件的二进制版本——链接库。<br>
+<br>
+所谓链接库，其实就是将开源的库文件（例如上面提到的 myMath.c）进行编译、打包操作后得到的二进制文件。虽然链接库是二进制文件，但无法独立运行，必须等待其它程序调用，才会被载入内存。<br>
+<br>
+一个完整的 C 语言项目可能包含多个 .c 源文件，项目的运行需要经过“编译”和“链接”两个过程：
+<ul>
+	<li>
+		编译：由编译器逐个对源文件做词法分析、语法分析、语义分析等操作，最终生成多个目标文件。每个目标文件都是二进制文件，但由于它们会相互调用对方的函数或变量，还可能会调用某些链接库文件中的函数或变量，编译器无法跨文件找到它们确切的存储地址，所以这些目标文件无法单独执行。</li>
+	<li>
+		链接：对于各个目标文件中缺失的函数和变量的存储地址（后续简称“缺失的地址”），由链接器负责修复，并最终将所有的目标文件和链接库组织成一个<span style="color: rgb(0, 128, 0);">可执行文件</span>。</li>
+</ul>
+<br>
+注意，一个目标文件中使用的函数或变量，可能定义在其他的目标文件中，也可能定义在某个链接库文件中。链接器完成完成链接工作的方式有两种，分别是：
+<ul>
+	<li>
+		无论缺失的地址位于其它目标文件还是链接库，链接库都会逐个找到各目标文件中缺失的地址。采用此链接方式生成的可执行文件，可以独立载入内存运行；</li>
+	<li>
+		链接器先从所有目标文件中找到部分缺失的地址，然后将所有目标文件组织成一个可执行文件。如此生成的可执行文件，仍缺失部分函数和变量的地址，待文件执行时，需连同所有的链接库文件一起载入内存，再由链接器完成剩余的地址修复工作，才能正常执行。</li>
+</ul>
+<br>
+我们通常将第一种链接方式称为<span style="color:#008000;">静态链接</span>，用到的链接库称为<span style="color:#008000;">静态链接库</span>；第二种链接方式中，链接所有目标文件的方法仍属静态链接，而载入内存后进行的链接操作称为<span style="color:#008000;">动态链接</span>，用到的链接库称为<span style="color:#008000;">动态链接库</span>。
+<blockquote>
+	<p>
+		静态链接的过程由静态链接器负责完成，动态链接的过程由动态链接器负责完成。链接器的实现机制和操作系统有关，例如 Linux 平台上，动态链接器本质就是一个动态链接库。</p>
+</blockquote>
+<h2>
+	静态链接库和动态链接库</h2>
+也就是说，程序完成链接操作的方式有两种，一种是在生成可执行文件之前完成所有链接操作，使用的库文件称为<span style="color:#008000;">静态链接库</span>；另一种是将部分链接操作推迟到程序执行时才进行，此过程使用的库文件称为<span style="color:#008000;">动态链接库</span>。
+<h4>
+	1) 静态链接库</h4>
+静态链接库用来和所有的目标文件一起组织成可执行文件，生成的可执行文件可以独立运行。<br>
+<br>
+采用静态链接库完成链接操作，存在诸多缺点。首先，可执行文件内部拷贝了所有目标文件和静态链接库的指令和数据，文件本身的体积会很大。当系统中存在多个链接同一个静态库的可执行文件时，每个可执行文件中都存有一份静态库的指令和数据，就会造成内存空间的极大浪费。<br>
+<br>
+此外，一旦程序中有模块更新，整个程序就必须重新链接后才能运行。假设一个程序有 20 个模块构成，每个模块的大小为 1 MB，那么每次更新任何一个模块，用户就必须重新获取 20 MB 的程序，对用户很不友好。<br>
+<h4>
+	2) 动态链接库</h4>
+实际上，动态链接库是 Windows 平台上对动态链接过程所用库文件的称谓，Linux 平台上习惯称为<span style="color:#008000;">共享库</span>或者<span style="color:#008000;">共享对象文件</span>，它们表达的是一个意思。<br>
+<br>
+所谓动态链接，指的是将链接的时机推迟到程序运行时再进行。具体来讲，对于一个以动态链接方式运行的项目，首先由静态链接器将所有的目标文件组织成一个可执行文件，运行时将所需的动态链接库全部载入内存，由动态链接器完成可执行文件和动态库文件的链接工作。<br>
+<blockquote>
+	<p>
+		动态链接库可以随可执行文件一同载入内存，也可以在可执行文件运行过程中载入，即可执行文件什么时候需要，动态链接库才会载入内存。</p>
+</blockquote>
+和静态链接库相比，动态链接库可以很好地解决空间浪费和更新困难的问题。动态链接库和可执行文件是分别载入内存的，因此动态链接库的体积通常会小一些。当有多个程序使用同一个动态链接库时，所有程序可以共享一份动态链接库的指令和数据，避免了空间的浪费。采用动态链接的方式也可以方便程序的更新和升级，当程序的某个模块更新后，只需要将旧的模块替换掉，程序运行时会自动将所有模板载入内存并动态地链接在一起。<br>
+<br>
+有读者可能会问，采用动态链接的方式，每次程序运行时都需要重新链接，会不会很慢？的确，动态链接确实会损失一部分程序性能，但实践证明，动态链接库和静态链接相比，性能损失大约在 5% 以下，由此换取程序在空间上的节省以及更新时的便利，是相当值得的。<br>
+<br>
+了解了静态链接库和动态链接库之后，接下来我们继续学习如何创建它们。</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./1链接库是什么（动态链接库和静态链接库）_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/dll/">链接库</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/dll/vip_8704.html">Windows下静态链接库的创建和使用</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/1411.html" title="C++ enum枚举类型详解">C++ enum枚举类型详解</a></li>
+<li><a href="http://c.biancheng.net/view/3596.html" title="汇编语言RCL（带进位循环左移）和RCR（带进位循环右移）指令">汇编语言RCL（带进位循环左移）和RCR（带进位循环右移）指令</a></li>
+<li><a href="http://c.biancheng.net/view/4468.html" title="Spring MVC使用SimpleMappingExceptionResolver类异常处理">Spring MVC使用SimpleMappingExceptionResolver类异常处理</a></li>
+<li><a href="http://c.biancheng.net/view/4637.html" title="Spring Boot的自动配置">Spring Boot的自动配置</a></li>
+<li><a href="http://c.biancheng.net/view/4827.html" title="JSP application.getResourceAsStream()方法：返回指定资源的输入流对象">JSP application.getResourceAsStream()方法：返回指定资源的输入流对象</a></li>
+<li><a href="http://c.biancheng.net/view/5166.html" title="Hibernate Query接口 setBoolean方法：绑定映射类型为boolean的参数">Hibernate Query接口 setBoolean方法：绑定映射类型为boolean的参数</a></li>
+<li><a href="http://c.biancheng.net/view/5658.html" title="Python项目实战之猜数字游戏（含实现代码）">Python项目实战之猜数字游戏（含实现代码）</a></li>
+<li><a href="http://c.biancheng.net/view/6365.html" title="服务器是什么？">服务器是什么？</a></li>
+<li><a href="http://c.biancheng.net/view/7538.html" title="绝对路径和相对路径">绝对路径和相对路径</a></li>
+<li><a href="http://c.biancheng.net/view/7879.html" title="jQuery each()方法的用法">jQuery each()方法的用法</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript" async="" charset="utf-8" src="./1链接库是什么（动态链接库和静态链接库）_files/core.php"></script><script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8703;
+window.arcId = "1e94oHC6e3hrWUDfuloIO8K4nOb3Aei7AXywCdYxqoD6weIar8YZjjPlzDQ";
+window.typeidChain = "399";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./1链接库是什么（动态链接库和静态链接库）_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./1链接库是什么（动态链接库和静态链接库）_files/jquery1.12.4.min.js.下载"></script>
+<script src="./1链接库是什么（动态链接库和静态链接库）_files/common.js.下载"></script>
+<span style="display:none;"><script src="./1链接库是什么（动态链接库和静态链接库）_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>

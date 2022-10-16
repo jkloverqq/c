@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://c.biancheng.net/thread/vip_8614.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="./7线程同步机制_files/core.php"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<!-- 启用Chromium高速渲染模式 -->
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<!-- 禁止百度转码 -->
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- 禁止识别电话号码 -->
+<meta name="format-detection" content="telephone=no">
+
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.72">
+<link href="./7线程同步机制_files/common.css" rel="stylesheet">
+<title>线程同步机制</title>
+<meta name="description" content="《 什么是线程 》一节讲过，多线程程序中各个线程除了可以使用自己的私有资源（局部变量、函数形参等）外，还可以共享全局变量、静态变量、堆内存、打开的文件等资源。 举个例">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+	<ul id="product-type" class="left">
+		<li>
+			<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+		</li>
+		<li class="active">
+			<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/vip/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-vip"></span>VIP会员</a>
+		</li>
+		<li>
+			<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+		</li>
+		<li>
+			<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+		</li>
+	</ul>
+</div>
+<div id="header" class="clearfix">
+	<a id="logo" class="left" href="http://c.biancheng.net/">
+		<img height="26" src="./7线程同步机制_files/logo.png" alt="C语言中文网">
+	</a>
+	<ul id="nav-main" class="hover-none left clearfix">
+		<li class="wap-yes"><a href="http://c.biancheng.net/">首页</a></li>
+		<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+		<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+		<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+		<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+		<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+		<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+	</ul>
+	<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+
+	<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+	<div id="sidebar" class="toggle-target">
+	<div id="contents">
+		<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/thread/">多线程</a></dt>
+		<dd>
+        	<span class="channel-num">1</span>
+        	<a href="http://c.biancheng.net/thread/what-is-thread.html">线程是什么</a>
+        </dd>
+<dd>
+        	<span class="channel-num">2</span>
+        	<a href="http://c.biancheng.net/thread/first-thread.html">第一个多线程程序</a>
+        </dd>
+<dd>
+        	<span class="channel-num">3</span>
+        	<a href="http://c.biancheng.net/thread/vip_8626.html">创建线程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">4</span>
+        	<a href="http://c.biancheng.net/thread/vip_8610.html">终止线程执行（3种方法）</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">5</span>
+        	<a href="http://c.biancheng.net/thread/vip_8627.html">获取线程函数的返回值</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">6</span>
+        	<a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd class="active">
+        	<span class="channel-num">7</span>
+        	<a href="http://c.biancheng.net/thread/vip_8614.html">线程同步机制</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">8</span>
+        	<a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">9</span>
+        	<a href="http://c.biancheng.net/thread/vip_8616.html">使用信号量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">10</span>
+        	<a href="http://c.biancheng.net/thread/vip_8617.html">使用条件变量实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">11</span>
+        	<a href="http://c.biancheng.net/thread/vip_8618.html">使用读写锁实现线程同步</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">12</span>
+        	<a href="http://c.biancheng.net/thread/vip_8619.html">如何避免线程发生死锁？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">13</span>
+        	<a href="http://c.biancheng.net/thread/vip_8620.html">线程属性有哪些，如何自定义线程属性？</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">14</span>
+        	<a href="http://c.biancheng.net/thread/vip_8622.html">使用C++11进行多线程编程</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+<dd>
+        	<span class="channel-num">15</span>
+        	<a href="http://c.biancheng.net/thread/vip_8625.html">将Linux多线程程序移植到Windows</a><span class="glyphicon glyphicon-usd"></span>
+        </dd>
+
+	</div>
+</div>
+	<div id="article-wrap">
+		<div id="article">
+			<div class="arc-info">
+	<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/thread/">多线程</a></span>
+	<span class="read-num">阅读：2,309</span>
+</div>
+
+<div id="ad-position-bottom"></div>
+			<h1>线程同步机制</h1>
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="default"><a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank" style="color:#D33428;">C语言中文网推出辅导班啦，包括<span style="color: #008000;">「C语言辅导班、C++辅导班、算法/数据结构辅导班」</span>，全部都是一对一教学：一对一辅导 + 一对一答疑 + 布置作业 + 项目实践 + 永久学习。QQ在线，随时响应！</a></p></div>
+			<div id="arc-body">《<a href="http://c.biancheng.net/thread/what-is-thread.html" target="_blank">线程是什么</a>》一节讲过，多线程程序中各个线程除了可以使用自己的私有资源（局部变量、函数形参等）外，还可以共享全局变量、静态变量、堆内存、打开的文件等资源。<br>
+<br>
+举个例子，编写一个多线程程序模拟“4个售票员共同卖 20 张票”的过程，代码如下所示：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: none;"><pre><a class="snippet-copy sh_url" href="http://c.biancheng.net/thread/vip_8614.html#" style="display: none;">复制</a><a class="snippet-text sh_url" href="http://c.biancheng.net/thread/vip_8614.html#">纯文本</a><a class="snippet-window sh_url" href="http://c.biancheng.net/thread/vip_8614.html#">复制</a></pre></div><pre class="cpp sh_cpp snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_preproc">#include</span><span class="sh_string">&lt;stdio.h&gt;</span></li><li><span class="sh_preproc">#include</span><span class="sh_string">&lt;stdlib.h&gt;</span></li><li><span class="sh_preproc">#include</span><span class="sh_string">&lt;pthread.h&gt;</span></li><li><span class="sh_comment">//全局变量，模拟总的票数</span></li><li><span class="sh_type">int</span> ticket_sum <span class="sh_symbol">=</span> <span class="sh_number">10</span><span class="sh_symbol">;</span></li><li><span class="sh_comment">//模拟4个售票员一起售卖票的过程</span></li><li><span class="sh_type">void</span> <span class="sh_symbol">*</span><span class="sh_function">sell_ticket</span><span class="sh_symbol">(</span><span class="sh_type">void</span> <span class="sh_symbol">*</span>arg<span class="sh_symbol">)</span><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> i<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//4个售票员负责将 10 张票全部卖出</span></li><li>    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span>i <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span> i <span class="sh_symbol">&lt;</span> <span class="sh_number">10</span><span class="sh_symbol">;</span> i<span class="sh_symbol">++)</span></li><li>    <span class="sh_cbracket">{</span></li><li>        <span class="sh_comment">//直至所有票全部卖出，4 个售票员才算完成任务</span></li><li>        <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>ticket_sum <span class="sh_symbol">&gt;</span> <span class="sh_number">0</span><span class="sh_symbol">)</span></li><li>        <span class="sh_cbracket">{</span></li><li>            <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>            <span class="sh_comment">//每个线程代表一个售票员</span></li><li>            <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"%u 卖第 %d 张票</span><span class="sh_specialchar">\n</span><span class="sh_string">"</span><span class="sh_symbol">,</span> <span class="sh_function">pthread_self</span><span class="sh_symbol">(),</span> <span class="sh_number">10</span> <span class="sh_symbol">-</span> ticket_sum <span class="sh_symbol">+</span> <span class="sh_number">1</span><span class="sh_symbol">);</span></li><li>            ticket_sum<span class="sh_symbol">--;</span></li><li>        <span class="sh_cbracket">}</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li><span class="sh_type">int</span> <span class="sh_function">main</span><span class="sh_symbol">()</span><span class="sh_cbracket">{</span></li><li>    <span class="sh_type">int</span> flag<span class="sh_symbol">;</span></li><li>    <span class="sh_type">int</span> i<span class="sh_symbol">;</span></li><li>    <span class="sh_type">void</span> <span class="sh_symbol">*</span>ans<span class="sh_symbol">;</span></li><li>    <span class="sh_comment">//创建 4 个线程，代表 4 个售票员</span></li><li>    <span class="sh_usertype">pthread_t</span><span class="sh_normal"> </span>tids<span class="sh_symbol">[</span><span class="sh_number">4</span><span class="sh_symbol">];</span></li><li>    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span>i <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span> i <span class="sh_symbol">&lt;</span> <span class="sh_number">4</span><span class="sh_symbol">;</span> i<span class="sh_symbol">++)</span></li><li>    <span class="sh_cbracket">{</span></li><li>        flag <span class="sh_symbol">=</span> <span class="sh_function">pthread_create</span><span class="sh_symbol">(&amp;</span>tids<span class="sh_symbol">[</span>i<span class="sh_symbol">],</span> NULL<span class="sh_symbol">,</span> <span class="sh_symbol">&amp;</span>sell_ticket<span class="sh_symbol">,</span> NULL<span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>flag <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>            <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"线程创建失败!"</span><span class="sh_symbol">);</span></li><li>            <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>        <span class="sh_cbracket">}</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_function">sleep</span><span class="sh_symbol">(</span><span class="sh_number">10</span><span class="sh_symbol">);</span> <span class="sh_comment">// 阻塞主线程，等待所有子线程执行结束</span></li><li>    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span>i <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span> i <span class="sh_symbol">&lt;</span> <span class="sh_number">4</span><span class="sh_symbol">;</span> i<span class="sh_symbol">++)</span></li><li>    <span class="sh_cbracket">{</span></li><li>        flag <span class="sh_symbol">=</span> <span class="sh_function">pthread_join</span><span class="sh_symbol">(</span>tids<span class="sh_symbol">[</span>i<span class="sh_symbol">],</span> <span class="sh_symbol">&amp;</span>ans<span class="sh_symbol">);</span></li><li>        <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>flag <span class="sh_symbol">!=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>            <span class="sh_function">printf</span><span class="sh_symbol">(</span><span class="sh_string">"tid=%d 等待失败！"</span><span class="sh_symbol">,</span> tids<span class="sh_symbol">[</span>i<span class="sh_symbol">]);</span></li><li>            <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li>        <span class="sh_cbracket">}</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_keyword">return</span> <span class="sh_number">0</span><span class="sh_symbol">;</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;pthread.h&gt;
+//全局变量，模拟总的票数
+int ticket_sum = 10;
+//模拟4个售票员一起售卖票的过程
+void *sell_ticket(void *arg){
+    int i;
+    //4个售票员负责将 10 张票全部卖出
+    for (i = 0; i &lt; 10; i++)
+    {
+        //直至所有票全部卖出，4 个售票员才算完成任务
+        if (ticket_sum &gt; 0)
+        {
+            sleep(1);
+            //每个线程代表一个售票员
+            printf("%u 卖第 %d 张票\n", pthread_self(), 10 - ticket_sum + 1);
+            ticket_sum--;
+        }
+    }
+    return 0;
+}
+
+int main(){
+    int flag;
+    int i;
+    void *ans;
+    //创建 4 个线程，代表 4 个售票员
+    pthread_t tids[4];
+    for (i = 0; i &lt; 4; i++)
+    {
+        flag = pthread_create(&amp;tids[i], NULL, &amp;sell_ticket, NULL);
+        if (flag != 0) {
+            printf("线程创建失败!");
+            return 0;
+        }
+    }
+    sleep(10); // 阻塞主线程，等待所有子线程执行结束
+    for (i = 0; i &lt; 4; i++)
+    {
+        flag = pthread_join(tids[i], &amp;ans);
+        if (flag != 0) {
+            printf("tid=%d 等待失败！", tids[i]);
+            return 0;
+        }
+    }
+    return 0;
+}</pre></div></div>
+程序中新建了 4 个子线程，每个线程都可以访问&nbsp;ticket_sum 全局变量，它们共同执行 sell_ticket() 函数，模拟“4个售票员共同售卖 10 张票”的过程。<br>
+<br>
+假设程序编写在 thread.c 文件中，执行过程如下：
+<p class="info-box">
+	[root@localhost ~]# gcc thread.c -o thread.exe -lpthread<br>
+	[root@localhost ~]# ./thread.exe<br>
+	3296569088 卖第 1 张票<br>
+	3265099520 卖第 2 张票<br>
+	3286079232 卖第 3 张票<br>
+	3275589376 卖第 4 张票<br>
+	3286079232 卖第 5 张票<br>
+	3265099520 卖第 6 张票<br>
+	3296569088 卖第 7 张票<br>
+	3275589376 卖第 8 张票<br>
+	3286079232 卖第 9 张票<br>
+	3265099520 卖第 10 张票<br>
+	3275589376 卖第 11 张票<br>
+	3296569088 卖第 12 张票<br>
+	3286079232 卖第 13 张票</p>
+<br>
+程序的执行结果并不唯一，还可能输出如下类似的信息：<br>
+<p class="info-box">
+	1492682496 卖第 1 张票<br>
+	1503172352 卖第 1 张票<br>
+	1482192640 卖第 1 张票<br>
+	1471702784 卖第 1 张票<br>
+	1503172352 卖第 5 张票<br>
+	1482192640 卖第 6 张票<br>
+	1492682496 卖第 6 张票<br>
+	1471702784 卖第 6 张票<br>
+	1503172352 卖第 9 张票<br>
+	1492682496 卖第 9 张票<br>
+	1471702784 卖第 9 张票<br>
+	1482192640 卖第 12 张票<br>
+	1503172352 卖第 13 张票</p>
+程序执行过程中，出现了“多个售票员卖出同一张票”以及“4个售票员多卖出 3 张票”的异常情况。造成此类问题的根本原因在于，进程中公有资源的访问权限是完全开放的，各个线程可以随时访问这些资源，程序运行过程中很容易出现“多个线程同时访问某公共资源”的情况。<br>
+<br>
+例如，之所以会出现“多个售票员卖出同一张票”的情况，因为这些线程几乎同一时间访问 ticket_sum 变量，得到的是相同的值。出现“4 个售票员多卖出 3 张票”的原因是：4 个线程访问 ticket_sum 变量得到的都是一个大于 0 的数，每个线程都可以继续执行 if 语句内的代码。由于各个线程先后执行的顺序不同，有的线程先执行<code>ticket_sum--</code>操作，导致其它线程计算<code>10-ticket_sum+1</code>表达式时，读取到的 ticket_num 变量的值为负数，因此表达式的值会出现大于 10 的情况。<br>
+<br>
+我们通常将“多个线程同时访问某一公共资源”的现象称为“线程间产生了资源竞争”或者“线程间抢夺公共资源”，线程间竞争资源往往会导致程序的运行结果出现异常，感到匪夷所思，严重时还会导致程序运行崩溃。<br>
+<br>
+幸运地是，Linux 提供了很多种解决方案，确定各个线程可以同步访问进程提供的公共资源（简称“线程同步”）。所谓线程同步，简单地理解就是：当一个线程访问某公共资源时，其它线程不得访问该资源，它们只能等待此线程访问完成后，再逐个访问该资源。
+<h2>
+	Linux线程同步的解决方案</h2>
+Linux 环境中，实现线程同步的常用方法有 4 种，分别称为<a href="http://c.biancheng.net/thread/vip_8615.html" target="_blank">互斥锁</a>、<a href="http://c.biancheng.net/thread/vip_8616.html" target="_blank">信号量</a>、<a href="http://c.biancheng.net/thread/vip_8617.html" target="_blank">条件变量</a>和<a href="http://c.biancheng.net/thread/vip_8618.html" target="_blank">读写锁</a>。<br>
+<br>
+<span style="color:#008000;">互斥锁</span>（Mutex）又称<span style="color:#008000;">互斥量</span>或者<span style="color:#008000;">互斥体</span>，是最简单也最有效地一种线程同步机制。互斥锁的用法和实际生活中的锁非常类似，当一个线程访问公共资源时，会及时地“锁上”该资源，阻止其它线程访问；访问结束后再进行“解锁”操作，将该资源让给其它线程访问。<br>
+<br>
+<span style="color:#008000;">信号量</span>又称<span style="color:#008000;">“信号灯”，</span>主要用于控制同时访问公共资源的线程数量，当线程数量控制在 ≤1 时，该信号量又称<span style="color:#008000;">二元信号量</span>，功能和互斥锁非常类似；当线程数量控制在 N（≥2）个时，该信号量又称<span style="color:#008000;">多元信号量</span>，指的是同一时刻最多只能有 N 个线程访问该资源。<br>
+<br>
+<span style="color:#008000;">条件变量</span>的功能类似于实际生活中的门，门有“打开”和“关闭”两种状态，分别对应条件变量的“成立”状态和“不成立”状态。当条件变量“不成立”时，任何线程都无法访问资源，只能等待条件变量成立；一旦条件变量成立，所有等待的线程都会恢复执行，访问目标资源。为了防止各个线程竞争资源，条件变量总是和互斥锁搭配使用。<br>
+<br>
+多线程程序中，如果大多数线程都是对公共资源执行读取操作，仅有少量的线程对公共资源进行修改，这种情况下可以使用<span style="color:#008000;">读写锁</span>解决线程同步问题。<br>
+<br>
+关于以上 4 种实现线程同步的方式，我们会在后续章节一一给您做详细的讲解。<br>
+</div>
+			<div id="arc-append">
+	<p>关注微信公众号「站长严长生」，在手机上阅读所有教程，随时随地都能学习。本公众号由<a class="col-link" href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">C语言中文网站长</a>运营，每日更新，坚持原创，敢说真话，凡事有态度。</p>
+	<p style="margin-top:12px; text-align:center;">
+		<img width="180" src="./7线程同步机制_files/qrcode_weixueyuan_original.png" alt="魏雪原二维码"><br>
+		<span class="col-green">微信扫描二维码关注公众号</span>
+	</p>
+</div>
+<!-- <p>关注微信公众号「魏雪原」，跟着<a class="col-link" href="/view/8092.html" target="_blank">站长</a>一起学习，拒绝躺平，跳出内卷，用知识完成阶级跃升：</p>
+	<ul>
+		<li>每日更新，坚持原创，敢说真话，凡事有态度。</li>
+		<li>编程+求职+创业+营销，既有硬知识，也有软技能。</li>
+		<li>手机端阅读教程，随时随地都能学习。</li>
+		<li>即将绑定网站部分功能，包括注册登录、找回密码、获取下载链接等。</li>
+	</ul> -->
+			<div class="pre-next-page clearfix">
+                    <span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/thread/vip_8613.html">终止线程执行，千万别踩这个坑！</a></span>
+                    <span class="next right"><a href="http://c.biancheng.net/thread/vip_8615.html">使用互斥锁实现线程同步</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+                </div>
+			<div id="ad-arc-bottom"></div>
+
+<!-- <div id="ad-bottom-weixin" class="clearfix">
+	<div class="left" style="width: 535px;">
+		<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+		<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+		<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+		<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+		<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+	</div>
+	<div class="right" style="width: 150px;">
+		<img width="150" src="/templets/new/images/erweima_biancheng.gif?v=1.6.72" alt="编程帮二维码" /><br />
+		<span class="col-green">微信扫描二维码关注</span>
+	</div>
+</div> -->
+
+<div id="nice-arcs" class="box-bottom">
+	<h4>优秀文章</h4>
+	<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/1538.html" title="C++二进制文件读写（read和write）详解">C++二进制文件读写（read和write）详解</a></li>
+<li><a href="http://c.biancheng.net/view/1908.html" title="区块链的应用有什么？区块链将带来什么变革？">区块链的应用有什么？区块链将带来什么变革？</a></li>
+<li><a href="http://c.biancheng.net/view/5117.html" title="Go语言表达式求值器">Go语言表达式求值器</a></li>
+<li><a href="http://c.biancheng.net/view/5166.html" title="Hibernate Query接口 setBoolean方法：绑定映射类型为boolean的参数">Hibernate Query接口 setBoolean方法：绑定映射类型为boolean的参数</a></li>
+<li><a href="http://c.biancheng.net/view/5666.html" title="Python rjust()字符串右对齐方法详解">Python rjust()字符串右对齐方法详解</a></li>
+<li><a href="http://c.biancheng.net/view/5914.html" title="JS innerText和outerText属性：读写文本">JS innerText和outerText属性：读写文本</a></li>
+<li><a href="http://c.biancheng.net/view/6381.html" title="网络体系的构成和类型">网络体系的构成和类型</a></li>
+<li><a href="http://c.biancheng.net/view/6984.html" title="C++ auto类型推导完全攻略">C++ auto类型推导完全攻略</a></li>
+<li><a href="http://c.biancheng.net/view/8133.html" title="JS数组（Array）的创建、访问及元素的引用">JS数组（Array）的创建、访问及元素的引用</a></li>
+<li><a href="http://c.biancheng.net/thread/vip_8614.html" title="线程同步机制">线程同步机制</a></li>
+</ul>
+</div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 8614;
+window.arcId = "3265qF2evqd85sWn5pg5lgZMowMGJG6j97A+23ogW019AF7ggFm7VAita7I";
+window.typeidChain = "396";
+</script>
+<div id="footer" class="clearfix">
+	<div class="info left">
+	<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+	<p>
+		<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+		<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+		<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+	</p>
+	<p>Copyright ©2012-2021 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+	</div>
+	<img class="right" src="./7线程同步机制_files/logo_bottom.gif" alt="底部Logo">
+	<span id="return-top"><b>↑</b></span>
+</div>
+
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.72";
+</script>
+
+<script src="./7线程同步机制_files/jquery1.12.4.min.js.下载"></script>
+<script src="./7线程同步机制_files/common.js.下载"></script>
+<span style="display:none;"><script src="./7线程同步机制_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>
